@@ -1,0 +1,18 @@
+{
+  "schema_version": "replication-receipt/1.0",
+  "paper_doi": "10.1257/aer.103.6.2121",
+  "target": "Table 3, import-exposure coefficient, columns 1-6",
+  "status": "complete",
+  "data_sha256": "a53a2d2bdf049349f2679a8493ea859f47de437e94a726c898b493ccd03f6264",
+  "stata_python_max_abs_coefficient_delta": 5.168088179630104e-13,
+  "stata_python_max_abs_standard_error_delta": 3.857525687767094e-09,
+  "author_rounded_max_abs_coefficient_delta": 0.00046224736703082137,
+  "author_rounded_max_abs_standard_error_delta": 0.00025954171196168607,
+  "assertions": {
+    "all_samples_1444": true,
+    "all_cluster_counts_48": true,
+    "stata_python_coefficients_within_1e-10": true,
+    "stata_python_standard_errors_within_1e-7": true,
+    "author_rounded_values_within_0.0005": true
+  }
+}

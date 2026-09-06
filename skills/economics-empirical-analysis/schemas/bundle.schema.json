@@ -1,0 +1,11 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,
+ "required":["schema_version","project_id","run_id","status","fingerprint","environment","models","artifacts","limitations"],
+ "properties":{
+  "schema_version":{"const":"empirical-bundle/1.0"},"project_id":{"type":"string"},"run_id":{"type":"string"},
+  "status":{"enum":["complete","partial","failed"]},"fingerprint":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+  "environment":{"type":"object"},"models":{"type":"array","items":{"type":"object","required":["spec_id","status"],"properties":{"spec_id":{"type":"string"},"status":{"enum":["complete","failed"]},"error":{"type":"string"}},"additionalProperties":false}},
+  "artifacts":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["path","sha256","bytes"],"properties":{"path":{"type":"string"},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"bytes":{"type":"integer","minimum":0}}}},
+  "limitations":{"type":"array","items":{"type":"string"}}
+ }
+}

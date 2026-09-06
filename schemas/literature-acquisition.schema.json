@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Literature acquisition ledger",
+  "type": "object",
+  "required": ["schema_version", "run_id", "records", "run_blockers"],
+  "properties": {
+    "schema_version": {"const": "literature-acquisition/1.0"},
+    "run_id": {"type": "string", "minLength": 1},
+    "records": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "run_blockers": {"type": "array", "items": {"$ref": "#/$defs/handoff"}}
+  },
+  "$defs": {
+    "handoff": {
+      "type": "object",
+      "required": ["reason", "user_action", "resume_when", "status"],
+      "properties": {
+        "reason": {"type": "string", "minLength": 1},
+        "user_action": {"type": "string", "minLength": 1},
+        "resume_when": {"type": "string", "minLength": 1},
+        "status": {"enum": ["pending", "communicated", "resolved", "deferred-by-user"]}
+      }
+    },
+    "record": {
+      "type": "object",
+      "required": ["record_id", "title", "authors", "year", "venue", "source_url", "importance", "selection_reason", "destination", "status", "attempts", "local_file", "version", "zotero_item_key", "attachment_key", "cloud_sync", "handoff"],
+      "properties": {
+        "record_id": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "authors": {"type": "array", "items": {"type": "string"}},
+        "year": {"type": ["integer", "null"]},
+        "venue": {"type": "string"},
+        "source_url": {"type": "string"},
+        "importance": {"enum": ["core", "user-requested", "supporting"]},
+        "selection_reason": {"type": "string"},
+        "destination": {"type": "string"},
+        "status": {"enum": ["pending", "acquiring", "fulltext-verified", "archived-local", "needs-human", "deferred-by-user"]},
+        "attempts": {"type": "array", "items": {
+          "type": "object", "required": ["at", "route", "result"],
+          "properties": {"at": {"type": "string"}, "route": {"type": "string"}, "result": {"type": "string"}}
+        }},
+        "local_file": {"type": ["string", "null"]},
+        "version": {"type": ["string", "null"]},
+        "zotero_item_key": {"type": ["string", "null"]},
+        "attachment_key": {"type": ["string", "null"]},
+        "cloud_sync": {"enum": ["unknown", "pending", "confirmed", "failed", "not-requested"]},
+        "handoff": {"anyOf": [{"type": "null"}, {"$ref": "#/$defs/handoff"}]}
+      },
+      "allOf": [
+        {"if": {"properties": {"status": {"const": "needs-human"}}}, "then": {"properties": {"handoff": {"$ref": "#/$defs/handoff"}}}},
+        {"if": {"properties": {"status": {"enum": ["fulltext-verified", "archived-local"]}}}, "then": {"properties": {"local_file": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}}}},
+        {"if": {"properties": {"status": {"const": "archived-local"}}}, "then": {"properties": {"zotero_item_key": {"type": "string", "minLength": 1}, "attachment_key": {"type": "string", "minLength": 1}}}}
+      ]
+    }
+  }
+}

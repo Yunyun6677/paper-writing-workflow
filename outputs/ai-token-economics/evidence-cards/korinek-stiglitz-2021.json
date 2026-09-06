@@ -1,0 +1,55 @@
+{
+  "schema_version": "evidence-card/1.0",
+  "record_id": "10.3386/w28453",
+  "zotero_item_key": null,
+  "bibtex_key": "korinekstiglitz2021",
+  "title": "Artificial Intelligence, Globalization, and Strategies for Economic Development",
+  "authors": [
+    "Anton Korinek",
+    "Joseph E. Stiglitz"
+  ],
+  "year": 2021,
+  "venue": "NBER Working Paper 28453",
+  "verification": {
+    "level": "claim-verified",
+    "sources": [
+      {
+        "type": "authoritative-bibliographic-record",
+        "url": "https://doi.org/10.3386/w28453",
+        "provenance": "role2 candidate ledger; retained checkpoint"
+      },
+      {
+        "type": "inspected-local-fulltext",
+        "path": "work/runs/ai-token-economics-v1/benchmark-fulltext/korinek-stiglitz-2021-development.txt",
+        "inspected_sections": "NBER w28453，Abstract、§§2–7（前轮全文审读）"
+      }
+    ]
+  },
+  "research_question": "AI和全球化如何改变发展战略？",
+  "method": {
+    "design": "发展机制与政策综合；非确定预测",
+    "boundary": "限定于所列版本与定位；不将理论/模拟/综述当作生成式AI因果实证。"
+  },
+  "findings": [
+    {
+      "claim": "劳动替代型技术可能削弱发展中经济体由全球化获得的收益，发展结果取决于技术和制度条件。",
+      "locator": "NBER w28453，Abstract、§§2–7（前轮全文审读）",
+      "evidence_kind": "text"
+    }
+  ],
+  "limitations": [
+    "不能将前生成式AI时代的机制证据直接外推为大模型的已实现效果。",
+    "本卡为有界续跑核验；未补造页码或未查验的量化系数。"
+  ],
+  "fulltext": {
+    "status": "local-only",
+    "inspected": true,
+    "path": "work/runs/ai-token-economics-v1/role2-fulltext/korinek-stiglitz-2021-development.pdf",
+    "source_url": "https://doi.org/10.3386/w28453"
+  },
+  "provenance": {
+    "role": "evidence-zotero-citation-curator",
+    "date": "2026-09-04",
+    "mode": "resume-existing-evidence-no-new-zotero-write"
+  }
+}

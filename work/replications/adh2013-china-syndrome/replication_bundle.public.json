@@ -1,0 +1,53 @@
+{
+  "schema_version": "replication-bundle/1.0",
+  "project_id": "adh2013-china-syndrome",
+  "status": "complete-selected-table",
+  "paper": {
+    "title": "The China Syndrome: Local Labor Market Effects of Import Competition in the United States",
+    "authors": ["David H. Autor", "David Dorn", "Gordon H. Hanson"],
+    "year": 2013,
+    "journal": "American Economic Review",
+    "doi": "10.1257/aer.103.6.2121",
+    "paper_url": "https://economics.mit.edu/sites/default/files/publications/the%20china%20syndrome%202013.pdf",
+    "replication_url": "https://www.ddorn.net/data/Autor-Dorn-Hanson-ChinaSyndrome-FileArchive.zip"
+  },
+  "scope": {
+    "target": "Table 3, columns 1-6",
+    "full_paper_replication_claimed": false
+  },
+  "verification": {
+    "status": "complete",
+    "stata_version": "Stata/SE 16.0",
+    "python_stata_max_abs_coefficient_delta": 5.168088179630104e-13,
+    "python_stata_max_abs_standard_error_delta": 3.857525687767094e-09,
+    "author_rounded_tolerance": 0.0005
+  },
+  "external_artifacts_not_redistributed": [
+    {
+      "role": "author-replication-package",
+      "sha256": "1b56c028a75fba784b14477cdf2e89de6ae90a443b9b1b9648179d852048df12"
+    },
+    {
+      "role": "paper-pdf",
+      "sha256": "e35493c9042ed370e7cd754fba6a0273a4a547f48fbbc0c9c298b56ef799b7b6"
+    },
+    {
+      "role": "analysis-data-workfile_china.dta",
+      "sha256": "a53a2d2bdf049349f2679a8493ea859f47de437e94a726c898b493ccd03f6264"
+    }
+  ],
+  "public_artifacts": [
+    {"path": "REPORT.md", "bytes": 4630, "sha256": "bac343154367810cdcc96f0d8497a2b40368ed59fa37bcc70521ce4ef3e980fd"},
+    {"path": "run/stata/replicate_table3.do", "bytes": 1885, "sha256": "119926b8cba86012741d7cb0b5e7318a5683dd4eedccefc13f0708bfead57ca4"},
+    {"path": "run/stata/table3_results.csv", "bytes": 603, "sha256": "cbee1fde45ef060df21110710ebefd6fb8b893fc6d80590219455aeee45ae05f"},
+    {"path": "run/stata/STATA_COMPLETE.txt", "bytes": 10, "sha256": "5963977da4c2cb333a978aa0daa86f36234831cd8bc416443ca9087268bc8645"},
+    {"path": "run/python/replicate_table3.py", "bytes": 7717, "sha256": "25bf4085a67910465bf3aee423b8c7f58fff7d1364feaaa1b858c3234a9cf9a7"},
+    {"path": "run/python/table3_results.csv", "bytes": 774, "sha256": "4ece425c72d608e006fb3f485eecd05d7ce707815a6eccb51810fc112a3c44c4"},
+    {"path": "run/python/receipt.json", "bytes": 803, "sha256": "80b47d6e35316b2a9fe85e323a614e0a3af6f6419e73222a398fc86f8d40b4ff"}
+  ],
+  "limitations": [
+    "Only Table 3 columns 1-6 were executed and verified.",
+    "Numerical reproduction does not independently validate the IV exclusion restriction.",
+    "The general empirical request schema does not yet expose weighted IV as a reusable model type."
+  ]
+}

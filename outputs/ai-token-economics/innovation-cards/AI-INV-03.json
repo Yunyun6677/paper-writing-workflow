@@ -1,0 +1,54 @@
+{
+  "schema_version": "innovation-card/1.0",
+  "status": "potential-direction",
+  "novelty_scope": "仅依据本轮已核验语料和角色报告形成建议。最新推理市场与价格指数候选尚未完成全文核验；没有完成由角色2签署的针对本卡的反向检索，不称首次或确定创新。",
+  "reverse_search_status": "pending",
+  "feasibility_audit": "依据 role4-methods.md 第6及第8节作方案级约束；最终样本量、成本和合作可用性未获验证。",
+  "innovation_id": "AI-INV-03",
+  "rank": 3,
+  "title": "生成式AI预算与跨境信息任务：由任务实验走向贸易机制",
+  "type": "mechanism-clarification",
+  "gap": {
+    "statement": "已核验机器人GVC研究不能直接回答语言模型对跨境信息任务的影响；任务效果与出口效果之间仍需补充数据。"
+  },
+  "nearest_prior_work": [
+    "10.3386/w24254",
+    "10.3386/w28453",
+    "10.19581/j.cnki.ciejournal.2020.05.016"
+  ],
+  "map_node_ids": [
+    "F-GVC",
+    "D-DEVELOP",
+    "G-TRADE",
+    "G-GOV"
+  ],
+  "contribution": "先以多语商品描述、客户沟通、目标市场信息检索等低风险任务开展预算或访问实验，测量信息成本机制；具备合作企业后再连接真实订单、市场进入与服务出口。",
+  "expected_evidence": [
+    "效果可能随语言距离、初始语言技能及复核要求变化",
+    "任务效率改善并不保证订单、利润或出口增加"
+  ],
+  "data_requirements": [
+    "合成或脱敏跨境任务、模型版本、预算、token、盲评与人工复核",
+    "拓展阶段需真实企业使用日志、询盘/订单结果及可验证外生上线安排"
+  ],
+  "identification_strategy": "首阶段随机化任务访问/预算，估计信息任务的局部效应。企业阶段只在随机上线或可信准实验条件成立时讨论出口因果效应；普通采用面板只作相关性和扩散分析。",
+  "feasibility_constraints": [
+    "海关数据不覆盖多数数字服务；供应商国籍、计费主体、云位置、用户所在地必须分开",
+    "不能把调用海外模型直接认定为统计口径上的跨境服务进口",
+    "从跨境任务实验起步较可行，直接企业—海关联结对硕士阶段风险高"
+  ],
+  "reverse_search_queries": [
+    "generative AI translation exports randomized experiment trade costs",
+    "AI API usage firm exports digital services",
+    "生成式人工智能 跨境电商 翻译 出口 随机实验"
+  ],
+  "falsification": "若AI访问没有改善跨境任务质量或广义成本，则信息摩擦机制缺乏支持；即使任务有效，也须独立检验出口结果，不能自动外推。",
+  "scores": {
+    "originality": 2,
+    "importance": 5,
+    "evidence_support": 3,
+    "feasibility": 3,
+    "identification_credibility": 3,
+    "profile_fit": 5
+  }
+}

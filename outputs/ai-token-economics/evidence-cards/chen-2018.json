@@ -1,0 +1,54 @@
+{
+  "schema_version": "evidence-card/1.0",
+  "record_id": "10.19653/j.cnki.dbcjdxxb.2018.03.002",
+  "zotero_item_key": "IAX7E39S",
+  "bibtex_key": "chen2018",
+  "title": "人工智能与经济学：近期文献的一个综述",
+  "authors": [
+    "陈永伟"
+  ],
+  "year": 2018,
+  "venue": "东北财经大学学报 (3): 6-21",
+  "verification": {
+    "level": "claim-verified",
+    "sources": [
+      {
+        "type": "authoritative-bibliographic-record",
+        "url": "https://doi.org/10.19653/j.cnki.dbcjdxxb.2018.03.002",
+        "provenance": "role2 candidate ledger; retained checkpoint"
+      },
+      {
+        "type": "inspected-local-fulltext",
+        "path": "work/runs/ai-token-economics-v1/role2-fulltext/chen-2018-ai-economics-review.txt",
+        "inspected_sections": "一、引言末段；三、四部分"
+      }
+    ]
+  },
+  "research_question": "经济学如何把AI作为工具与研究对象？",
+  "method": {
+    "design": "叙述性文献综述",
+    "boundary": "限定于所列版本与定位；不将理论/模拟/综述当作生成式AI因果实证。"
+  },
+  "findings": [
+    {
+      "claim": "综述区分AI作为经济研究工具与作为研究议题，两种用途不应混为同一经济效应。",
+      "locator": "一、引言末段；三、四部分",
+      "evidence_kind": "text"
+    }
+  ],
+  "limitations": [
+    "不能将前生成式AI时代的机制证据直接外推为大模型的已实现效果。",
+    "本卡为有界续跑核验；未补造页码或未查验的量化系数。"
+  ],
+  "fulltext": {
+    "status": "local-only",
+    "inspected": true,
+    "path": "work/runs/ai-token-economics-v1/role2-fulltext/chen-2018-ai-economics-review.txt",
+    "source_url": "https://doi.org/10.19653/j.cnki.dbcjdxxb.2018.03.002"
+  },
+  "provenance": {
+    "role": "evidence-zotero-citation-curator",
+    "date": "2026-09-04",
+    "mode": "resume-existing-evidence-no-new-zotero-write"
+  }
+}

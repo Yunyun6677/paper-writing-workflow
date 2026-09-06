@@ -1,0 +1,42 @@
+{
+  "schema_version": "innovation-card/1.0",
+  "innovation_id": "INV-03",
+  "title": "自贸区政策组件与动态暴露：从政策包效应到可解释处理",
+  "type": "identification-contribution",
+  "status": "research-design extension—qualified by Role 2 reverse search",
+  "rank": 3,
+  "gap": {
+    "statement": "当前空间断点只能识别边界附近综合政策包效应，不能把它称为纯贸易效应，也不能解释贸易、投资、监管、产业、基础设施或行政协同中的哪一部分发挥作用。",
+    "supporting_evidence": ["10.3386/w23209", "10.18235/0011652"],
+    "contrary_evidence": []
+  },
+  "nearest_prior_work": ["Ye et al. (2026; provincial FTZ-governance multi-period DID precedent)", "FTZ collaborative-innovation SRD study (bibliographic and open-fulltext lead)", "Dippel et al. (2017/2018)", "Franco Chuaire et al. (2014)"],
+  "map_node_ids": ["exp_ftz_policy_bundle", "gap_treatment_mechanism_measurement", "innovation_policy_component"],
+  "contribution": "把自贸区的批准、实际实施、扩围与具体制度清单编码成时序和组件暴露，并结合边界、批次和产业联系，区分市场开放、政府执行与基础设施等政策成分。",
+  "expected_evidence": [
+    "若贸易渠道主导，效果应随村庄或家庭的可贸易行业暴露、出口联系和就业结构增强。",
+    "若行政／项目渠道主导，效果应随财政项目、基础设施和干部任务变化，而不必随贸易联系增强。",
+    "动态效应应在实际实施之后出现，政策前不存在趋势或伪断点。"
+  ],
+  "data_requirements": [
+    "每个自贸区批次的批准、挂牌、扩围和具体制度清单",
+    "精确边界、边界段、园区／开发区／行政区重叠和交通节点",
+    "村庄产业就业、企业海关或供应链暴露、财政项目与基础设施时序",
+    "政策前后至少两期基层参与或可比调查"
+  ],
+  "identification_strategy": "以分期实施事件研究识别动态约化效应，以空间边界设计识别局部差异，并按边界段和可贸易行业暴露预先定义三重差分。组件比较仅在同一批次内存在可辨识差异时进行；报告边界段固定效应、伪断点、donut RD、政策前协变量连续性、空间 HAC／村级聚类和溢出缓冲带。",
+  "feasibility_constraints": [
+    "多个政策组件常同时实施，弱成分变异会造成不可识别或多重共线。",
+    "CFPS／CGSS 等调查的跨期地址和样本量可能不足以支持边界×批次×产业的交互。",
+    "企业海关数据、村级项目时序和高精度坐标可能存在获取权限。",
+    "边界沿开发区或行政区设置时，处理连续性假设尤其脆弱。"
+  ],
+  "reverse_search_queries": [
+    "China pilot free trade zone political participation local governance event study boundary discontinuity",
+    "China free trade zones state capacity local government policy experimentation rural",
+    "自贸试验区 基层治理 政治参与 空间断点 分期 双重差分"
+  ],
+  "novelty_scope": "Role 2 于 2026-09-03 的反向检索确认：自贸区多期 DID、自贸区精确边界 SRD、开放试点边界 SRD 以及自贸区—地方治理质量均已有先例；仅未检出把分期、精确边界和政策组件同时用于村级治理／基层政治参与的研究。因此这是一项结果层级与识别整合的设计扩展，不是方法首创。",
+  "falsification": "若效应在批准前已经出现、由少数重叠开发区边界驱动、在剔除行政边界和交通节点后消失，或无法把任何组件暴露与结果联系起来，则不能声称识别政策组件或动态贸易机制。",
+  "scores": {"originality": 3, "importance": 5, "evidence_support": 3, "feasibility": 3, "identification_credibility": 4, "profile_fit": 5}
+}

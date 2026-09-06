@@ -1,0 +1,56 @@
+{
+  "schema_version": "evidence-card/1.0",
+  "record_id": "nber-chapter-c14015",
+  "zotero_item_key": null,
+  "bibtex_key": "aghionjonesjones2019",
+  "title": "Artificial Intelligence and Economic Growth",
+  "authors": [
+    "Philippe Aghion",
+    "Benjamin F. Jones",
+    "Charles I. Jones"
+  ],
+  "year": 2019,
+  "venue": "The Economics of Artificial Intelligence: An Agenda, University of Chicago Press, pp. 237-282",
+  "verification": {
+    "level": "claim-verified",
+    "sources": [
+      {
+        "type": "authoritative-bibliographic-record",
+        "url": "https://www.nber.org/chapters/c14015",
+        "provenance": "role2 candidate ledger; retained checkpoint"
+      },
+      {
+        "type": "inspected-local-fulltext",
+        "path": "work/runs/ai-token-economics-v1/benchmark-fulltext/aghion-jones-jones-2019.txt",
+        "inspected_sections": "出版章节§9.4的Bottlenecks讨论、§9.7 Conclusion"
+      }
+    ]
+  },
+  "research_question": "AI如何改变增长与思想生产？",
+  "method": {
+    "design": "理论模型和情景分析",
+    "boundary": "限定于所列版本与定位；不将理论/模拟/综述当作生成式AI因果实证。"
+  },
+  "findings": [
+    {
+      "claim": "自动化是否带来增长加速取决于必要投入和思想生产瓶颈；不能由机器能力直接推出增长奇点。",
+      "locator": "出版章节§9.4的Bottlenecks讨论、§9.7 Conclusion",
+      "evidence_kind": "text"
+    }
+  ],
+  "limitations": [
+    "不能将前生成式AI时代的机制证据直接外推为大模型的已实现效果。",
+    "本卡为有界续跑核验；未补造页码或未查验的量化系数。"
+  ],
+  "fulltext": {
+    "status": "local-only",
+    "inspected": true,
+    "path": "work/runs/ai-token-economics-v1/role2-fulltext/aghion-jones-jones-2019.pdf",
+    "source_url": "https://www.nber.org/chapters/c14015"
+  },
+  "provenance": {
+    "role": "evidence-zotero-citation-curator",
+    "date": "2026-09-04",
+    "mode": "resume-existing-evidence-no-new-zotero-write"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "literature-workflow/1.0",
+  "type": "object",
+  "required": ["schema_version", "run_id", "created_at", "request", "candidates", "decisions", "imports", "errors", "next_stage_input"],
+  "properties": {
+    "schema_version": {"const": "literature-workflow/1.0"},
+    "run_id": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "request": {"type": "object"},
+    "search_plan": {"type": "object"},
+    "candidates": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "decisions": {"type": "array"},
+    "imports": {"type": "array"},
+    "errors": {"type": "array"},
+    "next_stage_input": {"type": "object"}
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "required": ["record_id", "title", "authors", "provenance", "screening_decision", "import_status"],
+      "properties": {
+        "record_id": {"type": "string"},
+        "zotero_item_key": {"type": ["string", "null"]},
+        "bibtex_key": {"type": ["string", "null"]},
+        "title": {"type": "string"},
+        "authors": {"type": "array", "items": {"type": "string"}},
+        "year": {"type": ["integer", "null"]},
+        "publication": {"type": "string"},
+        "doi": {"type": "string"},
+        "url": {"type": "string"},
+        "abstract": {"type": "string"},
+        "research_fields": {"type": "array", "items": {"type": "string"}},
+        "methods": {"type": "array", "items": {"type": "string"}},
+        "regions": {"type": "array", "items": {"type": "string"}},
+        "keywords": {"type": "array", "items": {"type": "string"}},
+        "relevance_score": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "quality_score": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "duplicate_status": {"enum": ["unchecked", "unique", "probable-duplicate", "duplicate"]},
+        "screening_decision": {"enum": ["pending", "include", "exclude", "manual-review"]},
+        "screening_reason": {"type": "string"},
+        "target_collections": {"type": "array", "items": {"type": "string"}},
+        "import_status": {"enum": ["not-imported", "queued", "created", "updated", "skipped", "failed"]},
+        "attachment_status": {"enum": ["unknown", "metadata-only", "indexed-fulltext", "unindexed-file", "open-access-available", "access-restricted"]},
+        "provenance": {"type": "array", "items": {"type": "object"}, "minItems": 1}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

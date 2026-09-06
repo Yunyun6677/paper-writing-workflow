@@ -1,0 +1,22 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema", "type":"object", "additionalProperties":false,
+ "required":["schema_version","project_id","run_id","question","sensitivity","inputs","models"],
+ "properties":{
+  "schema_version":{"const":"empirical-request/1.0"},
+  "project_id":{"type":"string","minLength":1}, "run_id":{"$ref":"#/$defs/id"},
+  "parent_run_id":{"type":["string","null"]}, "literature_project_id":{"type":["string","null"]},
+  "question":{"type":"string","minLength":1}, "sensitivity":{"enum":["synthetic","public","restricted"]},
+  "engines":{"type":"array","minItems":1,"uniqueItems":true,"items":{"enum":["python","stata"]}},
+  "inputs":{"type":"array","minItems":1,"items":{"type":"object","additionalProperties":false,"required":["path"],"properties":{
+   "path":{"type":"string","minLength":1},"sheet":{"type":"string"},"encoding":{"type":"string"},"dtypes":{"type":"object","additionalProperties":{"type":"string"}},"primary_key":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string"}},
+   "merge":{"type":"object","additionalProperties":false,"required":["on","validate"],"properties":{"on":{"type":"array","minItems":1,"items":{"type":"string"}},"validate":{"enum":["one_to_one","many_to_one"]}}}
+  }}},
+  "missing_codes":{"type":"object","additionalProperties":{"type":"array","items":{"type":["string","number"]}}},
+  "filters":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["column","op","values"],"properties":{"column":{"type":"string"},"op":{"enum":["keep","drop"]},"values":{"type":"array","items":{"type":["string","number","boolean"]}}}}},
+  "models":{"type":"array","minItems":1,"maxItems":30,"items":{"type":"object","additionalProperties":false,"required":["spec_id","purpose","rationale","outcome","regressors","covariance"],"properties":{
+   "spec_id":{"$ref":"#/$defs/id"},"purpose":{"enum":["primary","robustness","exploratory"]},"rationale":{"type":"string","minLength":1},"outcome":{"type":"string"},
+   "regressors":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string"}},"fixed_effects":{"type":"array","uniqueItems":true,"items":{"type":"string"}},
+   "covariance":{"enum":["HC1","HC3","cluster"]},"cluster":{"type":"string"}
+  },"allOf":[{"if":{"properties":{"covariance":{"const":"cluster"}}},"then":{"required":["cluster"]}}]}}
+ },"$defs":{"id":{"type":"string","pattern":"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"}}
+}

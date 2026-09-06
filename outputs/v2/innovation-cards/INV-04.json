@@ -1,0 +1,24 @@
+{
+  "schema_version": "innovation-card/1.0",
+  "innovation_id": "INV-04",
+  "title": "迁移条件下的制度可及性：远程、代理与返乡投票安排",
+  "type": "mechanism-clarification",
+  "status": "potential direction pending Role 2 reverse search",
+  "rank": 4,
+  "gap": {
+    "statement": "迁移与投票缺口已有相邻证据，但尚未在开放冲击设计中区分缺席成本、主动弃权与村庄组织动员。",
+    "supporting_evidence": ["stanford:pang-rozelle-2007-vote-confidence", "10.1080/1369183X.2026.2621838"],
+    "contrary_evidence": ["10.1525/as.2014.54.6.1009"]
+  },
+  "nearest_prior_work": ["Pang and Rozelle (2007)", "Zhang, Zheng and Zhang (2026)", "Pang, Zeng and Rozelle (2014)"],
+  "map_node_ids": ["mech_resident_resources", "cond_access_procedure", "outcome_reported_vote"],
+  "contribution": "识别开放引致迁移后，投票变化究竟来自物理缺席、程序限制、主动政治疏离还是村级组织动员不足，并评估代理、远程通知或返乡安排能否缓冲。",
+  "expected_evidence": ["物理缺席机制要求实际迁移时点与选举日重合。", "主动弃权机制要求即便在村或可代理投票仍选择不参加。", "组织动员机制要求通知、联络和程序便利度调节迁移者投票。"],
+  "data_requirements": ["选举日期、迁移日历、返乡记录和代理投票程序", "村干部通知方式、联络频次和候选竞争", "迁移者与非迁移者的可比基线"],
+  "identification_strategy": "利用选举日与迁移时点的相对时间、村级程序差异及外生就业暴露构造预注册异质性；若程序安排存在准随机或分期变化，可使用事件研究或工具变量。没有外生程序变化时只报告描述性机制分解。",
+  "feasibility_constraints": ["选举日和迁移日历可能难以回溯", "代理投票常与正式规则和实际操作不一致", "现有工作稿的‘选举日是否在村’单题不足以排除迁移机制"],
+  "reverse_search_queries": ["migrant proxy voting village elections China mobilization", "return migrants abstention village committee election China", "外出务工 代理投票 村委会选举 动员"],
+  "novelty_scope": "截至 2026-09-03 的全文集合；已有迁移—投票研究，因此创新只能建立在开放冲击和制度缓冲的交互上。",
+  "falsification": "若投票缺口与迁移时点、在场状态、程序便利度或动员均无系统关系，则迁移可及性机制不成立。",
+  "scores": {"originality": 3, "importance": 4, "evidence_support": 4, "feasibility": 3, "identification_credibility": 3, "profile_fit": 5}
+}

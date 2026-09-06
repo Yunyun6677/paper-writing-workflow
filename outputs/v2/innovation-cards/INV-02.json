@@ -1,0 +1,41 @@
+{
+  "schema_version": "innovation-card/1.0",
+  "innovation_id": "INV-02",
+  "title": "居民资源—组织资源双通道的可区分检验",
+  "type": "theory-integration",
+  "status": "innovation candidate—qualified by Role 2 reverse search",
+  "rank": 2,
+  "gap": {
+    "statement": "开放进入农村的居民侧证据集中于就业、迁移与收入，农村治理证据集中于国家能力、事实权力和公共品；目前尚缺同一设计区分两类通道如何共同塑造参与渠道。",
+    "supporting_evidence": ["cn:chen-binkai-2020-trade-rural-poverty", "10.1257/aer.20181249", "10.1016/j.jpubeco.2003.07.004"],
+    "contrary_evidence": ["10.3386/w23209"]
+  },
+  "nearest_prior_work": ["陈思宇、陈斌开 (2020)", "Martinez-Bravo et al. (2022)", "Dippel et al. (2017/2018)", "Ye et al. (2026; provincial FTZ-governance precedent)"],
+  "map_node_ids": ["mech_resident_resources", "mech_local_org_resources", "gap_cross_field_chain", "innovation_dual_channel"],
+  "contribution": "把贸易政治经济学的劳动力市场调整与中国农村治理的国家能力—自治关系置于同一理论框架，用可区分指标检验开放政策究竟主要改变居民的时间空间资源、组织的财政与执行资源，还是二者交互。",
+  "expected_evidence": [
+    "居民侧通道成立时，效应应随实际就业／通勤／迁移暴露和选举时点在场条件系统异质，而不是仅随公共品改善变化。",
+    "组织侧通道成立时，会议供给、项目资金来源、干部任务和客观决策权限应在边界处变化，并预测渠道效能。",
+    "若两通道交互，居民迁移对投票的影响应受村级组织动员或远程／代理投票安排调节。"
+  ],
+  "data_requirements": [
+    "个人就业行业、通勤、迁移时长和目的地、收入及社会网络",
+    "村级财政、上级项目、会议召开、干部编制、签批权、一肩挑和政策任务",
+    "政策实施前指标或可追溯的行政时序数据"
+  ],
+  "identification_strategy": "主效应仍限定为自贸区政策包的边界局部约化效应；通过预定异质暴露、政策组件和客观的村级供给结果检验两类通道。除非获得独立工具、随机化或明确时序，不把政策后变量控制回归解释为因果中介；可在有重复期数据时使用分期处理事件研究和 causal mediation sensitivity 作为补充而非替代。",
+  "feasibility_constraints": [
+    "现有道路、垃圾处理和权威认知不能分别替代组织能力与客观权力。",
+    "村级财政和会议档案的可得性可能决定项目能否落地。",
+    "边界两侧通勤与项目溢出会使二元处理解释失真。",
+    "必须先通过预处理连续性、边界重叠、空间排序和空间相关审计。"
+  ],
+  "reverse_search_queries": [
+    "trade openness state capacity local political participation rural China migration village governance",
+    "free trade zone rural governance village election participation China",
+    "贸易开放 自贸区 农村 基层组织 村民政治参与 迁移 财政"
+  ],
+  "novelty_scope": "Role 2 于 2026-09-03 的定向反向检索未发现贸易／自贸区冲击下同一村级设计同时区分居民资源与组织资源并连接基层参与；但 Ye et al. (2026) 已研究自贸区与省级地方治理质量。因此候选的新颖性只在‘村级双通道的可区分检验’，不能声称首次把自贸区与治理能力联系起来。",
+  "falsification": "若加入更直接的居民与组织指标后，两组指标均不在政策边界处变化，或其异质性与投票、会议各层结果无预注册的一致关系，则双通道解释被否定，主结果只能保留为政策包的未分解约化效应。",
+  "scores": {"originality": 4, "importance": 5, "evidence_support": 4, "feasibility": 3, "identification_credibility": 3, "profile_fit": 5}
+}

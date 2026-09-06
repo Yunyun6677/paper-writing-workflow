@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "literature-map/1.0",
+  "type": "object",
+  "required": ["schema_version", "map_id", "research_question", "nodes", "edges", "caption"],
+  "properties": {
+    "schema_version": {"const": "literature-map/1.0"},
+    "map_id": {"type": "string", "minLength": 1},
+    "research_question": {"type": "string", "minLength": 5},
+    "caption": {"type": "string", "minLength": 5},
+    "nodes": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "type", "lane", "status"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1},
+          "type": {"enum": ["research-question", "concept", "theory", "exposure", "mechanism", "condition", "finding", "outcome", "context", "method", "debate", "gap", "innovation"]},
+          "lane": {"type": "integer", "minimum": 0},
+          "record_ids": {"type": "array", "items": {"type": "string"}},
+          "locators": {"type": "array", "items": {"type": "string"}},
+          "status": {"enum": ["established", "contested", "gap", "proposed"]},
+          "confidence": {"enum": ["low", "medium", "high"]}
+        },
+        "additionalProperties": true
+      }
+    },
+    "edges": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["id", "source", "target", "relation", "record_ids", "evidence_status", "confidence", "rationale"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "source": {"type": "string"},
+          "target": {"type": "string"},
+          "relation": {"enum": ["defines", "operationalizes", "explains", "causes", "mediates", "moderates", "supports", "contradicts", "extends", "applies-to", "tested-by", "limited-by", "reveals-gap", "motivates"]},
+          "record_ids": {"type": "array", "items": {"type": "string"}},
+          "locators": {"type": "array", "items": {"type": "string"}},
+          "evidence_status": {"enum": ["direct", "synthesized", "inferred"]},
+          "confidence": {"enum": ["low", "medium", "high"]},
+          "rationale": {"type": "string", "minLength": 3}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": true
+}

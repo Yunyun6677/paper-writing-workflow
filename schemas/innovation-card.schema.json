@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "innovation-card/1.0",
+  "type": "object",
+  "required": ["schema_version", "innovation_id", "title", "type", "gap", "nearest_prior_work", "contribution", "falsification", "scores"],
+  "properties": {
+    "schema_version": {"const": "innovation-card/1.0"},
+    "innovation_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 3},
+    "type": {"enum": ["incremental-extension", "mechanism-clarification", "measurement-contribution", "identification-contribution", "theory-integration", "new-domain-application"]},
+    "gap": {"type": "object"},
+    "nearest_prior_work": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "map_node_ids": {"type": "array", "items": {"type": "string"}},
+    "contribution": {"type": "string", "minLength": 10},
+    "expected_evidence": {"type": "array", "items": {"type": "string"}},
+    "data_requirements": {"type": "array", "items": {"type": "string"}},
+    "identification_strategy": {"type": "string"},
+    "feasibility_constraints": {"type": "array", "items": {"type": "string"}},
+    "reverse_search_queries": {"type": "array", "items": {"type": "string"}},
+    "novelty_scope": {"type": "string"},
+    "falsification": {"type": "string", "minLength": 10},
+    "scores": {
+      "type": "object",
+      "required": ["originality", "importance", "evidence_support", "feasibility", "identification_credibility", "profile_fit"],
+      "properties": {
+        "originality": {"type": "integer", "minimum": 1, "maximum": 5},
+        "importance": {"type": "integer", "minimum": 1, "maximum": 5},
+        "evidence_support": {"type": "integer", "minimum": 1, "maximum": 5},
+        "feasibility": {"type": "integer", "minimum": 1, "maximum": 5},
+        "identification_credibility": {"type": "integer", "minimum": 1, "maximum": 5},
+        "profile_fit": {"type": "integer", "minimum": 1, "maximum": 5}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

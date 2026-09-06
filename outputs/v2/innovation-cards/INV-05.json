@@ -1,0 +1,24 @@
+{
+  "schema_version": "innovation-card/1.0",
+  "innovation_id": "INV-05",
+  "title": "治理能力—自治替代：用客观权力与财政流替代主观权威认知",
+  "type": "theory-integration",
+  "status": "potential direction pending Role 2 reverse search",
+  "rank": 5,
+  "gap": {
+    "statement": "国家能力与村庄自治的替代关系具有理论和历史证据，但工作稿仅观察主观‘一把手’认知和公共品结果，不能证明客观权力或组织能力变化。",
+    "supporting_evidence": ["10.1257/aer.20181249", "10.1016/j.jpubeco.2003.07.004"],
+    "contrary_evidence": ["10.1017/S0003055407070153", "10.1017/S0003055415000155"]
+  },
+  "nearest_prior_work": ["Martinez-Bravo et al. (2022)", "Zhang et al. (2004)", "Tsai (2007)", "Xu and Yao (2015)"],
+  "map_node_ids": ["mech_local_org_resources", "cond_election_function", "cond_org_resource_source"],
+  "contribution": "直接测量党组织、村委会和上级政府在项目、预算、人事、会议召集与签批中的事实权力，检验开放政策带来的治理资源是否替代自治问责或与非正式组织互补。",
+  "expected_evidence": ["组织侧替代要求上级或党组织控制的财政和签批权上升，并伴随选举渠道效能下降。", "互补机制则预测公共资源增加同时提升村委会问责、信息与参与质量。"],
+  "data_requirements": ["村级预算、项目资金来源和签批记录", "一肩挑、干部任命、会议召集与议事规则", "党组织、村委会和宗族／协会的成员及项目网络"],
+  "identification_strategy": "在明确政策时序后，将客观组织结果作为单独约化式结果，使用边界或分期政策变异；只有在存在独立外生组织冲击时才识别中介。使用网络和财政数据区分行政执行、正式问责和集体融资。",
+  "feasibility_constraints": ["村级财政和权力记录不易标准化或获得", "政治敏感数据需严格伦理和隐私治理", "自贸区与组织安排可能共同受地方发展战略驱动", "客观权力变化可能慢于当前调查观察窗"],
+  "reverse_search_queries": ["China village party branch village committee fiscal authority free trade zone", "state capacity village autonomy China policy zones", "自贸区 村党组织 村委会 财政 权力 基层治理"],
+  "novelty_scope": "截至 2026-09-03 的已核验全文；国家能力—自治不是新命题，潜在贡献只在于把它与开放政策及客观村级资源流相连。",
+  "falsification": "若政策边界处不存在客观预算、签批、召集权或干部安排变化，或这些变化不与参与渠道效能共同演化，则不能把主观权威认知解释为治理能力—自治替代。",
+  "scores": {"originality": 3, "importance": 5, "evidence_support": 4, "feasibility": 2, "identification_credibility": 3, "profile_fit": 5}
+}

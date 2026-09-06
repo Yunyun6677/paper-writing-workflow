@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-request/1.0",
+  "type": "object",
+  "required": ["schema_version", "request_id", "research_question", "languages", "sources"],
+  "properties": {
+    "schema_version": {"const": "research-request/1.0"},
+    "request_id": {"type": "string", "minLength": 1},
+    "research_question": {"type": "string", "minLength": 5},
+    "concepts": {"type": "array", "items": {"type": "string"}},
+    "date_range": {
+      "type": "object",
+      "properties": {"from": {"type": ["integer", "null"]}, "to": {"type": ["integer", "null"]}},
+      "additionalProperties": false
+    },
+    "languages": {"type": "array", "items": {"enum": ["zh-CN", "en"]}, "minItems": 1},
+    "sources": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "target_collection": {"type": "string"},
+    "max_results_per_source": {"type": "integer", "minimum": 1, "maximum": 500},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": false
+}

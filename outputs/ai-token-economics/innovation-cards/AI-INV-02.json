@@ -1,0 +1,52 @@
+{
+  "schema_version": "innovation-card/1.0",
+  "status": "potential-direction",
+  "novelty_scope": "仅依据本轮已核验语料和角色报告形成建议。最新推理市场与价格指数候选尚未完成全文核验；没有完成由角色2签署的针对本卡的反向检索，不称首次或确定创新。",
+  "reverse_search_status": "pending",
+  "feasibility_audit": "依据 role4-methods.md 第6及第8节作方案级约束；最终样本量、成本和合作可用性未获验证。",
+  "innovation_id": "AI-INV-02",
+  "rank": 2,
+  "title": "中文真实任务的质量调整推理成本面板",
+  "type": "measurement-contribution",
+  "gap": {
+    "statement": "token标价不是买方达标任务成本。本轮尚不能确认现有价格指数已覆盖中文任务复核和错误成本。"
+  },
+  "nearest_prior_work": [
+    "nber-chapter-c14017",
+    "10.1257/mac.20180386"
+  ],
+  "map_node_ids": [
+    "C-TOKEN",
+    "C-GCOST",
+    "G-PRICE",
+    "G-MARKET"
+  ],
+  "contribution": "构建固定中文任务篮子，将API费用与重试、人工复核和延迟联合记录，形成可复核的任务成本面板。测量增量需与新近价格指数全文对照，不能称首个AI价格指数。",
+  "expected_evidence": [
+    "原始token单价与达标任务成本排序可能不同",
+    "价格、模型质量与人工复核贡献可以分解"
+  ],
+  "data_requirements": [
+    "固定任务版本和权重、模型/版本/时间、真实价格、分项token与调用",
+    "多次重复测量、盲评一致性、复核分钟、延迟、失败任务"
+  ],
+  "identification_strategy": "定位测量论文。按固定任务计算总资源成本除以达标任务数，并同时报告失败率及质量分布，避免只筛选成功样本；比较匹配模型与质量调整指数，检验模型进入退出和任务权重。",
+  "feasibility_constraints": [
+    "小规模多模型任务面板可自主建立，但持续费用、评分劳务和模型漂移须试算",
+    "错误损失难货币化，应分别呈现真实观测与情景参数；禁止把假设损失当实测"
+  ],
+  "reverse_search_queries": [
+    "\"quality-adjusted\" \"AI\" \"price index\"",
+    "\"inference\" \"task cost\" human review economics",
+    "大模型 质量调整 价格指数 人工复核"
+  ],
+  "falsification": "若加入复核、失败和质量控制后排序及趋势不变，测量增量可能较小；应报告稳定性而非强造新结论。",
+  "scores": {
+    "originality": 2,
+    "importance": 4,
+    "evidence_support": 4,
+    "feasibility": 4,
+    "identification_credibility": 3,
+    "profile_fit": 5
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "evidence-card/1.0",
+  "record_id": "nber-chapter-c14018",
+  "zotero_item_key": null,
+  "bibtex_key": "korinekstiglitz2019",
+  "title": "Artificial Intelligence and Its Implications for Income Distribution and Unemployment",
+  "authors": [
+    "Anton Korinek",
+    "Joseph E. Stiglitz"
+  ],
+  "year": 2019,
+  "venue": "The Economics of Artificial Intelligence: An Agenda, University of Chicago Press, pp. 349-390",
+  "verification": {
+    "level": "claim-verified",
+    "sources": [
+      {
+        "type": "authoritative-bibliographic-record",
+        "url": "https://www.nber.org/chapters/c14018",
+        "provenance": "role2 candidate ledger; retained checkpoint"
+      },
+      {
+        "type": "inspected-local-fulltext",
+        "path": "work/runs/ai-token-economics-v1/benchmark-fulltext/korinek-stiglitz-2019-distribution.txt",
+        "inspected_sections": "出版章节§14.7 Conclusions"
+      }
+    ]
+  },
+  "research_question": "劳动替代技术如何影响分配和福利？",
+  "method": {
+    "design": "理论福利与政策分析",
+    "boundary": "限定于所列版本与定位；不将理论/模拟/综述当作生成式AI因果实证。"
+  },
+  "findings": [
+    {
+      "claim": "劳动替代技术若缺少保险与再分配，可能使工人的绝对福利下降；总收益不能保证帕累托改善。",
+      "locator": "出版章节§14.7 Conclusions",
+      "evidence_kind": "text"
+    }
+  ],
+  "limitations": [
+    "不能将前生成式AI时代的机制证据直接外推为大模型的已实现效果。",
+    "本卡为有界续跑核验；未补造页码或未查验的量化系数。"
+  ],
+  "fulltext": {
+    "status": "local-only",
+    "inspected": true,
+    "path": "work/runs/ai-token-economics-v1/role2-fulltext/korinek-stiglitz-2019-distribution.pdf",
+    "source_url": "https://www.nber.org/chapters/c14018"
+  },
+  "provenance": {
+    "role": "evidence-zotero-citation-curator",
+    "date": "2026-09-04",
+    "mode": "resume-existing-evidence-no-new-zotero-write"
+  }
+}

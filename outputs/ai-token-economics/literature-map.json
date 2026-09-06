@@ -1,0 +1,797 @@
+{
+  "schema_version": "literature-map/1.0",
+  "map_id": "ai-token-economics-v1-final",
+  "research_question": "人工智能经济学如何从算力与模型能力，经 token 化推理投入和真实采用，传导至劳动、企业、市场与宏观结果？",
+  "caption": "实线表示文献内关系或跨文献归纳，虚线表示综述提出的待检验联系；黄色是本轮语料的证据边界，并非全学界空白。研究方案另见独立报告。",
+  "nodes": [
+    {
+      "id": "RQ",
+      "label": "AI 与 token 化推理如何产生经济后果？",
+      "type": "research-question",
+      "lane": 0,
+      "record_ids": [],
+      "locators": [
+        "project-brief.md"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "T-TASK",
+      "label": "[成熟理论] 任务替代、增强与新任务",
+      "type": "theory",
+      "lane": 0,
+      "record_ids": [
+        "10.1257/aer.20160696"
+      ],
+      "locators": [
+        "Acemoglu & Restrepo 2018, §§2–4, 6"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "T-GPT",
+      "label": "[成熟理论] GPT 与无形互补资产",
+      "type": "theory",
+      "lane": 0,
+      "record_ids": [
+        "10.1257/mac.20180386"
+      ],
+      "locators": [
+        "Brynjolfsson, Rock & Syverson, §§II–III, VIII"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "T-STACK",
+      "label": "[框架延伸] 算力—模型—API 产业层级",
+      "type": "theory",
+      "lane": 0,
+      "record_ids": [
+        "nber-chapter-c14017",
+        "10.3386/w24254"
+      ],
+      "locators": [
+        "Varian 2019, §§16.2–16.6",
+        "Goldfarb & Trefler 2019, §§2–4"
+      ],
+      "status": "proposed",
+      "confidence": "medium"
+    },
+    {
+      "id": "C-TOKEN",
+      "label": "Token是模型特定单位，并非同质产出",
+      "type": "concept",
+      "lane": 1,
+      "record_ids": [
+        "nber-chapter-c14017",
+        "10.1257/mac.20180386"
+      ],
+      "locators": [
+        "Varian 2019 §§16.2–16.6；Brynjolfsson, Rock & Syverson 2021 §§II–III；角色3 §5、角色4 §6的测量推演（非原文token结论）"
+      ],
+      "status": "contested",
+      "confidence": "medium",
+      "evidence_status": "inferred"
+    },
+    {
+      "id": "C-GCOST",
+      "label": "[综述测量建议] 达标任务的广义成本",
+      "type": "concept",
+      "lane": 1,
+      "record_ids": [
+        "10.1257/mac.20180386",
+        "nber-chapter-c14017"
+      ],
+      "locators": [
+        "role3-theory.md §5.2 synthesis",
+        "role4-methods.md §6.1"
+      ],
+      "status": "proposed",
+      "confidence": "medium"
+    },
+    {
+      "id": "G-PRICE",
+      "label": "待补证：token 价格到达标任务成本的可识别桥梁",
+      "type": "gap",
+      "lane": 1,
+      "record_ids": [
+        "nber-chapter-c14017",
+        "10.1257/mac.20180386"
+      ],
+      "locators": [
+        "Varian 2019 §§16.2–16.6；Brynjolfsson, Rock & Syverson 2021 §§II–III；角色3 §5、角色4 §6的测量推演（非原文token结论）"
+      ],
+      "status": "gap",
+      "confidence": "medium",
+      "scope": "仅指本轮已核验语料，未完成系统反向检索；研究方向单独输出。",
+      "evidence_status": "inferred"
+    },
+    {
+      "id": "C-CHAIN",
+      "label": "能力 → 暴露 → 采用 → 真实使用",
+      "type": "concept",
+      "lane": 2,
+      "record_ids": [
+        "10.3386/w32966",
+        "10.3386/w33777"
+      ],
+      "locators": [
+        "Bick et al. 2024, abstract and pp.3–4",
+        "Humlum & Vestergaard 2026 revision, pp.2–6"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "F-ADOPTION",
+      "label": "[描述证据] 生成式 AI 采用迅速但强度分化",
+      "type": "finding",
+      "lane": 2,
+      "record_ids": [
+        "10.3386/w32966"
+      ],
+      "locators": [
+        "Bick et al. 2024, abstract and pp.3–4"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "F-ORGCOMP",
+      "label": "[观察证据] 组织支持与使用深度相关",
+      "type": "finding",
+      "lane": 2,
+      "record_ids": [
+        "10.3386/w33777",
+        "10.1257/mac.20180386"
+      ],
+      "locators": [
+        "Humlum & Vestergaard 2026 revision, pp.2–4",
+        "Productivity J-Curve, §§II–III"
+      ],
+      "status": "established",
+      "confidence": "medium"
+    },
+    {
+      "id": "G-USE",
+      "label": "待补证：暴露和许可证不能替代任务级真实使用",
+      "type": "gap",
+      "lane": 2,
+      "record_ids": [
+        "10.3386/w32966",
+        "10.3386/w33777"
+      ],
+      "locators": [
+        "Bick et al. 2024, §§2–5",
+        "Humlum & Vestergaard 2026 revision, pp.3–7"
+      ],
+      "status": "gap",
+      "confidence": "medium",
+      "scope": "仅指本轮已核验语料，未完成系统反向检索；研究方向单独输出。"
+    },
+    {
+      "id": "F-PROD",
+      "label": "[现场准实验] 客服流程短期效率提高",
+      "type": "finding",
+      "lane": 3,
+      "record_ids": [
+        "10.1093/qje/qjae044"
+      ],
+      "locators": [
+        "Brynjolfsson, Li & Raymond 2025, abstract and pp.1–3"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "F-HET",
+      "label": "[现场准实验] 收益因基线技能和任务而异",
+      "type": "finding",
+      "lane": 3,
+      "record_ids": [
+        "10.1093/qje/qjae044"
+      ],
+      "locators": [
+        "Brynjolfsson, Li & Raymond 2025, pp.1–4"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "F-REORG",
+      "label": "[DiD] 任务重组与短期工资工时稳定并存",
+      "type": "finding",
+      "lane": 3,
+      "record_ids": [
+        "10.3386/w33777"
+      ],
+      "locators": [
+        "Humlum & Vestergaard 2026 revision, abstract and pp.2–6"
+      ],
+      "status": "established",
+      "confidence": "medium"
+    },
+    {
+      "id": "G-FIRM",
+      "label": "待补证：企业采用的长期因果回报与组织机制",
+      "type": "gap",
+      "lane": 3,
+      "record_ids": [
+        "10.1093/qje/qjae044",
+        "10.3386/w33777"
+      ],
+      "locators": [
+        "single-firm and early-horizon limitations in evidence cards"
+      ],
+      "status": "gap",
+      "confidence": "medium",
+      "scope": "仅指本轮已核验语料，未完成系统反向检索；研究方向单独输出。"
+    },
+    {
+      "id": "T-IO",
+      "label": "[成熟理论] 规模经济、差异化、锁定与纵向一体化",
+      "type": "theory",
+      "lane": 4,
+      "record_ids": [
+        "nber-chapter-c14017",
+        "10.3386/w24254"
+      ],
+      "locators": [
+        "Varian 2019, §§16.2–16.6",
+        "Goldfarb & Trefler 2019, §§2–4"
+      ],
+      "status": "established",
+      "confidence": "medium"
+    },
+    {
+      "id": "G-MARKET",
+      "label": "待补证：价格、质量、需求与集中度",
+      "type": "gap",
+      "lane": 4,
+      "record_ids": [
+        "nber-chapter-c14017",
+        "10.1257/mac.20180386"
+      ],
+      "locators": [
+        "Varian 2019 §§16.2–16.6；Brynjolfsson, Rock & Syverson 2021 §§II–III；角色3 §5、角色4 §6的测量推演（非原文token结论）"
+      ],
+      "status": "gap",
+      "confidence": "medium",
+      "scope": "仅指本轮已核验语料，未完成系统反向检索；研究方向单独输出。",
+      "evidence_status": "inferred"
+    },
+    {
+      "id": "F-JCURVE",
+      "label": "[理论+测量] 互补投资形成生产率 J 曲线",
+      "type": "finding",
+      "lane": 5,
+      "record_ids": [
+        "10.1257/mac.20180386"
+      ],
+      "locators": [
+        "Brynjolfsson, Rock & Syverson, §§II–III, VIII"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "D-MACRO",
+      "label": "[校准] 十年宏观增益可能温和且假设敏感",
+      "type": "debate",
+      "lane": 5,
+      "record_ids": [
+        "10.1093/epolic/eiae042",
+        "nber-chapter-c14015"
+      ],
+      "locators": [
+        "Acemoglu 2025, abstract and §§3–4",
+        "Aghion, Jones & Jones 2019, §§2–3, 7"
+      ],
+      "status": "contested",
+      "confidence": "medium"
+    },
+    {
+      "id": "D-DISTRIB",
+      "label": "[理论/校准] 产出增加不等于劳动者普遍受益",
+      "type": "debate",
+      "lane": 5,
+      "record_ids": [
+        "nber-chapter-c14018",
+        "10.1093/epolic/eiae042",
+        "10.3386/w33777"
+      ],
+      "locators": [
+        "Korinek & Stiglitz 2019, §§14.2–14.7",
+        "Acemoglu 2025, inequality analysis",
+        "Humlum & Vestergaard, pp.3–6"
+      ],
+      "status": "contested",
+      "confidence": "high"
+    },
+    {
+      "id": "F-GVC",
+      "label": "[企业面板] 机器人暴露与中国企业 GVC 参与",
+      "type": "finding",
+      "lane": 6,
+      "record_ids": [
+        "10.19581/j.cnki.ciejournal.2020.05.016"
+      ],
+      "locators": [
+        "吕越、谷玮、包群 2020, §§3–6"
+      ],
+      "status": "established",
+      "confidence": "medium"
+    },
+    {
+      "id": "D-DEVELOP",
+      "label": "[模型/理论] 企业升级可与国家间数字鸿沟并存",
+      "type": "debate",
+      "lane": 6,
+      "record_ids": [
+        "10.19581/j.cnki.ciejournal.2021.10.006",
+        "10.3386/w28453",
+        "10.3386/w24254"
+      ],
+      "locators": [
+        "何宇等 2021, §§4–6",
+        "Korinek & Stiglitz 2021, §§2–7"
+      ],
+      "status": "contested",
+      "confidence": "medium"
+    },
+    {
+      "id": "G-TRADE",
+      "label": "待补证：跨境 API 服务、token 投入与出口结果",
+      "type": "gap",
+      "lane": 6,
+      "record_ids": [
+        "10.3386/w24254",
+        "10.3386/w28453"
+      ],
+      "locators": [
+        "trade-agenda limitations; role2-discovery.md cluster E/F"
+      ],
+      "status": "gap",
+      "confidence": "medium",
+      "scope": "仅指本轮已核验语料，未完成系统反向检索；研究方向单独输出。"
+    },
+    {
+      "id": "G-GOV",
+      "label": "待补证：中文组织与公共治理的合规采用证据",
+      "type": "gap",
+      "lane": 6,
+      "record_ids": [
+        "10.3386/w33777",
+        "10.3386/w28453"
+      ],
+      "locators": [
+        "Danish-context limitation; development-governance agenda"
+      ],
+      "status": "gap",
+      "confidence": "medium",
+      "scope": "仅指本轮已核验语料，未完成系统反向检索；研究方向单独输出。"
+    }
+  ],
+  "edges": [
+    {
+      "id": "E01",
+      "source": "RQ",
+      "target": "T-TASK",
+      "relation": "explains",
+      "record_ids": [
+        "10.1257/aer.20160696"
+      ],
+      "locators": [
+        "§§2–4, 6"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "任务框架区分替代、增强和新任务。"
+    },
+    {
+      "id": "E02",
+      "source": "RQ",
+      "target": "T-GPT",
+      "relation": "explains",
+      "record_ids": [
+        "10.1257/mac.20180386"
+      ],
+      "locators": [
+        "§§II–III, VIII"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "GPT 视角说明采用需要互补性无形投资。"
+    },
+    {
+      "id": "E03",
+      "source": "RQ",
+      "target": "T-STACK",
+      "relation": "explains",
+      "record_ids": [
+        "nber-chapter-c14017",
+        "10.3386/w24254"
+      ],
+      "locators": [
+        "IO and trade chapters"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "medium",
+      "rationale": "分层技术栈连接稀缺投入、企业边界与国际竞争。"
+    },
+    {
+      "id": "E04",
+      "source": "T-STACK",
+      "target": "C-TOKEN",
+      "relation": "extends",
+      "record_ids": [
+        "nber-chapter-c14017",
+        "10.1257/mac.20180386"
+      ],
+      "locators": [
+        "Varian 2019 §§16.2–16.6；J-Curve §§II–III；role3 §5 / role4 §6 的 token 应用推演"
+      ],
+      "evidence_status": "inferred",
+      "confidence": "medium",
+      "rationale": "token 是 API 层可观察投入，但跨模型并不同质。"
+    },
+    {
+      "id": "E05",
+      "source": "C-TOKEN",
+      "target": "C-GCOST",
+      "relation": "limited-by",
+      "record_ids": [
+        "nber-chapter-c14017",
+        "10.1257/mac.20180386"
+      ],
+      "locators": [
+        "Varian 2019 §§16.2–16.6；J-Curve §§II–III；role3 §5 / role4 §6 的 token 应用推演"
+      ],
+      "evidence_status": "inferred",
+      "confidence": "high",
+      "rationale": "单价和数量必须与质量、人工复核、延迟和失败损失合并。"
+    },
+    {
+      "id": "E06",
+      "source": "C-GCOST",
+      "target": "G-PRICE",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "10.1257/mac.20180386",
+        "nber-chapter-c14017"
+      ],
+      "locators": [
+        "role4 §6 synthesis"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "现有成熟框架支持广义成本，但当前核验语料缺少 token 到任务价值的因果估计。"
+    },
+    {
+      "id": "E07",
+      "source": "T-TASK",
+      "target": "C-CHAIN",
+      "relation": "operationalizes",
+      "record_ids": [
+        "10.1257/aer.20160696",
+        "10.3386/w32966"
+      ],
+      "locators": [
+        "task model and adoption survey"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "技术可行性须经采用和真实使用才能进入任务结果。"
+    },
+    {
+      "id": "E08",
+      "source": "T-GPT",
+      "target": "F-ORGCOMP",
+      "relation": "explains",
+      "record_ids": [
+        "10.1257/mac.20180386",
+        "10.3386/w33777"
+      ],
+      "locators": [
+        "J-curve §§II–III; Humlum & Vestergaard pp.2–4"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "medium",
+      "rationale": "培训、工作流和组织政策构成互补性条件。"
+    },
+    {
+      "id": "E09",
+      "source": "C-CHAIN",
+      "target": "F-ADOPTION",
+      "relation": "supports",
+      "record_ids": [
+        "10.3386/w32966"
+      ],
+      "locators": [
+        "abstract and pp.3–4"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "代表性调查直接测量采用广延和集约边际。"
+    },
+    {
+      "id": "E10",
+      "source": "F-ADOPTION",
+      "target": "G-USE",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "10.3386/w32966"
+      ],
+      "locators": [
+        "self-report and intensity limitations"
+      ],
+      "evidence_status": "inferred",
+      "confidence": "medium",
+      "rationale": "采用率不能回答任务级调用及质量。 这是本综述对核验语料边界的判断，不是原文证明的全学界空白。"
+    },
+    {
+      "id": "E11",
+      "source": "F-ORGCOMP",
+      "target": "F-PROD",
+      "relation": "moderates",
+      "record_ids": [
+        "10.1093/qje/qjae044",
+        "10.3386/w33777"
+      ],
+      "locators": [
+        "BLR pp.1–5; HV pp.2–4"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "medium",
+      "rationale": "现场效果随工作流和组织条件而变。"
+    },
+    {
+      "id": "E12",
+      "source": "C-CHAIN",
+      "target": "F-PROD",
+      "relation": "supports",
+      "record_ids": [
+        "10.1093/qje/qjae044"
+      ],
+      "locators": [
+        "abstract and pp.1–3"
+      ],
+      "evidence_status": "direct",
+      "confidence": "medium",
+      "rationale": "客服场景分阶段部署支持局部效果；不能把整个能力—暴露—采用链画作已识别因果关系。"
+    },
+    {
+      "id": "E13",
+      "source": "F-PROD",
+      "target": "F-HET",
+      "relation": "moderates",
+      "record_ids": [
+        "10.1093/qje/qjae044"
+      ],
+      "locators": [
+        "pp.1–4"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "效果对经验和基线技能存在显著异质性。"
+    },
+    {
+      "id": "E14",
+      "source": "F-PROD",
+      "target": "F-REORG",
+      "relation": "limited-by",
+      "record_ids": [
+        "10.1093/qje/qjae044",
+        "10.3386/w33777"
+      ],
+      "locators": [
+        "BLR aggregate limitation; HV abstract and pp.3–6"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "任务生产率提高并不自动转化为短期工资和工时变化。"
+    },
+    {
+      "id": "E15",
+      "source": "F-REORG",
+      "target": "G-FIRM",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "10.3386/w33777"
+      ],
+      "locators": [
+        "early horizon and adoption-selection limitations"
+      ],
+      "evidence_status": "inferred",
+      "confidence": "medium",
+      "rationale": "需要更长期、可识别的企业组织证据。 这是本综述对核验语料边界的判断，不是原文证明的全学界空白。"
+    },
+    {
+      "id": "E16",
+      "source": "T-STACK",
+      "target": "T-IO",
+      "relation": "explains",
+      "record_ids": [
+        "nber-chapter-c14017",
+        "10.3386/w24254"
+      ],
+      "locators": [
+        "IO/trade chapters"
+      ],
+      "evidence_status": "direct",
+      "confidence": "medium",
+      "rationale": "高固定成本、低复制成本和数据/知识外部性塑造市场结构。"
+    },
+    {
+      "id": "E17",
+      "source": "T-IO",
+      "target": "G-MARKET",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "nber-chapter-c14017"
+      ],
+      "locators": [
+        "2019 research agenda"
+      ],
+      "evidence_status": "inferred",
+      "confidence": "medium",
+      "rationale": "理论命题丰富，但当前已核验语料没有直接 token 市场需求与竞争估计。 这是本综述对核验语料边界的判断，不是原文证明的全学界空白。"
+    },
+    {
+      "id": "E18",
+      "source": "T-GPT",
+      "target": "F-JCURVE",
+      "relation": "explains",
+      "record_ids": [
+        "10.1257/mac.20180386"
+      ],
+      "locators": [
+        "§§II–III, VIII"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "未计量互补投资导致短期成本与长期服务流错位。"
+    },
+    {
+      "id": "E19",
+      "source": "F-JCURVE",
+      "target": "D-MACRO",
+      "relation": "limited-by",
+      "record_ids": [
+        "10.1257/mac.20180386",
+        "10.1093/epolic/eiae042"
+      ],
+      "locators": [
+        "J-curve; Acemoglu §§3–4"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "medium",
+      "rationale": "聚合结果取决于扩散、互补投资和可自动化任务份额。"
+    },
+    {
+      "id": "E20",
+      "source": "F-REORG",
+      "target": "D-DISTRIB",
+      "relation": "supports",
+      "record_ids": [
+        "10.3386/w33777",
+        "10.1093/epolic/eiae042"
+      ],
+      "locators": [
+        "HV pp.3–6; Acemoglu inequality analysis"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "早期组织变化与工资稳定可并存，分配结果不能从任务增益推出。"
+    },
+    {
+      "id": "E21",
+      "source": "T-TASK",
+      "target": "D-DISTRIB",
+      "relation": "explains",
+      "record_ids": [
+        "10.1257/aer.20160696",
+        "nber-chapter-c14018"
+      ],
+      "locators": [
+        "task and distribution models"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "替代、新任务、市场权力和再分配条件共同决定劳动收益。"
+    },
+    {
+      "id": "E22",
+      "source": "T-STACK",
+      "target": "F-GVC",
+      "relation": "applies-to",
+      "record_ids": [
+        "10.19581/j.cnki.ciejournal.2020.05.016"
+      ],
+      "locators": [
+        "吕越等 §§3–6"
+      ],
+      "evidence_status": "direct",
+      "confidence": "medium",
+      "rationale": "历史机器人暴露提供中国制造企业层证据，但不能等同于 GenAI。"
+    },
+    {
+      "id": "E23",
+      "source": "F-GVC",
+      "target": "D-DEVELOP",
+      "relation": "limited-by",
+      "record_ids": [
+        "10.19581/j.cnki.ciejournal.2020.05.016",
+        "10.19581/j.cnki.ciejournal.2021.10.006"
+      ],
+      "locators": [
+        "firm panel vs calibrated multi-country model"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "medium",
+      "rationale": "企业面板与多国校准对象不同，可能并存，非同一估计量的相反实证结论。"
+    },
+    {
+      "id": "E24",
+      "source": "D-DEVELOP",
+      "target": "G-TRADE",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "10.3386/w24254",
+        "10.3386/w28453"
+      ],
+      "locators": [
+        "international research agendas"
+      ],
+      "evidence_status": "inferred",
+      "confidence": "medium",
+      "rationale": "需直接观测跨境 API 投入、任务位置和出口表现。 这是本综述对核验语料边界的判断，不是原文证明的全学界空白。"
+    },
+    {
+      "id": "E25",
+      "source": "F-ORGCOMP",
+      "target": "G-GOV",
+      "relation": "applies-to",
+      "record_ids": [
+        "10.3386/w33777",
+        "10.3386/w28453"
+      ],
+      "locators": [
+        "organizational complement and development context"
+      ],
+      "evidence_status": "inferred",
+      "confidence": "medium",
+      "rationale": "中文公共与组织场景可能存在不同的合规、语言和治理边界，尚待检验。"
+    }
+  ],
+  "direction_links": [
+    {
+      "gap_ids": [
+        "G-PRICE",
+        "G-USE",
+        "G-FIRM"
+      ],
+      "innovation_id": "AI-INV-01",
+      "artifact": "innovation-cards/AI-INV-01.json"
+    },
+    {
+      "gap_ids": [
+        "G-PRICE",
+        "G-MARKET"
+      ],
+      "innovation_id": "AI-INV-02",
+      "artifact": "innovation-cards/AI-INV-02.json"
+    },
+    {
+      "gap_ids": [
+        "G-TRADE",
+        "G-GOV"
+      ],
+      "innovation_id": "AI-INV-03",
+      "artifact": "innovation-cards/AI-INV-03.json"
+    }
+  ]
+}

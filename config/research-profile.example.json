@@ -1,0 +1,35 @@
+{
+  "profile_version": "1.1",
+  "research_fields": {
+    "core": ["international-trade", "digital-economy"],
+    "adjacent": ["development-economics", "public-administration"]
+  },
+  "preferred_languages": ["zh-CN", "en"],
+  "default_sources": {
+    "international": ["OpenAlex", "Crossref", "RePEc", "NBER"],
+    "domestic": ["CNKI-export", "WanFang-export", "NSSD"]
+  },
+  "zotero_policy": {
+    "classification_mode": "research-project",
+    "default_destination": "01_research_projects",
+    "write_mode": "auto-after-verification",
+    "dedupe_order": ["doi", "title_author_year", "url"],
+    "auto_attach_pdf": true,
+    "require_fulltext_before_import": true,
+    "missing_fulltext_policy": "track-all-and-handoff-important-or-requested",
+    "require_verified_local_attachment": true,
+    "cloud_sync_separate_from_local_success": true
+  },
+  "review_defaults": {
+    "deliverable": "literature-review",
+    "citation_style": "GB/T 7714",
+    "anti_fabrication": "verified-real-sources-only",
+    "expert_panel_roles": 7,
+    "require_literature_map": true,
+    "require_independent_innovation_report": true
+  },
+  "secrets": {
+    "policy": "environment-only",
+    "required_now": []
+  }
+}

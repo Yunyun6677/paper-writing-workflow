@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "literature-review-project/1.0",
+  "type": "object",
+  "required": ["schema_version", "project_id", "research_question", "deliverable", "search_policy", "zotero_policy"],
+  "properties": {
+    "schema_version": {"const": "literature-review-project/1.0"},
+    "project_id": {"type": "string", "minLength": 1},
+    "research_question": {"type": "string", "minLength": 5},
+    "outcomes": {"type": "array", "items": {"type": "string"}},
+    "exposures": {"type": "array", "items": {"type": "string"}},
+    "mechanisms": {"type": "array", "items": {"type": "string"}},
+    "deliverable": {"const": "literature-review"},
+    "languages": {"type": "array", "items": {"enum": ["zh-CN", "en"]}, "minItems": 1},
+    "citation_style": {"type": "string"},
+    "expert_panel": {
+      "type": "object",
+      "properties": {
+        "total_roles": {"const": 7},
+        "status_file": {"type": "string"},
+        "allow_lead_fallback": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    },
+    "review_benchmark_policy": {
+      "type": "object",
+      "properties": {
+        "required": {"type": "boolean"},
+        "minimum_fulltext_benchmarks": {"type": "integer", "minimum": 3},
+        "learn_structure_not_wording": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    },
+    "literature_map_policy": {
+      "type": "object",
+      "properties": {
+        "required": {"type": "boolean"},
+        "graph_schema": {"type": "string"},
+        "render_format": {"enum": ["svg", "png", "svg-and-png"]}
+      },
+      "additionalProperties": true
+    },
+    "innovation_policy": {
+      "type": "object",
+      "properties": {
+        "required": {"type": "boolean"},
+        "top_k": {"type": "integer", "minimum": 1},
+        "require_reverse_search": {"type": "boolean"},
+        "require_methods_audit": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    },
+    "search_policy": {
+      "type": "object",
+      "required": ["include_classics", "emphasis_years", "source_types"],
+      "properties": {
+        "include_classics": {"type": "boolean"},
+        "emphasis_years": {"type": "integer", "minimum": 1},
+        "source_types": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "zotero_policy": {
+      "type": "object",
+      "required": ["root_collection", "auto_import", "require_fulltext"],
+      "properties": {
+        "root_collection": {"type": "string"},
+        "auto_import": {"type": "boolean"},
+        "require_fulltext": {"type": "boolean"},
+        "missing_fulltext": {"enum": ["skip", "metadata-only", "ask-user"]}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

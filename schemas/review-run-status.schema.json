@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-run-status/1.0",
+  "type": "object",
+  "required": ["schema_version", "run_id", "project_id", "roles", "stages", "updated_at"],
+  "properties": {
+    "schema_version": {"const": "review-run-status/1.0"},
+    "run_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "roles": {
+      "type": "object",
+      "required": ["lead-editor", "cross-language-discovery-specialist", "theory-mechanism-specialist", "methods-measurement-auditor", "review-benchmark-specialist", "map-innovation-specialist", "evidence-zotero-citation-curator"],
+      "properties": {
+        "lead-editor": {"$ref": "#/$defs/roleStatus"},
+        "cross-language-discovery-specialist": {"$ref": "#/$defs/roleStatus"},
+        "theory-mechanism-specialist": {"$ref": "#/$defs/roleStatus"},
+        "methods-measurement-auditor": {"$ref": "#/$defs/roleStatus"},
+        "review-benchmark-specialist": {"$ref": "#/$defs/roleStatus"},
+        "map-innovation-specialist": {"$ref": "#/$defs/roleStatus"},
+        "evidence-zotero-citation-curator": {"$ref": "#/$defs/roleStatus"}
+      },
+      "additionalProperties": false
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status", "checkpoint"],
+        "properties": {
+          "id": {"type": "string"},
+          "status": {"enum": ["pending", "running", "complete", "failed", "blocked"]},
+          "checkpoint": {"type": "string"},
+          "artifacts": {"type": "array", "items": {"type": "string"}},
+          "error": {"type": ["string", "null"]}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "$defs": {
+    "roleStatus": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["pending", "completed-by-agent", "completed-by-lead-fallback", "failed", "not-run", "not-applicable"]},
+        "agent_id": {"type": ["string", "null"]},
+        "checkpoint": {"type": ["string", "null"]},
+        "notes": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

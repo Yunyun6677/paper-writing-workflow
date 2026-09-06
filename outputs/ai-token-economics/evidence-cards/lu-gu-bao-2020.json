@@ -1,0 +1,56 @@
+{
+  "schema_version": "evidence-card/1.0",
+  "record_id": "10.19581/j.cnki.ciejournal.2020.05.016",
+  "zotero_item_key": "XEQLGLY8",
+  "bibtex_key": "lugubao2020",
+  "title": "人工智能与中国企业参与全球价值链分工",
+  "authors": [
+    "吕越",
+    "谷玮",
+    "包群"
+  ],
+  "year": 2020,
+  "venue": "中国工业经济 (5): 80-98",
+  "verification": {
+    "level": "claim-verified",
+    "sources": [
+      {
+        "type": "authoritative-bibliographic-record",
+        "url": "https://doi.org/10.19581/j.cnki.ciejournal.2020.05.016",
+        "provenance": "role2 candidate ledger; retained checkpoint"
+      },
+      {
+        "type": "inspected-local-fulltext",
+        "path": "work/runs/ai-token-economics-v1/role2-fulltext/lu-gu-bao-2020.txt",
+        "inspected_sections": "六、结论与启示；三、研究设计"
+      }
+    ]
+  },
+  "research_question": "工业自动化如何关联中国企业的全球价值链参与？",
+  "method": {
+    "design": "2000—2013年机器人、企业及海关数据匹配的计量研究；具体识别见方法审计",
+    "boundary": "限定于所列版本与定位；不将理论/模拟/综述当作生成式AI因果实证。"
+  },
+  "findings": [
+    {
+      "claim": "作者报告机器人应用与企业全球价值链参与提高有关，机制涉及劳动替代与生产率；该证据不是语言模型使用证据。",
+      "locator": "六、结论与启示；三、研究设计",
+      "evidence_kind": "text"
+    }
+  ],
+  "limitations": [
+    "不能将前生成式AI时代的机制证据直接外推为大模型的已实现效果。",
+    "本卡为有界续跑核验；未补造页码或未查验的量化系数。"
+  ],
+  "fulltext": {
+    "status": "local-only",
+    "inspected": true,
+    "path": "work/runs/ai-token-economics-v1/role2-fulltext/lu-gu-bao-2020.txt",
+    "source_url": "https://doi.org/10.19581/j.cnki.ciejournal.2020.05.016"
+  },
+  "provenance": {
+    "role": "evidence-zotero-citation-curator",
+    "date": "2026-09-04",
+    "mode": "resume-existing-evidence-no-new-zotero-write"
+  }
+}

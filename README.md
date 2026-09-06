@@ -1,0 +1,137 @@
+# Social Science Paper-Writing Workflow
+
+一套面向经济学、管理学与政治学研究的开放、可审计论文工作流。项目将文献检索与 Zotero 归档、结构化综述、文献地图、创新点发现，以及 Python–Stata 实证分析连接成统一的数据契约，方便不同 agent 和人工环节可靠交接。
+
+**当前公开版本：v0.1.0（2026-09-06）**
+
+> 当前状态：可复用原型。文献综述与实证分析两个 skill 已完成；Stata 16 批处理桥、Python–Stata 一致性测试和一项真实论文的局部复现已经跑通。云备份与更多因果推断设计仍在路线图中。历次变化见 [CHANGELOG.md](CHANGELOG.md)。
+
+## 能做什么
+
+| 模块 | 已实现能力 | 主要产物 |
+| --- | --- | --- |
+| 文献综述 | 七角色专家协议、中英文检索、全文核验、证据卡、引文审计 | 综述、证据矩阵、核验书目 |
+| 文献管理 | Zotero 本地读取、RIS/BibTeX 导入、项目制分类、获取失败交接 | 导入计划、获取台账、审计记录 |
+| 研究设计 | 概念—机制—结果梳理、文献地图、独立创新点组合 | JSON/SVG 地图、创新卡 |
+| 实证分析 | CSV/XLSX/DTA 摄取、清洗审计、OLS/固定效应、稳健或聚类标准误 | 结果表、图、报告、哈希清单 |
+| Stata 协作 | Stata 16 独立批处理、完成标记、Python–Stata 数值比对 | `.do`、结果 CSV、执行回执 |
+| 论文复现 | 公开材料下载说明、原始结果追踪、双引擎复核 | 复现报告与可复现代码 |
+
+## 工作流
+
+```text
+研究请求
+   ├─→ 文献专家面板 → 题录核验 → 合法全文 → Zotero 项目库
+   │                         ↓
+   │             证据卡 → 文献地图 → 文献综述
+   │                              └→ 独立创新点报告
+   └─→ 实证请求 → 数据摄取 → Python / Stata → 一致性审计
+                                      ↓
+                             可验证结果包 → 论文写作
+```
+
+各阶段不依赖自由文本“口头交接”，而使用 `schemas/` 和 skill 内的 JSON Schema。无法取得的重要全文会形成明确的人类交接项，不会被静默遗漏。
+
+## 仓库结构
+
+```text
+.
+├─ skills/
+│  ├─ social-science-literature-review/  # 文献综述专家 skill
+│  └─ economics-empirical-analysis/       # Python–Stata 实证 skill
+├─ schemas/                               # 跨模块数据契约
+├─ scripts/                               # 通用工作流与 Zotero 工具
+├─ config/                                # 可公开配置模板
+├─ examples/                              # 请求示例
+├─ outputs/                               # 已脱敏的示范成果
+└─ work/replications/                     # 可公开的复现代码与核验结果
+```
+
+## 快速开始
+
+### 1. 获取代码并建立 Python 环境
+
+```powershell
+git clone https://github.com/Yunyun6677/paper-writing-workflow.git
+cd paper-writing-workflow
+py -m venv .venv-empirical
+./.venv-empirical/Scripts/python.exe -m pip install -r skills/economics-empirical-analysis/requirements.txt
+./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/empirical.py doctor
+```
+
+运行实证模块测试：
+
+```powershell
+./.venv-empirical/Scripts/python.exe -m unittest skills/economics-empirical-analysis/scripts/test_empirical.py
+```
+
+### 2. 创建本地研究画像
+
+复制 `config/research-profile.example.json` 为 `config/research-profile.json`，再按自己的领域和偏好修改。后者已被 Git 忽略，适合保存个人化配置；仍不要在其中保存密码或 API Key。
+
+研究任务使用 `examples/research-request.example.json` 或对应 schema 新建，不要覆盖既有项目记录。
+
+### 3. 连接 Zotero
+
+- 本地只读：保持 Zotero Desktop 运行并启用本地 API。
+- 自动写入：只在需要时设置 `ZOTERO_USER_ID` 与 `ZOTERO_API_KEY` 环境变量。
+- API Key 仅保存在操作系统的环境变量或安全凭据库；不要粘贴到对话、配置文件、日志或 Git。
+- 付费数据库使用你自己的合法机构访问。工作流不绕过登录、付费墙或技术保护措施。
+
+### 4. 连接 Stata
+
+Stata 是专有软件，本仓库不包含安装程序或许可证。将 `STATA_EXE` 指向已授权的 Windows 可执行文件，或在命令中传入 `--stata-exe`：
+
+```powershell
+$env:STATA_EXE = "C:/Program Files/Stata18/StataSE-64.exe"
+./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/stata_bridge.py --smoke --output work/stata-smoke
+```
+
+Stata 16 使用可审计的批处理桥；Stata 17 及以上可在重新通过一致性测试后评估官方 PyStata。
+
+## 已验证复现案例
+
+项目复现了 Autor、Dorn 与 Hanson（2013）*The China Syndrome* 的 Table 3 第 1–6 列。Python 与 Stata 的最大系数绝对差为 `5.17e-13`，最大标准误绝对差为 `3.86e-09`，并与作者公布的舍入结果一致。
+
+- [复现报告](work/replications/adh2013-china-syndrome/REPORT.md)
+- [Stata 代码](work/replications/adh2013-china-syndrome/run/stata/replicate_table3.do)
+- [Python 代码](work/replications/adh2013-china-syndrome/run/python/replicate_table3.py)
+- [公开结果清单](work/replications/adh2013-china-syndrome/replication_bundle.public.json)
+
+论文 PDF、作者原始数据及压缩包没有在本仓库重新分发。公开结果清单保存来源 URL 和 SHA-256；下载作者材料后，可将数据路径显式传给两个脚本。该案例只声称复现指定表格，不把数值一致误写为对识别假设的独立验证。
+
+## 示例成果
+
+- `outputs/v2/`：贸易开放与农村基层政治参与综述、文献地图及独立创新点报告。
+- `outputs/ai-token-economics/`：人工智能经济学综述、证据卡、文献地图与研究入口。
+- `outputs/literature-workflow-contract-v1.md`：文献模块的交接约定。
+
+这些成果用于展示工作流结构，不替代研究者对原文、数据、识别策略和引用的再次核查。
+
+## 数据、隐私与版权
+
+- 不提交 API Key、账户、许可证序列号、个人 Zotero 快照或本机绝对路径。
+- 不提交用户原始数据、受限全文或许可证不明确的第三方材料。
+- 原始数据默认不可变；所有转换、筛选、合并和缺失值处理必须留痕。
+- Zotero 云端同步成功与本地归档成功分别记录。
+- 对无法合法自动取得的核心文献，记录题录、失败原因和用户下一步操作。
+- 自动分析不以“得到显著结果”为优化目标，也不自动把相关性解释为因果性。
+
+提交前请运行测试，并检查暂存文件中是否存在凭据、私人数据和大文件。更完整的协作规则见 [CONTRIBUTING.md](CONTRIBUTING.md)，安全问题见 [SECURITY.md](SECURITY.md)。
+
+## 路线图
+
+- 增加 DID、IV、RD、面板与调查抽样设计的独立审计门。
+- 为 OSF、Zenodo 或机构存储增加显式授权的加密备份适配器。
+- 增加可移植的项目初始化器、持续集成和跨版本 Stata 证书。
+- 把 Zotero 获取台账、实证结果包和写作引用进一步统一为端到端项目 manifest。
+
+## 版本规则
+
+项目使用语义化版本：破坏兼容性的契约变更提升主版本，向后兼容的新功能提升次版本，修复与文档调整提升补丁版本。每个公开版本同时保留 Git tag、GitHub Release、发布日期和变更记录；日常开发以 `main` 分支最新提交为准。
+
+## 致谢与许可
+
+文献工作流的早期设计参考了 [fakerqwq/social-science-paper-writing-skill](https://github.com/fakerqwq/social-science-paper-writing-skill) 的模块化思路，并根据可核验全文、Zotero 项目制归档、七角色协议、强制文献地图和实证复现需求重新设计；没有照搬其内容。
+
+本仓库原创代码与文档采用 [MIT License](LICENSE)。第三方论文、数据和软件继续适用各自许可。

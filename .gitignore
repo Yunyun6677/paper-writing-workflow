@@ -1,0 +1,59 @@
+# Local runtimes and caches
+.venv*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+tmp/
+
+# Secrets and machine-local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+config/research-profile.json
+inputs/
+
+# Logs and generated binary artifacts
+*.log
+*.dta
+*.gph
+*.zip
+*.pdf
+*.xls
+*.xlsx
+
+# Private Zotero state and audit trails
+outputs/library-snapshot.json
+outputs/phase-1-zotero-test.json
+outputs/**/*zotero*.json
+outputs/**/*import*.json
+outputs/**/*classification*.json
+outputs/**/*audit*.json
+outputs/**/*bundle.json
+outputs/trade-rural-governance-import-plan.json
+
+# Legacy one-off scripts containing local Zotero item identifiers
+scripts/zotero_web_workflow.py
+scripts/zotero_upload_fulltext.py
+scripts/zotero_link_fulltext.py
+
+# Working data are private by default. Publish only the audited replication slice.
+work/*
+!work/replications/
+work/replications/*
+!work/replications/adh2013-china-syndrome/
+work/replications/adh2013-china-syndrome/source/
+work/replications/adh2013-china-syndrome/original/
+work/replications/adh2013-china-syndrome/replication_bundle.json
+work/replications/adh2013-china-syndrome/run/stata/table3_results.dta
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

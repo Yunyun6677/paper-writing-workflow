@@ -1,0 +1,55 @@
+{
+  "schema_version": "evidence-card/1.0",
+  "record_id": "10.3386/w24254",
+  "zotero_item_key": null,
+  "bibtex_key": "goldfarbtrefler2019",
+  "title": "Artificial Intelligence and International Trade",
+  "authors": [
+    "Avi Goldfarb",
+    "Daniel Trefler"
+  ],
+  "year": 2019,
+  "venue": "The Economics of Artificial Intelligence: An Agenda, University of Chicago Press, pp. 463-492",
+  "verification": {
+    "level": "claim-verified",
+    "sources": [
+      {
+        "type": "authoritative-bibliographic-record",
+        "url": "https://doi.org/10.3386/w24254",
+        "provenance": "role2 candidate ledger; retained checkpoint"
+      },
+      {
+        "type": "inspected-local-fulltext",
+        "path": "work/runs/ai-token-economics-v1/benchmark-fulltext/goldfarb-trefler-2019-trade.txt",
+        "inspected_sections": "出版章节Introduction（印刷页463起）；已读对应NBER w24254"
+      }
+    ]
+  },
+  "research_question": "AI与国际贸易的关键机制是什么？",
+  "method": {
+    "design": "理论与政策议程章节；非贸易效应估计",
+    "boundary": "限定于所列版本与定位；不将理论/模拟/综述当作生成式AI因果实证。"
+  },
+  "findings": [
+    {
+      "claim": "AI的国际维度涉及技术和知识扩散、比较优势及国际规则，而不能只分析国内劳动市场。",
+      "locator": "出版章节Introduction（印刷页463起）；已读对应NBER w24254",
+      "evidence_kind": "text"
+    }
+  ],
+  "limitations": [
+    "不能将前生成式AI时代的机制证据直接外推为大模型的已实现效果。",
+    "本卡为有界续跑核验；未补造页码或未查验的量化系数。"
+  ],
+  "fulltext": {
+    "status": "local-only",
+    "inspected": true,
+    "path": "work/runs/ai-token-economics-v1/role2-fulltext/goldfarb-trefler-2019-trade.pdf",
+    "source_url": "https://doi.org/10.3386/w24254"
+  },
+  "provenance": {
+    "role": "evidence-zotero-citation-curator",
+    "date": "2026-09-04",
+    "mode": "resume-existing-evidence-no-new-zotero-write"
+  }
+}

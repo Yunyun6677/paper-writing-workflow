@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence-card/1.0",
+  "type": "object",
+  "required": ["schema_version", "record_id", "title", "authors", "verification", "research_question", "method", "findings", "fulltext"],
+  "properties": {
+    "schema_version": {"const": "evidence-card/1.0"},
+    "record_id": {"type": "string", "minLength": 1},
+    "zotero_item_key": {"type": ["string", "null"]},
+    "bibtex_key": {"type": ["string", "null"]},
+    "title": {"type": "string", "minLength": 1},
+    "authors": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "year": {"type": ["integer", "null"]},
+    "venue": {"type": "string"},
+    "doi": {"type": "string"},
+    "verification": {
+      "type": "object",
+      "required": ["level", "sources"],
+      "properties": {
+        "level": {"enum": ["candidate", "bibliographic-verified", "fulltext-verified", "claim-verified"]},
+        "sources": {"type": "array", "items": {"type": "object"}, "minItems": 1}
+      },
+      "additionalProperties": true
+    },
+    "research_question": {"type": "string"},
+    "theory": {"type": "array", "items": {"type": "string"}},
+    "mechanisms": {"type": "array", "items": {"type": "string"}},
+    "data": {"type": "object"},
+    "method": {"type": "object"},
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim", "locator"],
+        "properties": {
+          "claim": {"type": "string"},
+          "locator": {"type": "string"},
+          "evidence_kind": {"enum": ["text", "table", "figure", "appendix"]}
+        },
+        "additionalProperties": true
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "relevance": {"type": "object"},
+    "fulltext": {
+      "type": "object",
+      "required": ["status", "inspected"],
+      "properties": {
+        "status": {"enum": ["cloud-synced", "local-only", "metadata-only"]},
+        "inspected": {"type": "boolean"},
+        "source_url": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

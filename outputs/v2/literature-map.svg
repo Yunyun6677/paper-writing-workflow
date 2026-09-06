@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2070" height="721" viewBox="0 0 2070 721" role="img">
+<defs><marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#667085"/></marker></defs>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<text x="55" y="38" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="22" font-weight="700" fill="#17212B">不同类型的国际贸易与开放政策如何改变政治代表、政府回应与农村居民和组织资源，并最终影响中国农村基层政治参与？</text>
+<text x="55" y="66" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#52606D">正式综述文献地图：从开放暴露类型，经居民资源与政治组织/治理能力，进入农村基层治理条件和参与结果，最终揭示跨领域证据链与识别缺口。创新评分和研究方案另见独立报告。</text>
+<path d="M 275.0 358.0 C 310.0 358.0, 310.0 228.0, 345.0 228.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="310.0" y="288.0" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">applies-to</text>
+<path d="M 275.0 358.0 C 310.0 358.0, 310.0 358.0, 345.0 358.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="310.0" y="353.0" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">applies-to</text>
+<path d="M 275.0 358.0 C 310.0 358.0, 310.0 488.0, 345.0 488.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="310.0" y="418.0" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">applies-to</text>
+<path d="M 565.0 228.0 C 600.0 228.0, 600.0 163.0, 635.0 163.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="600.0" y="190.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">causes</text>
+<path d="M 855.0 163.0 C 1180.0 163.0, 1180.0 293.0, 1505.0 293.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1180.0" y="223.0" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">explains</text>
+<path d="M 565.0 358.0 C 600.0 358.0, 600.0 293.0, 635.0 293.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="600.0" y="320.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">causes</text>
+<path d="M 565.0 488.0 C 600.0 488.0, 600.0 293.0, 635.0 293.0" fill="none" stroke="#667085" stroke-width="1.7" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<text x="600.0" y="385.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">motivates</text>
+<path d="M 565.0 488.0 C 600.0 488.0, 600.0 553.0, 635.0 553.0" fill="none" stroke="#667085" stroke-width="1.7" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<text x="600.0" y="515.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">motivates</text>
+<path d="M 745.0 471.0 C 745.0 471.0, 745.0 505.0, 745.0 505.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="745.0" y="483.0" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">applies-to</text>
+<path d="M 855.0 553.0 C 890.0 553.0, 890.0 163.0, 925.0 163.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="890.0" y="353.0" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">moderates</text>
+<path d="M 855.0 293.0 C 890.0 293.0, 890.0 293.0, 925.0 293.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="890.0" y="288.0" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">explains</text>
+<path d="M 1145.0 293.0 C 1180.0 293.0, 1180.0 228.0, 1215.0 228.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1180.0" y="255.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">explains</text>
+<path d="M 1145.0 423.0 C 1180.0 423.0, 1180.0 228.0, 1215.0 228.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1180.0" y="320.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">explains</text>
+<path d="M 1145.0 163.0 C 1180.0 163.0, 1180.0 228.0, 1215.0 228.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1180.0" y="190.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">moderates</text>
+<path d="M 1145.0 553.0 C 1180.0 553.0, 1180.0 488.0, 1215.0 488.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1180.0" y="515.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">explains</text>
+<path d="M 1435.0 358.0 C 1470.0 358.0, 1470.0 423.0, 1505.0 423.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1470.0" y="385.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">reveals-gap</text>
+<path d="M 1435.0 228.0 C 1470.0 228.0, 1470.0 423.0, 1505.0 423.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1470.0" y="320.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">reveals-gap</text>
+<path d="M 1435.0 488.0 C 1470.0 488.0, 1470.0 423.0, 1505.0 423.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1470.0" y="450.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">supports</text>
+<path d="M 1725.0 293.0 C 1760.0 293.0, 1760.0 293.0, 1795.0 293.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1760.0" y="288.0" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">reveals-gap</text>
+<path d="M 855.0 293.0 C 1325.0 293.0, 1325.0 293.0, 1795.0 293.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1325.0" y="288.0" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">reveals-gap</text>
+<path d="M 565.0 488.0 C 1180.0 488.0, 1180.0 423.0, 1795.0 423.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1180.0" y="450.5" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">reveals-gap</text>
+<path d="M 1725.0 423.0 C 1760.0 423.0, 1760.0 423.0, 1795.0 423.0" fill="none" stroke="#667085" stroke-width="1.7" marker-end="url(#arrow)"/>
+<text x="1760.0" y="418.0" text-anchor="middle" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#475467">reveals-gap</text>
+<rect x="55" y="310.0" width="220" height="96" rx="12" fill="#E8F3EC" stroke="#347A52" stroke-width="1.8"/>
+<text x="67" y="329.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#347A52">RESEARCH-QUESTION · rq_trade_governance_participation</text>
+<text x="67" y="353.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">开放经济如何经政治组织与农村治理</text>
+<text x="67" y="369.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">影响基层政治参与？</text>
+<rect x="345" y="180.0" width="220" height="96" rx="12" fill="#E8F3EC" stroke="#347A52" stroke-width="1.8"/>
+<text x="357" y="199.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#347A52">EXPOSURE · exp_import_competition</text>
+<text x="357" y="223.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">不利进口竞争／贸易协定冲击</text>
+<rect x="345" y="310.0" width="220" height="96" rx="12" fill="#E8F3EC" stroke="#347A52" stroke-width="1.8"/>
+<text x="357" y="329.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#347A52">EXPOSURE · exp_export_opportunity</text>
+<text x="357" y="353.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">出口机会与贸易扩张</text>
+<rect x="345" y="440.0" width="220" height="96" rx="12" fill="#FCE9E7" stroke="#B84A3A" stroke-width="1.8"/>
+<text x="357" y="459.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#B84A3A">EXPOSURE · exp_ftz_policy_bundle</text>
+<text x="357" y="483.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">自贸区综合政策包：贸易、投资、监</text>
+<text x="357" y="499.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">管、产业与基础设施</text>
+<rect x="635" y="115" width="220" height="96" rx="12" fill="#E8F3EC" stroke="#347A52" stroke-width="1.8"/>
+<text x="647" y="134" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#347A52">MECHANISM · mech_regional_adjustment</text>
+<text x="647" y="158" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">地区就业、收入与经济风险重配</text>
+<rect x="635" y="245" width="220" height="96" rx="12" fill="#E8F3EC" stroke="#347A52" stroke-width="1.8"/>
+<text x="647" y="264" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#347A52">MECHANISM · mech_resident_resources</text>
+<text x="647" y="288" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">居民侧：就业、迁移、在场时间、收</text>
+<text x="647" y="304" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">入与社会网络</text>
+<rect x="635" y="375" width="220" height="96" rx="12" fill="#E8F3EC" stroke="#347A52" stroke-width="1.8"/>
+<text x="647" y="394" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#347A52">MECHANISM · mech_state_capacity_response</text>
+<text x="647" y="418" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">政府侧：补偿、政策菜单与国家能力</text>
+<rect x="635" y="505" width="220" height="96" rx="12" fill="#FCE9E7" stroke="#B84A3A" stroke-width="1.8"/>
+<text x="647" y="524" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#B84A3A">MECHANISM · mech_local_org_resources</text>
+<text x="647" y="548" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">组织侧：地方财政、上级项目、执行</text>
+<text x="647" y="564" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">能力与纵向控制</text>
+<rect x="925" y="115" width="220" height="96" rx="12" fill="#E8F3EC" stroke="#347A52" stroke-width="1.8"/>
+<text x="937" y="134" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#347A52">CONDITION · cond_election_function</text>
+<text x="937" y="158" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">选举的双重功能：基层问责与纵向组</text>
+<text x="937" y="174" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">织工具</text>
+<rect x="925" y="245" width="220" height="96" rx="12" fill="#E8F3EC" stroke="#347A52" stroke-width="1.8"/>
+<text x="937" y="264" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#347A52">CONDITION · cond_access_procedure</text>
+<text x="937" y="288" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">参与可及性与程序质量：在场、代投</text>
+<text x="937" y="304" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">、本人投票、竞争</text>
+<rect x="925" y="375" width="220" height="96" rx="12" fill="#FCE9E7" stroke="#B84A3A" stroke-width="1.8"/>
+<text x="937" y="394" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#B84A3A">CONDITION · cond_trust_networks</text>
+<text x="937" y="418" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">政治信任、网络、知识与组织动员</text>
+<rect x="925" y="505" width="220" height="96" rx="12" fill="#E8F3EC" stroke="#347A52" stroke-width="1.8"/>
+<text x="937" y="524" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#347A52">CONDITION · cond_org_resource_source</text>
+<text x="937" y="548" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">正式／非正式组织、资源来源与公共</text>
+<text x="937" y="564" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">品供给</text>
+<rect x="1215" y="180.0" width="220" height="96" rx="12" fill="#E8F3EC" stroke="#347A52" stroke-width="1.8"/>
+<text x="1227" y="199.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#347A52">OUTCOME · outcome_reported_vote</text>
+<text x="1227" y="223.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">报告参加村委会选举投票</text>
+<rect x="1215" y="310.0" width="220" height="96" rx="12" fill="#FCE9E7" stroke="#B84A3A" stroke-width="1.8"/>
+<text x="1227" y="329.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#B84A3A">OUTCOME · outcome_meeting_entry</text>
+<text x="1227" y="353.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">进入村民会议场域的频次</text>
+<rect x="1215" y="440.0" width="220" height="96" rx="12" fill="#FCE9E7" stroke="#B84A3A" stroke-width="1.8"/>
+<text x="1227" y="459.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#B84A3A">OUTCOME · outcome_voice_influence</text>
+<text x="1227" y="483.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">发言、议程、意见采纳、合法性与资</text>
+<text x="1227" y="499.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">源配置影响</text>
+<rect x="1505" y="245.0" width="220" height="96" rx="12" fill="#FCE9E7" stroke="#B84A3A" stroke-width="1.8"/>
+<text x="1517" y="264.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#B84A3A">DEBATE · debate_institution_dependent_direction</text>
+<text x="1517" y="288.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">争议一：相近贸易损失为何产生不同</text>
+<text x="1517" y="304.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">投票与代表方向？</text>
+<rect x="1505" y="375.0" width="220" height="96" rx="12" fill="#FCE9E7" stroke="#B84A3A" stroke-width="1.8"/>
+<text x="1517" y="394.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#B84A3A">DEBATE · debate_frequency_not_power</text>
+<text x="1517" y="418.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">争议二：参与频次、主观合法性与实</text>
+<text x="1517" y="434.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">际权力不能互换</text>
+<rect x="1795" y="245.0" width="220" height="96" rx="12" fill="#FFF4D6" stroke="#B98216" stroke-width="1.8"/>
+<text x="1807" y="264.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#B98216">GAP · gap_cross_field_chain</text>
+<text x="1807" y="288.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">交叉空白：贸易／开放政策→农村基</text>
+<text x="1807" y="304.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">层组织→村民参与的证据链尚未闭合</text>
+<rect x="1795" y="375.0" width="220" height="96" rx="12" fill="#FFF4D6" stroke="#B98216" stroke-width="1.8"/>
+<text x="1807" y="394.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="10" font-weight="700" fill="#B98216">GAP · gap_treatment_mechanism_measurement</text>
+<text x="1807" y="418.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">识别空白：政策包成分、居民侧／组</text>
+<text x="1807" y="434.0" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="13" fill="#17212B">织侧机制及参与质量未被同时区分</text>
+<rect x="55" y="665" width="18" height="18" rx="4" fill="#E8F3EC" stroke="#347A52"/>
+<text x="81" y="679" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="12" fill="#344054">已建立</text>
+<rect x="205" y="665" width="18" height="18" rx="4" fill="#FCE9E7" stroke="#B84A3A"/>
+<text x="231" y="679" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="12" fill="#344054">争议</text>
+<rect x="355" y="665" width="18" height="18" rx="4" fill="#FFF4D6" stroke="#B98216"/>
+<text x="381" y="679" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="12" fill="#344054">缺口</text>
+<rect x="505" y="665" width="18" height="18" rx="4" fill="#EAE8FA" stroke="#6557B2"/>
+<text x="531" y="679" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="12" fill="#344054">拟议创新</text>
+<text x="2015" y="679" text-anchor="end" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="11" fill="#667085">实线：直接/综合证据　虚线：综述推断</text>
+</svg>

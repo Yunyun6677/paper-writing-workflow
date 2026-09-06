@@ -1,0 +1,41 @@
+{
+  "schema_version": "innovation-card/1.0",
+  "innovation_id": "INV-01",
+  "title": "基层参与阶梯：从可及性、进入到发言与意见采纳",
+  "type": "measurement-contribution",
+  "status": "innovation candidate—qualified by Role 2 reverse search",
+  "rank": 1,
+  "gap": {
+    "statement": "现有工作稿用二元投票和会议次数刻画参与，但全文证据显示名义投票、本人投票、完整程序、会议进入、合法性感知和实际决策影响不可互换。",
+    "supporting_evidence": ["stanford:pang-rozelle-2007-vote-confidence", "10.13821/j.cnki.ceq.2017.01.12", "10.1017/S0003055410000079"],
+    "contrary_evidence": []
+  },
+  "nearest_prior_work": ["Luo et al. (2011; bibliographic lead only)", "Pang and Rozelle (2007)", "张同龙、张林秀 (2017)", "Olken (2010)"],
+  "map_node_ids": ["outcome_reported_vote", "outcome_meeting_entry", "outcome_voice_influence", "gap_treatment_mechanism_measurement", "innovation_participation_ladder"],
+  "contribution": "建立适用于农村基层治理的多层参与测量框架，区分资格与可及性、实际进入、独立表达、意见采纳和资源配置影响，并检验开放政策对不同层级是否产生方向不同的效应。",
+  "expected_evidence": [
+    "若只是会议供给增加，会议召开数和受邀概率上升，但发言、采纳和议程影响未必上升。",
+    "若选举渠道相对效能下降，本人投票或完整投票下降应强于名义参加。",
+    "阶梯各层的处理效应可不同符号，但相邻层之间的逻辑约束需预先注册。"
+  ],
+  "data_requirements": [
+    "最近一届选举的资格、本人写票、本人投箱、代投、候选竞争和选举日是否在村",
+    "村民大会与村民代表会议的召开次数、受邀、实际出席、发言、议案、意见采纳和表决记录",
+    "村级会议纪要或抽样核验材料，用于校正自报偏差"
+  ],
+  "identification_strategy": "在现有边界局部设计中预先定义主次结果和参与阶梯，分别估计各层的局部约化效应；对会议供给与个人出席采用村级供给和个体行为两层模型，并对多重检验进行 FDR 或 family-wise 调整。若能取得政策前后重复测量，可将分期政策和边界局部比较结合为事件研究或局部 DID。",
+  "feasibility_constraints": [
+    "现有二手调查若缺少发言和采纳项目，需要新增问卷或行政记录，不能由当前变量回填。",
+    "会议纪要的公开程度和跨村一致性可能较低。",
+    "必须区分普通村民参加村民代表会议的资格与实际方式。",
+    "需报告各层结果的样本流失、顶端编码和社会赞许偏差。"
+  ],
+  "reverse_search_queries": [
+    "China village meeting attendance voice agenda setting opinion uptake measurement political participation",
+    "村民大会 参会 发言 意见采纳 议程设置 政治参与 测量",
+    "village election nominal actual complete voting participation China proxy ballot"
+  ],
+  "novelty_scope": "Role 2 于 2026-09-03 完成中英文定向反向检索：未发现同一研究完整覆盖选举与会议的可及性—进入—发言—采纳阶梯；但 Luo et al. (2011) 已在同一村级研究连接选举与村民代表会议次数，Pang—Rozelle 与张同龙、张林秀已细分选举程序。因此只能称‘完整跨渠道参与阶梯’的限定性创新候选，不能称首次同时研究选举与会议。",
+  "falsification": "如果政策只改变自报参与而不改变可核验的会议供给、本人投票、发言或意见采纳，且差异可由社会赞许或问卷口径解释，则‘参与渠道重排’和测量贡献均不成立。",
+  "scores": {"originality": 4, "importance": 5, "evidence_support": 5, "feasibility": 4, "identification_credibility": 4, "profile_fit": 5}
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": "evidence-card/1.0",
+  "record_id": "10.19581/j.cnki.ciejournal.2021.10.006",
+  "zotero_item_key": "QEFDMEVY",
+  "bibtex_key": "hechenzhang2021",
+  "title": "人工智能技术应用与全球价值链竞争",
+  "authors": [
+    "何宇",
+    "陈珍珍",
+    "张建华"
+  ],
+  "year": 2021,
+  "venue": "中国工业经济 (10): 117-135",
+  "verification": {
+    "level": "claim-verified",
+    "sources": [
+      {
+        "type": "authoritative-bibliographic-record",
+        "url": "https://doi.org/10.19581/j.cnki.ciejournal.2021.10.006",
+        "provenance": "role2 candidate ledger; retained checkpoint"
+      },
+      {
+        "type": "inspected-local-fulltext",
+        "path": "work/runs/ai-token-economics-v1/role2-fulltext/he-chen-zhang-2021.txt",
+        "inspected_sections": "摘要；模型与参数校准部分"
+      }
+    ]
+  },
+  "research_question": "AI如何改变发达与发展中国家的价值链竞争？",
+  "method": {
+    "design": "16个经济体的多国多阶段模型校准与数值模拟",
+    "boundary": "限定于所列版本与定位；不将理论/模拟/综述当作生成式AI因果实证。"
+  },
+  "findings": [
+    {
+      "claim": "模型显示发展中国家可能同时面临上游升级困难与下游产业回流压力；属于条件模拟而非已识别的现实冲击。",
+      "locator": "摘要；模型与参数校准部分",
+      "evidence_kind": "text"
+    }
+  ],
+  "limitations": [
+    "不能将前生成式AI时代的机制证据直接外推为大模型的已实现效果。",
+    "本卡为有界续跑核验；未补造页码或未查验的量化系数。"
+  ],
+  "fulltext": {
+    "status": "local-only",
+    "inspected": true,
+    "path": "work/runs/ai-token-economics-v1/role2-fulltext/he-chen-zhang-2021.txt",
+    "source_url": "https://doi.org/10.19581/j.cnki.ciejournal.2021.10.006"
+  },
+  "provenance": {
+    "role": "evidence-zotero-citation-curator",
+    "date": "2026-09-04",
+    "mode": "resume-existing-evidence-no-new-zotero-write"
+  }
+}

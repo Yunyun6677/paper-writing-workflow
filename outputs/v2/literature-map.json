@@ -1,0 +1,691 @@
+{
+  "schema_version": "literature-map/1.0",
+  "map_id": "trade-rural-participation-v2-formal",
+  "research_question": "不同类型的国际贸易与开放政策如何改变政治代表、政府回应与农村居民和组织资源，并最终影响中国农村基层政治参与？",
+  "caption": "正式综述文献地图：从开放暴露类型，经居民资源与政治组织/治理能力，进入农村基层治理条件和参与结果，最终揭示跨领域证据链与识别缺口。创新评分和研究方案另见独立报告。",
+  "nodes": [
+    {
+      "id": "rq_trade_governance_participation",
+      "label": "开放经济如何经政治组织与农村治理影响基层政治参与？",
+      "type": "research-question",
+      "lane": 0,
+      "record_ids": [],
+      "locators": [
+        "project brief, Primary question"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "exp_import_competition",
+      "label": "不利进口竞争／贸易协定冲击",
+      "type": "exposure",
+      "lane": 1,
+      "record_ids": [
+        "10.1257/aer.20170011",
+        "10.1016/j.jinteco.2022.103652",
+        "10.1111/ajps.12358",
+        "10.1257/aer.20220425"
+      ],
+      "locators": [
+        "Autor et al. PDF pp.2,5",
+        "Che et al. PDF pp.2,35-36",
+        "Colantone-Stanig PDF pp.1-2,35",
+        "Choi et al. NBER preprint, abstract and Sections I-V"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "exp_export_opportunity",
+      "label": "出口机会与贸易扩张",
+      "type": "exposure",
+      "lane": 1,
+      "record_ids": [
+        "cn:chen-binkai-2020-trade-rural-poverty",
+        "cn:wang-zuo-2011-globalization-rural-labor"
+      ],
+      "locators": [
+        "陈思宇、陈斌开 PDF pp.1,9-12",
+        "王光栋、左家玲 PDF pp.1-4"
+      ],
+      "status": "established",
+      "confidence": "medium"
+    },
+    {
+      "id": "exp_ftz_policy_bundle",
+      "label": "自贸区综合政策包：贸易、投资、监管、产业与基础设施",
+      "type": "exposure",
+      "lane": 1,
+      "record_ids": [],
+      "locators": [
+        "用户工作稿；Role 4, Sections II and IV"
+      ],
+      "status": "contested",
+      "confidence": "medium"
+    },
+    {
+      "id": "mech_regional_adjustment",
+      "label": "地区就业、收入与经济风险重配",
+      "type": "mechanism",
+      "lane": 2,
+      "record_ids": [
+        "10.1257/aer.20170011",
+        "10.1111/ajps.12358",
+        "10.1257/aer.20220425",
+        "10.3386/w23209"
+      ],
+      "locators": [
+        "Autor et al. PDF pp.2,5,54-55",
+        "Colantone-Stanig PDF pp.1-2,35",
+        "Dippel et al. NBER w23209, Sections 2-4"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "mech_resident_resources",
+      "label": "居民侧：就业、迁移、在场时间、收入与社会网络",
+      "type": "mechanism",
+      "lane": 2,
+      "record_ids": [
+        "cn:chen-binkai-2020-trade-rural-poverty",
+        "stanford:pang-rozelle-2007-vote-confidence",
+        "10.1080/1369183X.2026.2621838"
+      ],
+      "locators": [
+        "陈思宇、陈斌开 PDF pp.9-12",
+        "Pang-Rozelle working paper, results and conclusion",
+        "Zhang-Zheng-Zhang (2026), results and mechanism sections"
+      ],
+      "status": "established",
+      "confidence": "medium"
+    },
+    {
+      "id": "mech_state_capacity_response",
+      "label": "政府侧：补偿、政策菜单与国家能力",
+      "type": "mechanism",
+      "lane": 2,
+      "record_ids": [
+        "10.18235/0011652",
+        "10.1257/aer.20181249"
+      ],
+      "locators": [
+        "Franco Chuaire et al. official PDF pp.3-7",
+        "Martinez-Bravo et al. PDF pp.4-5,35-36"
+      ],
+      "status": "established",
+      "confidence": "medium"
+    },
+    {
+      "id": "mech_local_org_resources",
+      "label": "组织侧：地方财政、上级项目、执行能力与纵向控制",
+      "type": "mechanism",
+      "lane": 2,
+      "record_ids": [
+        "10.1257/aer.20181249",
+        "10.1016/j.jpubeco.2003.07.004"
+      ],
+      "locators": [
+        "Martinez-Bravo et al. PDF pp.4-5,35-36",
+        "Zhang et al. PDF pp.3,19-25"
+      ],
+      "status": "contested",
+      "confidence": "medium"
+    },
+    {
+      "id": "cond_election_function",
+      "label": "选举的双重功能：基层问责与纵向组织工具",
+      "type": "condition",
+      "lane": 3,
+      "record_ids": [
+        "10.1257/aer.20181249",
+        "10.1016/j.jpubeco.2003.07.004"
+      ],
+      "locators": [
+        "Martinez-Bravo et al. PDF pp.1,4-5,35-36",
+        "Zhang et al. PDF pp.19-25"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "cond_access_procedure",
+      "label": "参与可及性与程序质量：在场、代投、本人投票、竞争",
+      "type": "condition",
+      "lane": 3,
+      "record_ids": [
+        "stanford:pang-rozelle-2007-vote-confidence",
+        "10.13821/j.cnki.ceq.2017.01.12",
+        "10.1525/as.2014.54.6.1009"
+      ],
+      "locators": [
+        "Pang-Rozelle working paper, voting protocol tables",
+        "张同龙、张林秀 PDF pp.1-3,15-16",
+        "Pang-Zeng-Rozelle PDF pp.1-3,20-22"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "cond_trust_networks",
+      "label": "政治信任、网络、知识与组织动员",
+      "type": "condition",
+      "lane": 3,
+      "record_ids": [
+        "10.19934/j.cnki.shxyj.2007.04.008",
+        "10.1525/as.2014.54.6.1009"
+      ],
+      "locators": [
+        "孙昕等 PDF pp.165-187",
+        "Pang-Zeng-Rozelle PDF pp.20-22"
+      ],
+      "status": "contested",
+      "confidence": "medium"
+    },
+    {
+      "id": "cond_org_resource_source",
+      "label": "正式／非正式组织、资源来源与公共品供给",
+      "type": "condition",
+      "lane": 3,
+      "record_ids": [
+        "10.1017/S0003055407070153",
+        "10.1017/S0003055415000155",
+        "10.1016/j.jpubeco.2003.07.004",
+        "10.13821/j.cnki.ceq.2017.01.12"
+      ],
+      "locators": [
+        "Tsai PDF pp.1-3,9-10,17-18",
+        "Xu-Yao PDF pp.2-4,18-20",
+        "张同龙、张林秀 PDF pp.15-16"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "outcome_reported_vote",
+      "label": "报告参加村委会选举投票",
+      "type": "outcome",
+      "lane": 4,
+      "record_ids": [
+        "stanford:pang-rozelle-2007-vote-confidence",
+        "10.19934/j.cnki.shxyj.2007.04.008",
+        "10.13821/j.cnki.ceq.2017.01.12"
+      ],
+      "locators": [
+        "Role 4, Section 5.1",
+        "张同龙、张林秀 PDF pp.1-3"
+      ],
+      "status": "established",
+      "confidence": "high"
+    },
+    {
+      "id": "outcome_meeting_entry",
+      "label": "进入村民会议场域的频次",
+      "type": "outcome",
+      "lane": 4,
+      "record_ids": [
+        "10.1017/S0003055410000079"
+      ],
+      "locators": [
+        "Olken PDF pp.2,24-26",
+        "Role 4, Section 5.2"
+      ],
+      "status": "contested",
+      "confidence": "medium"
+    },
+    {
+      "id": "outcome_voice_influence",
+      "label": "发言、议程、意见采纳、合法性与资源配置影响",
+      "type": "outcome",
+      "lane": 4,
+      "record_ids": [
+        "10.1017/S0003055410000079",
+        "10.1017/S0003055407070153",
+        "10.1017/S0003055415000155"
+      ],
+      "locators": [
+        "Olken PDF pp.24-26",
+        "Tsai PDF pp.17-18",
+        "Xu-Yao PDF pp.18-20"
+      ],
+      "status": "contested",
+      "confidence": "medium"
+    },
+    {
+      "id": "debate_institution_dependent_direction",
+      "label": "争议一：相近贸易损失为何产生不同投票与代表方向？",
+      "type": "debate",
+      "lane": 5,
+      "record_ids": [
+        "10.1257/aer.20170011",
+        "10.1016/j.jinteco.2022.103652",
+        "10.1111/ajps.12358",
+        "10.1257/aer.20220425"
+      ],
+      "locators": [
+        "Role 3, Section 2.1",
+        "Role 4, Section II"
+      ],
+      "status": "contested",
+      "confidence": "high"
+    },
+    {
+      "id": "debate_frequency_not_power",
+      "label": "争议二：参与频次、主观合法性与实际权力不能互换",
+      "type": "debate",
+      "lane": 5,
+      "record_ids": [
+        "10.1017/S0003055410000079",
+        "10.13821/j.cnki.ceq.2017.01.12",
+        "10.1017/S0003055415000155"
+      ],
+      "locators": [
+        "Olken PDF pp.24-26",
+        "张同龙、张林秀 PDF pp.15-16",
+        "Role 4, Section V"
+      ],
+      "status": "contested",
+      "confidence": "high"
+    },
+    {
+      "id": "gap_cross_field_chain",
+      "label": "交叉空白：贸易／开放政策→农村基层组织→村民参与的证据链尚未闭合",
+      "type": "gap",
+      "lane": 6,
+      "record_ids": [
+        "cn:chen-binkai-2020-trade-rural-poverty",
+        "10.1257/aer.20181249",
+        "10.1080/1369183X.2026.2621838"
+      ],
+      "locators": [
+        "Role 2, Sections 3 and 5",
+        "Role 3, Section V"
+      ],
+      "status": "gap",
+      "confidence": "medium"
+    },
+    {
+      "id": "gap_treatment_mechanism_measurement",
+      "label": "识别空白：政策包成分、居民侧／组织侧机制及参与质量未被同时区分",
+      "type": "gap",
+      "lane": 6,
+      "record_ids": [
+        "10.3386/w23209",
+        "stanford:pang-rozelle-2007-vote-confidence",
+        "10.1017/S0003055410000079"
+      ],
+      "locators": [
+        "Dippel et al. NBER w23209, mechanism identification sections",
+        "Role 4, Sections IV-VI"
+      ],
+      "status": "gap",
+      "confidence": "high"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e01",
+      "source": "rq_trade_governance_participation",
+      "target": "exp_import_competition",
+      "relation": "applies-to",
+      "record_ids": [
+        "10.1257/aer.20170011",
+        "10.1016/j.jinteco.2022.103652"
+      ],
+      "locators": [
+        "project brief",
+        "Autor et al. PDF pp.2,5",
+        "Che et al. PDF pp.2,35-36"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "进口竞争是开放政治后果文献的主要已识别暴露。"
+    },
+    {
+      "id": "e02",
+      "source": "rq_trade_governance_participation",
+      "target": "exp_export_opportunity",
+      "relation": "applies-to",
+      "record_ids": [
+        "cn:chen-binkai-2020-trade-rural-poverty"
+      ],
+      "locators": [
+        "project brief",
+        "陈思宇、陈斌开 PDF pp.1,9-12"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "出口机会更接近外贸进入中国农村家庭的正向机会面。"
+    },
+    {
+      "id": "e03",
+      "source": "rq_trade_governance_participation",
+      "target": "exp_ftz_policy_bundle",
+      "relation": "applies-to",
+      "record_ids": [
+        "user-draft:田皓允-9.2"
+      ],
+      "locators": [
+        "用户工作稿；Role 4 Section II"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "用户研究的处理是自贸区边界内综合政策暴露。"
+    },
+    {
+      "id": "e04",
+      "source": "exp_import_competition",
+      "target": "mech_regional_adjustment",
+      "relation": "causes",
+      "record_ids": [
+        "10.1257/aer.20170011",
+        "10.1111/ajps.12358",
+        "10.1257/aer.20220425"
+      ],
+      "locators": [
+        "Autor et al. PDF pp.2,5",
+        "Colantone-Stanig PDF pp.1-2",
+        "Choi et al. preprint Sections II-IV"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "多项准实验将地区进口暴露与就业及调整成本联系起来。"
+    },
+    {
+      "id": "e05",
+      "source": "mech_regional_adjustment",
+      "target": "debate_institution_dependent_direction",
+      "relation": "explains",
+      "record_ids": [
+        "10.1257/aer.20170011",
+        "10.1016/j.jinteco.2022.103652",
+        "10.1111/ajps.12358",
+        "10.1257/aer.20220425"
+      ],
+      "locators": [
+        "Role 4 Section II"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "经济损失进入选举政治，但政治供给和基线分化调节其方向。"
+    },
+    {
+      "id": "e06",
+      "source": "exp_export_opportunity",
+      "target": "mech_resident_resources",
+      "relation": "causes",
+      "record_ids": [
+        "cn:chen-binkai-2020-trade-rural-poverty"
+      ],
+      "locators": [
+        "陈思宇、陈斌开 PDF pp.9-12"
+      ],
+      "evidence_status": "direct",
+      "confidence": "medium",
+      "rationale": "出口冲击与外出务工、移民网络和家庭收入变化相联系。"
+    },
+    {
+      "id": "e07",
+      "source": "exp_ftz_policy_bundle",
+      "target": "mech_resident_resources",
+      "relation": "motivates",
+      "record_ids": [],
+      "locators": [
+        "用户工作稿机制分析；Role 4 Section VI"
+      ],
+      "evidence_status": "inferred",
+      "confidence": "low",
+      "rationale": "政策包可能改变就业、迁移和在场资源，但现有机制变量仅是政策后约化式结果。"
+    },
+    {
+      "id": "e08",
+      "source": "exp_ftz_policy_bundle",
+      "target": "mech_local_org_resources",
+      "relation": "motivates",
+      "record_ids": [],
+      "locators": [
+        "用户工作稿；Role 3 Section IV"
+      ],
+      "evidence_status": "inferred",
+      "confidence": "low",
+      "rationale": "财政、项目和执行能力是待检验组织桥梁，当前没有直接识别。"
+    },
+    {
+      "id": "e09",
+      "source": "mech_state_capacity_response",
+      "target": "mech_local_org_resources",
+      "relation": "applies-to",
+      "record_ids": [
+        "10.18235/0011652",
+        "10.1257/aer.20181249"
+      ],
+      "locators": [
+        "Franco Chuaire et al. PDF pp.3-7",
+        "Martinez-Bravo et al. PDF pp.35-36"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "medium",
+      "rationale": "宏观政策菜单与村级自治研究共同提示国家能力会重配政策和组织资源，但层级不同。"
+    },
+    {
+      "id": "e10",
+      "source": "mech_local_org_resources",
+      "target": "cond_election_function",
+      "relation": "moderates",
+      "record_ids": [
+        "10.1257/aer.20181249"
+      ],
+      "locators": [
+        "Martinez-Bravo et al. PDF pp.4-5,35-36"
+      ],
+      "evidence_status": "direct",
+      "confidence": "medium",
+      "rationale": "地区政府资源与纵向控制需求改变自治和选举的组织功能。"
+    },
+    {
+      "id": "e11",
+      "source": "mech_resident_resources",
+      "target": "cond_access_procedure",
+      "relation": "explains",
+      "record_ids": [
+        "stanford:pang-rozelle-2007-vote-confidence",
+        "10.1080/1369183X.2026.2621838"
+      ],
+      "locators": [
+        "Pang-Rozelle working paper, results",
+        "Zhang-Zheng-Zhang (2026), results"
+      ],
+      "evidence_status": "direct",
+      "confidence": "medium",
+      "rationale": "迁移和经济利益脱嵌与真实投票可及性及弃权相关，但后者为观察性证据。"
+    },
+    {
+      "id": "e12",
+      "source": "cond_access_procedure",
+      "target": "outcome_reported_vote",
+      "relation": "explains",
+      "record_ids": [
+        "stanford:pang-rozelle-2007-vote-confidence",
+        "10.13821/j.cnki.ceq.2017.01.12",
+        "10.1525/as.2014.54.6.1009"
+      ],
+      "locators": [
+        "Pang-Rozelle voting protocol tables",
+        "张同龙、张林秀 PDF pp.1-3",
+        "Pang-Zeng-Rozelle PDF pp.20-22"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "名义投票、本人投票和完整参与具有不同含义，知识也不是行动的充分条件。"
+    },
+    {
+      "id": "e13",
+      "source": "cond_trust_networks",
+      "target": "outcome_reported_vote",
+      "relation": "explains",
+      "record_ids": [
+        "10.19934/j.cnki.shxyj.2007.04.008",
+        "10.1525/as.2014.54.6.1009"
+      ],
+      "locators": [
+        "孙昕等 PDF pp.165-187",
+        "Pang-Zeng-Rozelle PDF pp.20-22"
+      ],
+      "evidence_status": "direct",
+      "confidence": "medium",
+      "rationale": "信任和组织成员身份与投票相关，知识干预的行为转化受社会障碍约束。"
+    },
+    {
+      "id": "e14",
+      "source": "cond_election_function",
+      "target": "outcome_reported_vote",
+      "relation": "moderates",
+      "record_ids": [
+        "10.1257/aer.20181249",
+        "10.1016/j.jpubeco.2003.07.004"
+      ],
+      "locators": [
+        "Martinez-Bravo et al. PDF pp.1,4-5",
+        "Zhang et al. PDF pp.19-25"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "medium",
+      "rationale": "参与某一选举渠道的效能取决于该制度实际承担问责还是纵向治理功能。"
+    },
+    {
+      "id": "e15",
+      "source": "cond_org_resource_source",
+      "target": "outcome_voice_influence",
+      "relation": "explains",
+      "record_ids": [
+        "10.1017/S0003055407070153",
+        "10.1017/S0003055415000155",
+        "10.13821/j.cnki.ceq.2017.01.12"
+      ],
+      "locators": [
+        "Tsai PDF pp.17-18",
+        "Xu-Yao PDF pp.18-20",
+        "张同龙、张林秀 PDF pp.15-16"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "公共品可能来自非正式问责、集体融资或正式参与，资源来源改变参与的制度含义。"
+    },
+    {
+      "id": "e16",
+      "source": "outcome_meeting_entry",
+      "target": "debate_frequency_not_power",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "10.1017/S0003055410000079"
+      ],
+      "locators": [
+        "Olken PDF pp.24-26",
+        "Role 4 Section 5.2"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "进入程序与主观合法性可以变化，而最终项目选择不一定相应变化。"
+    },
+    {
+      "id": "e17",
+      "source": "outcome_reported_vote",
+      "target": "debate_frequency_not_power",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "stanford:pang-rozelle-2007-vote-confidence",
+        "10.13821/j.cnki.ceq.2017.01.12"
+      ],
+      "locators": [
+        "Pang-Rozelle working paper",
+        "张同龙、张林秀 PDF pp.1-3"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "报告参加不能替代本人投票、完整程序或有效授权。"
+    },
+    {
+      "id": "e18",
+      "source": "outcome_voice_influence",
+      "target": "debate_frequency_not_power",
+      "relation": "supports",
+      "record_ids": [
+        "10.1017/S0003055410000079",
+        "10.1017/S0003055415000155"
+      ],
+      "locators": [
+        "Olken PDF pp.24-26",
+        "Xu-Yao PDF pp.18-20"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "medium",
+      "rationale": "实际影响需要议程、采纳或资源配置结果，而不能由频次反推。"
+    },
+    {
+      "id": "e19",
+      "source": "debate_institution_dependent_direction",
+      "target": "gap_cross_field_chain",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "10.1257/aer.20170011",
+        "10.1016/j.jinteco.2022.103652",
+        "10.1257/aer.20181249"
+      ],
+      "locators": [
+        "Role 2 Section 3",
+        "Role 3 Section V"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "贸易政治文献主要止于竞争性选举，农村治理文献通常不把开放当作处理。"
+    },
+    {
+      "id": "e20",
+      "source": "mech_resident_resources",
+      "target": "gap_cross_field_chain",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "cn:chen-binkai-2020-trade-rural-poverty",
+        "10.1080/1369183X.2026.2621838"
+      ],
+      "locators": [
+        "Role 2 Sections 2.3 and 3"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "medium",
+      "rationale": "开放到迁移、迁移到基层参与各有邻接证据，但尚未形成同一因果设计。"
+    },
+    {
+      "id": "e21",
+      "source": "exp_ftz_policy_bundle",
+      "target": "gap_treatment_mechanism_measurement",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "user-draft:田皓允-9.2"
+      ],
+      "locators": [
+        "用户工作稿；Role 4 Sections II, IV-VI"
+      ],
+      "evidence_status": "direct",
+      "confidence": "high",
+      "rationale": "工作稿的政策包、机制和结果构念需要进一步分解。"
+    },
+    {
+      "id": "e22",
+      "source": "debate_frequency_not_power",
+      "target": "gap_treatment_mechanism_measurement",
+      "relation": "reveals-gap",
+      "record_ids": [
+        "10.1017/S0003055410000079",
+        "10.13821/j.cnki.ceq.2017.01.12"
+      ],
+      "locators": [
+        "Role 4 Section V"
+      ],
+      "evidence_status": "synthesized",
+      "confidence": "high",
+      "rationale": "当前二元投票和会议次数不能覆盖参与质量阶梯。"
+    }
+  ]
+}

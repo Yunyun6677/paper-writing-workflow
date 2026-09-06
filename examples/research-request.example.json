@@ -1,0 +1,20 @@
+{
+  "schema_version": "research-request/1.0",
+  "request_id": "replace-with-a-uuid",
+  "research_question": "How does a digital technology shock affect firm productivity and labor demand?",
+  "concepts": [
+    "artificial intelligence",
+    "productivity",
+    "labor demand",
+    "firm organization"
+  ],
+  "date_range": {
+    "from": 2000,
+    "to": null
+  },
+  "languages": ["en", "zh-CN"],
+  "sources": ["OpenAlex", "Crossref", "RePEc", "NBER", "CNKI-export"],
+  "target_collection": "01_research_projects/example-project",
+  "max_results_per_source": 100,
+  "notes": "Verify every record and inspect lawfully acquired full text before substantive synthesis."
+}

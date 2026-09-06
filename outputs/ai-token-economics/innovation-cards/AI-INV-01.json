@@ -1,0 +1,52 @@
+{
+  "schema_version": "innovation-card/1.0",
+  "status": "potential-direction",
+  "novelty_scope": "仅依据本轮已核验语料和角色报告形成建议。最新推理市场与价格指数候选尚未完成全文核验；没有完成由角色2签署的针对本卡的反向检索，不称首次或确定创新。",
+  "reverse_search_status": "pending",
+  "feasibility_audit": "依据 role4-methods.md 第6及第8节作方案级约束；最终样本量、成本和合作可用性未获验证。",
+  "innovation_id": "AI-INV-01",
+  "rank": 1,
+  "title": "随机 token 预算对达标任务、人工复核与学习的影响",
+  "type": "identification-contribution",
+  "gap": {
+    "statement": "当前核验的工具访问和采用研究不能单独识别给定模型下随机额度的效果；这不是声称学界没有预算实验。"
+  },
+  "nearest_prior_work": [
+    "10.1093/qje/qjae044",
+    "10.3386/w32966",
+    "10.3386/w33777"
+  ],
+  "map_node_ids": [
+    "G-PRICE",
+    "G-USE",
+    "G-FIRM"
+  ],
+  "contribution": "固定模型和任务池，随机分配低、中、高额度，测量预算政策的局部处理效应；不把额外token自动解释为生产率。",
+  "expected_evidence": [
+    "预算改变调用和重试；达标质量、人工复核时间与错误率可能呈非线性",
+    "异质性按处理前技能和任务可验证性预注册"
+  ],
+  "data_requirements": [
+    "任务ID、匿名参与者与团队ID、分配预算、模型版本、输入输出缓存推理token",
+    "盲评质量、人工时间、失败与重试、退出和跨账户使用"
+  ],
+  "identification_strategy": "分层随机化并按协作结构聚类，ITT为主要估计量。预算可能改变任务选择、计划和努力，因此默认不把预算作为token数量的有效工具变量；排除限制与单调性有额外依据时才报告局部IV。预算不是价格，不能直接估计需求价格弹性。",
+  "feasibility_constraints": [
+    "先进行小规模流程试点，正式样本量按试点方差、最小可检测效应、聚类和失访作功效分析，不预先保证100—300人足够",
+    "固定版本或显式记录模型更新；知情同意、不与课程成绩挂钩"
+  ],
+  "reverse_search_queries": [
+    "\"token budget\" randomized experiment productivity economics",
+    "\"API credits\" generative AI field experiment",
+    "生成式人工智能 额度 预算 随机实验"
+  ],
+  "falsification": "预算确实提高使用量但未改善质量、时间或复核成本，将削弱额外推理投入改善生产的解释；不显著但区间很宽不能据此宣称零效应。",
+  "scores": {
+    "originality": 2,
+    "importance": 5,
+    "evidence_support": 4,
+    "feasibility": 4,
+    "identification_credibility": 4,
+    "profile_fit": 5
+  }
+}
