@@ -1,0 +1,9 @@
+COMMAND: Rscript --vanilla plot_coefficients.R
+
+STDOUT
+null device 
+          1 
+null device 
+          1 
+
+STDERR

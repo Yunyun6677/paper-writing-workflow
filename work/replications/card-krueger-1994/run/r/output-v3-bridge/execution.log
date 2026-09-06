@@ -1,0 +1,5 @@
+COMMAND: Rscript --vanilla replicate.R
+
+STDOUT
+
+STDERR

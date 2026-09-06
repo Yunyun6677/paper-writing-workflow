@@ -1,0 +1,60 @@
+{
+  "schema_version": "replication-bundle/1.0",
+  "project_id": "card-krueger-1994-selected-results",
+  "status": "complete",
+  "release_date": "2026-09-06",
+  "scope": "Table 3 headline DID and Table 4 columns 1-5 only",
+  "paper": {
+    "title": "Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania",
+    "authors": ["David Card", "Alan B. Krueger"],
+    "year": 1994,
+    "journal": "American Economic Review",
+    "nber_doi": "10.3386/w4509",
+    "journal_identifier": "JSTOR 2118030"
+  },
+  "sources": [
+    {
+      "role": "author_data_archive",
+      "url": "https://davidcard.berkeley.edu/data_sets/njmin.zip",
+      "redistributed": false,
+      "bytes": 23017,
+      "sha256": "41a29aec6b489658b20030d044a2b20a5f5a04b871cde41df057afd6013ba587"
+    },
+    {
+      "role": "extracted_source_data",
+      "path_in_archive": "public.dat",
+      "redistributed": false,
+      "bytes": 82410,
+      "sha256": "04bde0cad5540980f32ce099c6dad369e2f05494698071d8a65b3e1cbe9ca53a"
+    },
+    {
+      "role": "author_paper_pdf",
+      "url": "https://davidcard.berkeley.edu/papers/min-wage-ff-nj.pdf",
+      "redistributed": false,
+      "bytes": 595695,
+      "sha256": "ee1c49a69983b1d274c8c50dabb2cee8734b37e8dcf01af8cfee07673d6d86c9"
+    }
+  ],
+  "engines": ["python", "stata", "r"],
+  "public_artifacts": {
+    "python_table3_sha256": "ad2a308fb6128cea658f26d68fd7bb33aa35867f5748f0ec181886513c72e881",
+    "python_table4_sha256": "27a8d7026b00b4bff1a2468ad096c7acbabf49e36ea78bfad8b05da9a7099a8d",
+    "stata_table4_sha256": "27c34b1030b406b542e3e7d406dd91a9d2702b87c5eeb9c2dbe36603b40f2881",
+    "r_table4_sha256": "9f5c49bdf13660d08518d19cc9f0d498dbb774eeb71d994f16fc9da664cf4255",
+    "parity_receipt_sha256": "d4f1f7235b48727cfc6a7dcbf7a8737436f41ded302259a64327c1159062345e",
+    "coefficient_plot_svg_sha256": "d67b13550de1cf3df2e69d8551c0432006dc874fd282ddf810e013a6d0e54771",
+    "coefficient_plot_png_sha256": "2c0bf926e3051f7160142221915ec14d9df85126b9919300b5d3a3cd5037058b"
+  },
+  "verification": {
+    "all_engine_status": "complete",
+    "matching_n_and_residual_df": true,
+    "maximum_cross_engine_coefficient_delta": 1.2079226507921703e-13,
+    "maximum_cross_engine_standard_error_delta": 4.796163466380676e-14,
+    "maximum_paper_rounding_delta": 0.00466544
+  },
+  "limitations": [
+    "This is a selected-results replication, not a full-paper replication.",
+    "Numerical parity does not independently validate the causal design.",
+    "Raw and derived data are intentionally excluded from the repository."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "engine-execution/1.0",
+  "status": "complete",
+  "engine": "r",
+  "mode": "coefficient-plot",
+  "executable_name": "Rscript.exe",
+  "source_sha256": "27a8d7026b00b4bff1a2468ad096c7acbabf49e36ea78bfad8b05da9a7099a8d",
+  "script_sha256": "800b8746078b33c87fcd4e73d85af42ff53c99f789574106cc3fd7961a5aa06e",
+  "artifacts": [
+    {
+      "path": "coefficients.csv",
+      "bytes": 318,
+      "sha256": "27a8d7026b00b4bff1a2468ad096c7acbabf49e36ea78bfad8b05da9a7099a8d"
+    },
+    {
+      "path": "coefficient-plot.svg",
+      "bytes": 57674,
+      "sha256": "d67b13550de1cf3df2e69d8551c0432006dc874fd282ddf810e013a6d0e54771"
+    },
+    {
+      "path": "coefficient-plot.png",
+      "bytes": 9958,
+      "sha256": "2c0bf926e3051f7160142221915ec14d9df85126b9919300b5d3a3cd5037058b"
+    },
+    {
+      "path": "session-info.txt",
+      "bytes": 644,
+      "sha256": "1512cbaa320a7953906fc934f6afd15c6ef30137baaf9b34b3914db8d588a506"
+    },
+    {
+      "path": "R_COMPLETE.txt",
+      "bytes": 10,
+      "sha256": "5963977da4c2cb333a978aa0daa86f36234831cd8bc416443ca9087268bc8645"
+    },
+    {
+      "path": "execution.log",
+      "bytes": 124,
+      "sha256": "270c95b5cd372b5cd3d7b4e38a4324f091144b389e673df9a9cb909c3664f10f"
+    }
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 0.635
+}

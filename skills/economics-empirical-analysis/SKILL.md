@@ -1,6 +1,6 @@
 ---
 name: economics-empirical-analysis
-description: Run reproducible economics empirical workflows with Python and Stata, ingest DTA/Excel/CSV data, preserve provenance, audit model specifications, and hand structured results to writing agents. Use for data preparation, empirical estimation, robustness checks, or replication packages; not for selecting specifications to manufacture significance.
+description: Run reproducible economics empirical workflows with Python, Stata, and R; ingest DTA/Excel/CSV data, preserve provenance, audit model specifications, create R graphics, and hand structured results to writing agents. Use for data preparation, empirical estimation, robustness checks, or replication packages; not for selecting specifications to manufacture significance.
 ---
 
 # Economics Empirical Analysis
@@ -32,4 +32,8 @@ The bundled runner supports CSV, XLSX and DTA input; explicit missing-code conve
 
 Stata: read [stata-handoff.md](references/stata-handoff.md). The configured Stata/SE 16 installation uses an isolated Windows batch process and has passed both a synthetic smoke test and Python–Stata parity tests for the v1 estimators. Stata 17+ may use official PyStata only after a fresh parity test. Never inspect/copy license files or alter the user's existing Stata session.
 
-Before delivery, verify bundle hashes and report actual statuses for the requested run. Stata support is limited to the estimators exercised by parity tests; do not generalize that certificate to staged methods. Cloud remains awaiting a user-selected destination and authorization. Hand the downstream agent `bundle.json`, not a free-text summary alone.
+R: read [r-handoff.md](references/r-handoff.md). Use an isolated `Rscript --vanilla` process, explicit inputs, a new output directory, an R-written completion marker, captured `sessionInfo()`, and hashed artifacts. The base-R coefficient plot is a supported interchange output; package-dependent analysis requires a project-local lockfile and a new parity certificate.
+
+When learning from published replication packages, read [replication-catalog.md](references/replication-catalog.md). Treat catalog entries as queued, source-verified, partially executed, or executed—never collapse these statuses. Port a method only after its estimand, sample, weights, uncertainty and assumptions are explicit.
+
+Before delivery, verify bundle hashes and report actual statuses for the requested run. Stata and R support is limited to the estimators and graphics exercised by their certificates; do not generalize them to staged methods. Cloud remains awaiting a user-selected destination and authorization. Hand the downstream agent `bundle.json` plus engine receipts, not a free-text summary alone.

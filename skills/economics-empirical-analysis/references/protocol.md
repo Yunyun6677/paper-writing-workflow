@@ -4,7 +4,7 @@
 
 Record question, observational unit, population, dependent variable, exposure/treatment, time scale, estimand, sampling/weights, design assumptions and literature-project ID. This v1 accepts a question and explicit model list for execution; it cannot infer valid identification. Treat unspecified weights/design as unresolved, not as permission to call an association causal. Restrict real-data summaries in chat to aggregates and avoid exposing household identifiers.
 
-Logical responsibilities (not a claim of seven separately executed models): coordinator; data/provenance custodian; measurement/cleaning; identification reviewer; Python/Stata executor; replication/robustness auditor; tables/writing handoff. Use separate agents only when authorized and useful; otherwise stage these responsibilities locally.
+Logical responsibilities (not a claim of seven separately executed models): coordinator; data/provenance custodian; measurement/cleaning; identification reviewer; Python/Stata/R executor; replication/robustness auditor; tables/writing handoff. Use separate agents only when authorized and useful; otherwise stage these responsibilities locally.
 
 ## Data and run layout
 
@@ -22,7 +22,7 @@ Before results, register `spec_id`, purpose (`primary`, `robustness`, `explorato
 
 ## Downstream acceptance
 
-`bundle.json` contains request/source/code hashes, environment versions, relative artifact paths and model statuses. A writing agent checks `verify`, then reads coefficients together with CI, covariance type, N, sample exclusions, unit definitions and limitations. Generated figures show coefficients with 95% CIs, not causal confirmation. Failed/partial bundles cannot be passed as completed analyses. Publication disclosure/rounding and small-cell suppression remain a human-reviewed downstream step.
+`bundle.json` contains request/source/code hashes, environment versions, relative artifact paths and model statuses. Each external engine adds an `engine-execution/1.0` receipt with relative paths and SHA-256. A writing agent checks `verify`, then reads coefficients together with CI, covariance type, N, sample exclusions, unit definitions and limitations. Generated figures show coefficients with 95% CIs, not causal confirmation. Failed/partial bundles cannot be passed as completed analyses. Publication disclosure/rounding and small-cell suppression remain a human-reviewed downstream step.
 
 ## Upload and cloud backup gate
 

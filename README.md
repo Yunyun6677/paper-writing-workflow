@@ -1,10 +1,10 @@
 # Social Science Paper-Writing Workflow
 
-一套面向经济学、管理学与政治学研究的开放、可审计论文工作流。项目将文献检索与 Zotero 归档、结构化综述、文献地图、创新点发现，以及 Python–Stata 实证分析连接成统一的数据契约，方便不同 agent 和人工环节可靠交接。
+一套面向经济学、管理学与政治学研究的开放、可审计论文工作流。项目将文献检索与 Zotero 归档、结构化综述、文献地图、创新点发现，以及 Python–Stata–R 实证分析连接成统一的数据契约，方便不同 agent 和人工环节可靠交接。
 
-**当前公开版本：v0.1.0（2026-09-06）**
+**当前公开版本：v0.2.0（2026-09-06）**
 
-> 当前状态：可复用原型。文献综述与实证分析两个 skill 已完成；Stata 16 批处理桥、Python–Stata 一致性测试和一项真实论文的局部复现已经跑通。云备份与更多因果推断设计仍在路线图中。历次变化见 [CHANGELOG.md](CHANGELOG.md)。
+> 当前状态：可复用原型。文献综述与实证分析两个 skill 已完成；Python、Stata 16 与 R 4.6.1 的标准接口和跨引擎一致性测试已跑通，两项真实论文的局部复现可供审计。云备份与更多因果推断设计仍在路线图中。历次变化见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 能做什么
 
@@ -15,7 +15,8 @@
 | 研究设计 | 概念—机制—结果梳理、文献地图、独立创新点组合 | JSON/SVG 地图、创新卡 |
 | 实证分析 | CSV/XLSX/DTA 摄取、清洗审计、OLS/固定效应、稳健或聚类标准误 | 结果表、图、报告、哈希清单 |
 | Stata 协作 | Stata 16 独立批处理、完成标记、Python–Stata 数值比对 | `.do`、结果 CSV、执行回执 |
-| 论文复现 | 公开材料下载说明、原始结果追踪、双引擎复核 | 复现报告与可复现代码 |
+| R 协作 | R 独立批处理、任意分析脚本桥、SVG/PNG 绘图、环境记录 | `.R`、图形、会话信息、执行回执 |
+| 论文复现 | 公开材料下载说明、原始结果追踪、三引擎复核 | 复现报告与可复现代码 |
 
 ## 工作流
 
@@ -25,9 +26,9 @@
    │                         ↓
    │             证据卡 → 文献地图 → 文献综述
    │                              └→ 独立创新点报告
-   └─→ 实证请求 → 数据摄取 → Python / Stata → 一致性审计
-                                      ↓
-                             可验证结果包 → 论文写作
+   └─→ 实证请求 → 数据摄取 → Python / Stata / R → 一致性审计
+                                          ↓
+                                 可验证结果包 → 论文写作
 ```
 
 各阶段不依赖自由文本“口头交接”，而使用 `schemas/` 和 skill 内的 JSON Schema。无法取得的重要全文会形成明确的人类交接项，不会被静默遗漏。
@@ -38,7 +39,7 @@
 .
 ├─ skills/
 │  ├─ social-science-literature-review/  # 文献综述专家 skill
-│  └─ economics-empirical-analysis/       # Python–Stata 实证 skill
+│  └─ economics-empirical-analysis/       # Python–Stata–R 实证 skill
 ├─ schemas/                               # 跨模块数据契约
 ├─ scripts/                               # 通用工作流与 Zotero 工具
 ├─ config/                                # 可公开配置模板
@@ -62,7 +63,8 @@ py -m venv .venv-empirical
 运行实证模块测试：
 
 ```powershell
-./.venv-empirical/Scripts/python.exe -m unittest skills/economics-empirical-analysis/scripts/test_empirical.py
+./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/test_empirical.py
+./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/test_r_bridge.py
 ```
 
 ### 2. 创建本地研究画像
@@ -89,16 +91,38 @@ $env:STATA_EXE = "C:/Program Files/Stata18/StataSE-64.exe"
 
 Stata 16 使用可审计的批处理桥；Stata 17 及以上可在重新通过一致性测试后评估官方 PyStata。
 
+### 5. 连接 R 与生成图形
+
+安装 R 后，将 `R_SCRIPT` 指向 `Rscript.exe`。R 桥支持环境自检、结构化分析脚本和标准系数图；所有任务使用新输出目录并生成 `engine-execution/1.0` 回执：
+
+```powershell
+$env:R_SCRIPT = "C:/Program Files/R/R-4.6.1/bin/Rscript.exe"
+./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/r_bridge.py --smoke --output work/r-smoke
+./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/r_bridge.py --plot --input PATH_TO/coefficients.csv --output work/r-plot
+```
+
+任意 R 分析脚本还可通过 `--analysis --input ... --analysis-script ... --output ...` 运行。脚本必须写入完成标记、会话信息和至少一个 CSV/JSON 结果，桥接层负责日志、哈希与失败留痕。
+
 ## 已验证复现案例
 
-项目复现了 Autor、Dorn 与 Hanson（2013）*The China Syndrome* 的 Table 3 第 1–6 列。Python 与 Stata 的最大系数绝对差为 `5.17e-13`，最大标准误绝对差为 `3.86e-09`，并与作者公布的舍入结果一致。
+项目现有两个真实数据案例：
+
+1. Autor、Dorn 与 Hanson（2013）*The China Syndrome* 的 Table 3 第 1–6 列。Python 与 Stata 的最大系数绝对差为 `5.17e-13`，最大标准误绝对差为 `3.86e-09`，并与作者公布的舍入结果一致。
 
 - [复现报告](work/replications/adh2013-china-syndrome/REPORT.md)
 - [Stata 代码](work/replications/adh2013-china-syndrome/run/stata/replicate_table3.do)
 - [Python 代码](work/replications/adh2013-china-syndrome/run/python/replicate_table3.py)
 - [公开结果清单](work/replications/adh2013-china-syndrome/replication_bundle.public.json)
 
-论文 PDF、作者原始数据及压缩包没有在本仓库重新分发。公开结果清单保存来源 URL 和 SHA-256；下载作者材料后，可将数据路径显式传给两个脚本。该案例只声称复现指定表格，不把数值一致误写为对识别假设的独立验证。
+2. Card 与 Krueger（1994）*Minimum Wages and Employment* 的 Table 3 核心 DID 与 Table 4 第 1–5 列。Python、Stata 16 与 R 4.6.1 的最大跨引擎差低于 `1.21e-13`，并生成了 R 系数图。
+
+- [复现报告](work/replications/card-krueger-1994/REPORT.md)
+- [Python、Stata 与 R 代码](work/replications/card-krueger-1994/run/)
+- [三引擎一致性回执](work/replications/card-krueger-1994/run/parity-v2.json)
+- [公开结果清单](work/replications/card-krueger-1994/replication_bundle.public.json)
+- [可继续执行的方法目录](skills/economics-empirical-analysis/references/replication-catalog.md)
+
+论文 PDF、作者原始数据及压缩包没有在本仓库重新分发。公开结果清单保存来源 URL 和 SHA-256；下载作者材料后，可将数据路径显式传给脚本。每个案例只声称复现指定表格，不把数值一致误写为对识别假设的独立验证。
 
 ## 示例成果
 
@@ -121,7 +145,7 @@ Stata 16 使用可审计的批处理桥；Stata 17 及以上可在重新通过�
 
 ## 路线图
 
-- 增加 DID、IV、RD、面板与调查抽样设计的独立审计门。
+- 增加现代 DID、IV、RD、面板与调查抽样设计的独立审计门。
 - 为 OSF、Zenodo 或机构存储增加显式授权的加密备份适配器。
 - 增加可移植的项目初始化器、持续集成和跨版本 Stata 证书。
 - 把 Zotero 获取台账、实证结果包和写作引用进一步统一为端到端项目 manifest。

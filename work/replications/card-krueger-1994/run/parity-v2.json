@@ -1,0 +1,31 @@
+{
+  "schema_version": "replication-parity/1.0",
+  "status": "complete",
+  "engines": [
+    "python",
+    "stata",
+    "r"
+  ],
+  "max_abs_deltas": {
+    "python_stata_coefficient": 7.460698725481052e-14,
+    "python_stata_standard_error": 3.019806626980426e-14,
+    "python_r_coefficient": 6.572520305780927e-14,
+    "python_r_standard_error": 1.7763568394002505e-14,
+    "stata_r_coefficient": 1.2079226507921703e-13,
+    "stata_r_standard_error": 4.796163466380676e-14
+  },
+  "inputs": {
+    "python": {
+      "sha256": "27a8d7026b00b4bff1a2468ad096c7acbabf49e36ea78bfad8b05da9a7099a8d",
+      "bytes": 318
+    },
+    "stata": {
+      "sha256": "27c34b1030b406b542e3e7d406dd91a9d2702b87c5eeb9c2dbe36603b40f2881",
+      "bytes": 312
+    },
+    "r": {
+      "sha256": "9f5c49bdf13660d08518d19cc9f0d498dbb774eeb71d994f16fc9da664cf4255",
+      "bytes": 322
+    }
+  }
+}

@@ -51,6 +51,20 @@ work/replications/adh2013-china-syndrome/source/
 work/replications/adh2013-china-syndrome/original/
 work/replications/adh2013-china-syndrome/replication_bundle.json
 work/replications/adh2013-china-syndrome/run/stata/table3_results.dta
+!work/replications/card-krueger-1994/
+work/replications/card-krueger-1994/source/
+work/replications/card-krueger-1994/original/
+work/replications/card-krueger-1994/run/python/output-v2/
+work/replications/card-krueger-1994/run/python/output-v3/analysis.csv
+work/replications/card-krueger-1994/run/r/output-v1/
+work/replications/card-krueger-1994/run/r/output-v2/
+work/replications/card-krueger-1994/run/stata/output-v1/
+work/replications/card-krueger-1994/run/stata/output-v2/
+work/replications/card-krueger-1994/run/stata/output-v3/
+work/replications/card-krueger-1994/run/r-plot-v1/
+work/replications/card-krueger-1994/run/parity.json
+!work/replications/card-krueger-1994/run/r/output-v3-bridge/execution.log
+!work/replications/card-krueger-1994/run/r-plot-v2/execution.log
 
 # OS and editor noise
 .DS_Store

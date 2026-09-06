@@ -1,0 +1,33 @@
+{
+  "schema_version": "engine-execution/1.0",
+  "status": "complete",
+  "engine": "r",
+  "mode": "analysis",
+  "executable_name": "Rscript.exe",
+  "source_sha256": "787fadb90d17c68c671fbff49603a409f033a9d839b6417bddcb386f840d1923",
+  "script_sha256": "5387277349c0fb866bc40327cf14d6f3ea8e545b92853993c4a88dbc34e7c597",
+  "artifacts": [
+    {
+      "path": "execution.log",
+      "bytes": 60,
+      "sha256": "0959faa77526ee85a0f2c92ae54a9f2b06f6b3ae064d928cab6bf48845cae3cc"
+    },
+    {
+      "path": "R_COMPLETE.txt",
+      "bytes": 10,
+      "sha256": "5963977da4c2cb333a978aa0daa86f36234831cd8bc416443ca9087268bc8645"
+    },
+    {
+      "path": "session-info.txt",
+      "bytes": 644,
+      "sha256": "1512cbaa320a7953906fc934f6afd15c6ef30137baaf9b34b3914db8d588a506"
+    },
+    {
+      "path": "table4_results.csv",
+      "bytes": 322,
+      "sha256": "9f5c49bdf13660d08518d19cc9f0d498dbb774eeb71d994f16fc9da664cf4255"
+    }
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 1.484
+}

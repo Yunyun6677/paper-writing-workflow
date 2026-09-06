@@ -1,0 +1,13 @@
+{
+  "schema_version": "replication-receipt/1.0",
+  "status": "complete",
+  "paper_identifier": "JSTOR:2118030",
+  "working_paper_doi": "10.3386/w4509",
+  "source_sha256": "04bde0cad5540980f32ce099c6dad369e2f05494698071d8a65b3e1cbe9ca53a",
+  "records": 410,
+  "unique_sheet_ids": 409,
+  "duplicate_sheet_records": 2,
+  "analysis_sample": 357,
+  "table3_did": 2.753605782980582,
+  "author_rounded_max_abs_delta": 0.004665440253401876
+}
