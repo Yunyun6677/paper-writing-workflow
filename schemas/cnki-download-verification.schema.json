@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CNKI download verification",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "verified_at",
+    "expected_title",
+    "status",
+    "source_file",
+    "archive_file",
+    "format",
+    "size",
+    "sha256",
+    "page_count",
+    "title_similarity",
+    "checks",
+    "errors"
+  ],
+  "properties": {
+    "schema_version": {"const": "cnki-download-verification/1.0"},
+    "verified_at": {"type": "string", "format": "date-time"},
+    "expected_title": {"type": "string", "minLength": 1},
+    "status": {"enum": ["fulltext-verified", "needs-human"]},
+    "source_file": {"type": ["string", "null"]},
+    "archive_file": {"type": ["string", "null"]},
+    "format": {"enum": ["pdf", "caj", null]},
+    "size": {"type": ["integer", "null"], "minimum": 0},
+    "sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "page_count": {"type": ["integer", "null"], "minimum": 0},
+    "title_similarity": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "checks": {"type": "array", "items": {"type": "string"}},
+    "errors": {"type": "array", "items": {"type": "string"}}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "fulltext-verified"}}},
+      "then": {
+        "properties": {
+          "source_file": {"type": "string", "minLength": 1},
+          "archive_file": {"type": "string", "minLength": 1},
+          "format": {"enum": ["pdf", "caj"]},
+          "size": {"type": "integer", "minimum": 50000},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "errors": {"maxItems": 0}
+        }
+      }
+    }
+  ]
+}

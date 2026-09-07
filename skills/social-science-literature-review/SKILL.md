@@ -14,6 +14,7 @@ Produce a traceable literature review whose claims can be followed from prose to
 - Do not summarize methods, findings, mechanisms, limitations, page numbers, or quotations without inspecting the full text.
 - Before Zotero import, deduplicate in this order: normalized DOI, other persistent identifier, normalized title plus first author plus year, then canonical URL.
 - Import automatically only after bibliographic verification and successful lawful full-text acquisition. Track every selected work through acquisition and archiving; unavailable works remain outside the included corpus, not silently removed. Read [acquisition and human handoff](references/acquisition-handoff.md) when acquiring or archiving literature. Explicitly hand inaccessible important or user-requested works to the user with the exact next action.
+- For Chinese core-journal retrieval through CNKI, use the `cnki-literature-acquisition` skill when available. Its dedicated Chrome profile, verified-download record, and Zotero attachment check supplement this review skill's acquisition ledger; CNKI search results or metadata exports alone never count as full text.
 - Never expose Zotero credentials in prompts, source files, logs, or outputs.
 - Distinguish evidence from interpretation and uncertainty. A citation must support the exact sentence attached to it.
 

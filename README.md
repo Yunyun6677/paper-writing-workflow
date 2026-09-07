@@ -2,7 +2,7 @@
 
 一套面向经济学、管理学与政治学研究的开放、可审计论文工作流。项目将文献检索与 Zotero 归档、结构化综述、文献地图、创新点发现，以及 Python–Stata–R 实证分析连接成统一的数据契约，方便不同 agent 和人工环节可靠交接。
 
-**当前公开版本：v0.3.0（2026-09-07）**
+**当前公开版本：v0.4.0（2026-09-08）**
 
 > 当前状态：可复用原型。文献综述与实证分析两个 skill 已完成；Python、Stata 16 与 R 4.6.1 的标准接口和跨引擎一致性测试已跑通，四项真实论文的局部复现可供审计。云备份与更多因果推断设计仍在路线图中。历次变化见 [CHANGELOG.md](CHANGELOG.md)。
 
@@ -14,6 +14,7 @@
 | --- | --- | --- |
 | 文献综述 | 七角色专家协议、中英文检索、全文核验、证据卡、引文审计 | 综述、证据矩阵、核验书目 |
 | 文献管理 | Zotero 本地读取、RIS/BibTeX 导入、项目制分类、获取失败交接 | 导入计划、获取台账、审计记录 |
+| 中文核心获取 | 专用 Chrome 会话访问知网、结构化检索、官方下载、PDF/CAJ 校验 | 下载核验 JSON、本地全文、Zotero 附件 |
 | 研究设计 | 概念—机制—结果梳理、文献地图、独立创新点组合 | JSON/SVG 地图、创新卡 |
 | 实证分析 | CSV/XLSX/DTA 摄取、清洗审计、OLS/固定效应、稳健或聚类标准误 | 结果表、图、报告、哈希清单 |
 | Stata 协作 | Stata 16 独立批处理、完成标记、Python–Stata 数值比对 | `.do`、结果 CSV、执行回执 |
@@ -41,6 +42,7 @@
 .
 ├─ skills/
 │  ├─ social-science-literature-review/  # 文献综述专家 skill
+│  ├─ cnki-literature-acquisition/        # 知网检索、下载核验与 Zotero 归档
 │  └─ economics-empirical-analysis/       # Python–Stata–R 实证 skill
 ├─ schemas/                               # 跨模块数据契约
 ├─ scripts/                               # 通用工作流与 Zotero 工具
@@ -82,7 +84,15 @@ py -m venv .venv-empirical
 - API Key 仅保存在操作系统的环境变量或安全凭据库；不要粘贴到对话、配置文件、日志或 Git。
 - 付费数据库使用你自己的合法机构访问。工作流不绕过登录、付费墙或技术保护措施。
 
-### 4. 连接 Stata
+### 4. 连接中国知网
+
+知网模块使用独立的 Chrome 研究配置，不接管日常 Chrome 标签页，也不导出 Cookie。用户在独立窗口中自行完成学校/知网登录；程序只使用页面上正式提供的检索、导出与 PDF/CAJ 下载功能。下载后必须经过文件签名、页数、标题匹配和 SHA-256 核验，才能进入项目目录和 Zotero。
+
+环境配置、权限边界与验证步骤见 [CNKI Chrome 配置](skills/cnki-literature-acquisition/references/chrome-setup.md)。实际检索时可直接提出：
+
+> 在知网中检索 2020—2026 年《中国行政管理》发表的乡村治理研究，筛选与村民参与或基层组织相关的论文；将能合法获得的全文下载、核验并归档到当前研究项目和 Zotero，无法取得的生成明确交接。
+
+### 5. 连接 Stata
 
 Stata 是专有软件，本仓库不包含安装程序或许可证。将 `STATA_EXE` 指向已授权的 Windows 可执行文件，或在命令中传入 `--stata-exe`：
 
@@ -93,7 +103,7 @@ $env:STATA_EXE = "C:/Program Files/Stata18/StataSE-64.exe"
 
 Stata 16 使用可审计的批处理桥；Stata 17 及以上可在重新通过一致性测试后评估官方 PyStata。
 
-### 5. 连接 R 与生成图形
+### 6. 连接 R 与生成图形
 
 安装 R 后，将 `R_SCRIPT` 指向 `Rscript.exe`。R 桥支持环境自检、结构化分析脚本和标准系数图；所有任务使用新输出目录并生成 `engine-execution/1.0` 回执：
 
@@ -166,5 +176,7 @@ $env:R_SCRIPT = "C:/Program Files/R/R-4.6.1/bin/Rscript.exe"
 ## 致谢与许可
 
 文献工作流的早期设计参考了 [fakerqwq/social-science-paper-writing-skill](https://github.com/fakerqwq/social-science-paper-writing-skill) 的模块化思路，并根据可核验全文、Zotero 项目制归档、七角色协议、强制文献地图和实证复现需求重新设计；没有照搬其内容。
+
+知网模块参考了 [cookjohn/cnki-skills](https://github.com/cookjohn/cnki-skills) 通过 Chrome DevTools 进行直接导航、DOM 结构化提取与可见验证码检测的思路；本项目增加了专用浏览器配置、禁止 Cookie 导出、下载字节校验、项目台账和 Zotero 附件复核。
 
 本仓库原创代码与文档采用 [MIT License](LICENSE)。第三方论文、数据和软件继续适用各自许可。

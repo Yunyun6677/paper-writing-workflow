@@ -6,6 +6,7 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 tmp/
+.runtime/
 
 # Secrets and machine-local configuration
 .env

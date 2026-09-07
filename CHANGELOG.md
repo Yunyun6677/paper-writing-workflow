@@ -2,6 +2,20 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.4.0] - 2026-09-08
+
+### Added
+
+- `cnki-literature-acquisition` skill：通过独立 Chrome 配置完成知网结构化检索、官方 PDF/CAJ 下载、可见验证码交接和 Zotero 归档。
+- `cnki-download-verification/1.0` 数据契约与下载校验工具，记录格式、文件大小、页数、标题相似度、SHA-256 和项目归档路径。
+- 中文核心文献获取与七角色文献综述工作流的正式衔接。
+
+### Security and provenance
+
+- Chrome 调试限定在独立研究配置中，不连接日常浏览器配置，不导出 Cookie、密码、令牌或请求头。
+- 固定使用经过验证的 Chrome DevTools MCP 版本，并关闭使用统计和 CrUX 性能数据。
+- 实现思路参考 `cookjohn/cnki-skills`，新增本地全文真实性核验、获取台账、去重和 Zotero 附件复核。
+
 ## [0.3.0] - 2026-09-07
 
 ### Added
@@ -62,3 +76,4 @@
 [0.1.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.2.0
 [0.3.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.3.0
+[0.4.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.4.0
