@@ -2,6 +2,26 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.3.0] - 2026-09-07
+
+### Added
+
+- 面向科研与代码零基础用户的中文使用指南，覆盖提示词、数据字典、方法选择、运行要求和结果阅读。
+- Yang 等（2023）中国公民诚信论文的 Table 1、Table 2 第 1–9 列与 Figure 1 Python 重建。
+- Wiebe（2020）中国官员晋升论文的 Table 1 与 Table 2 LPM 第 1–3 列 Python 重建。
+- 三篇中国相关实证论文的完成/未完成能力矩阵，以及 He–Wang（2017）农村基层治理复制包的人类交接。
+- 高维固定效应、迭代单例删除、跨软件聚类推断和无界面绘图的复现经验规范。
+
+### Verified
+
+- 公民诚信案例的 Table 1 和核心处理系数与论文显示值一致，9 个模型完成 Python–Stata 一致性核验。
+- 官员晋升案例在复现 `reghdfe` 单例规则后，三列 N 精确匹配，点估计匹配论文三位小数。
+
+### Known gaps
+
+- 官员晋升案例的原始 Stata 执行仍待外部进程授权；状态明确保留为 pending。
+- 官员晋升案例的聚类标准误尚未严格对齐，Logit、Ordered Logit 和规格曲线尚未执行。
+
 ## [0.2.0] - 2026-09-06
 
 ### Added
@@ -41,3 +61,4 @@
 
 [0.1.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.1.0
 [0.2.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.2.0
+[0.3.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.3.0

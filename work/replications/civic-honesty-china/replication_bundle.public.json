@@ -1,0 +1,35 @@
+{
+  "schema_version": "replication-bundle/1.0",
+  "project_id": "yang-et-al-2023-civic-honesty-selected-results",
+  "status": "partial",
+  "release_date": "2026-09-07",
+  "paper_doi": "10.1073/pnas.2213824120",
+  "source": {
+    "url": "https://github.com/Science-replication-group/Unraveling_Controversies_over_Civic_Honesty_Measurement",
+    "commit": "5d7c9eeba928ba101252f221d114f05d64f116fc",
+    "redistributed": false,
+    "experiment_sha256": "2497f522a9887e7446e736221b8db284ccba60030ec6823bc9b3bfd28a4d707e",
+    "survey_sha256": "d351c0de02b924db297b20642cd9a32a251a3b0c1460fd659df07ec0dcf9fce9"
+  },
+  "executed": ["Table 1", "Table 2 columns 1-9", "Figure 1 attitude panels"],
+  "engine_status": {"python": "complete", "stata": "complete", "r": "not-planned"},
+  "public_artifacts": {
+    "table1_sha256": "96bc05abed23446ec5bda34595ba603f5e937b040ab7364c1c5c5a58408b7687",
+    "table2_sha256": "43918efd1eaa36a7c85202c51170660cbb069b8df0855a600ff820d443d5e629",
+    "figure_png_sha256": "af93d0fdd85dba46cd9e69df6dd41f33cd6465b9e46db158d5a2e128d9a87830",
+    "figure_svg_sha256": "f874b3b20f61cb348be5a109cdba5c0e65b85c4b26188f79bc7f47d917757ec1",
+    "stata_table2_sha256": "8b1f85e814a846e2987159f54593a350d3ffabf37511b842f3be655ebd2c164e",
+    "parity_receipt_sha256": "e477b8b207080bf615363b58afacbaeb76aea363ffabe70ab1b00a4f869bc5a5"
+  },
+  "parity": {
+    "status": "complete",
+    "acceptance_tolerance": 1e-6,
+    "maximum_estimate_delta": 4.659321817257478e-7,
+    "maximum_standard_error_delta": 4.3366676028000484e-8,
+    "p_value_reference_distributions_differ": true
+  },
+  "limitations": [
+    "Supplementary and cross-country analyses were not executed.",
+    "Source data and original code are not redistributed because no repository-level license was found."
+  ]
+}

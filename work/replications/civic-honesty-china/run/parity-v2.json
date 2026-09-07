@@ -1,0 +1,27 @@
+{
+  "schema_version": "replication-parity/1.0",
+  "status": "complete",
+  "engines": [
+    "python",
+    "stata"
+  ],
+  "max_abs_deltas": {
+    "estimate": 4.659321817257478e-07,
+    "std_error": 4.3366676028000484e-08,
+    "nobs": 0.0,
+    "df_resid": 0.0,
+    "p_value": 0.0004697449577625995
+  },
+  "p_value_note": "Python reports asymptotic normal p-values; Stata regress, robust reports t p-values with residual degrees of freedom.",
+  "acceptance_tolerance": 1e-06,
+  "inputs": {
+    "python": {
+      "sha256": "43918efd1eaa36a7c85202c51170660cbb069b8df0855a600ff820d443d5e629",
+      "bytes": 937
+    },
+    "stata": {
+      "sha256": "8b1f85e814a846e2987159f54593a350d3ffabf37511b842f3be655ebd2c164e",
+      "bytes": 627
+    }
+  }
+}

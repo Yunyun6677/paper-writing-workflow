@@ -1,0 +1,10 @@
+spec_id,outcome,term,estimate,std_error,p_value,nobs,df_resid
+m1,email,money,10.213698,4.0114227,.01120245,496,481
+m2,email,money,12.142477,4.3253969,.00523277,434,414
+m3,email,money,12.166719,4.3353902,.00524972,434,409
+m4,wallet_recovery,money,1.3992163,3.6205129,.69932019,496,481
+m5,wallet_recovery,money,2.1620485,3.8174033,.57145171,434,414
+m6,wallet_recovery,money,2.0460422,3.8124498,.59178469,434,409
+m7,wallet_totalrecovery,money,-9.5877949,4.0317891,.01779418,496,481
+m8,wallet_totalrecovery,money,-10.065692,4.2866621,.01933706,434,414
+m9,wallet_totalrecovery,money,-10.281536,4.2587197,.01620665,434,409

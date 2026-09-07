@@ -36,4 +36,6 @@ R: read [r-handoff.md](references/r-handoff.md). Use an isolated `Rscript --vani
 
 When learning from published replication packages, read [replication-catalog.md](references/replication-catalog.md). Treat catalog entries as queued, source-verified, partially executed, or executed—never collapse these statuses. Port a method only after its estimand, sample, weights, uncertainty and assumptions are explicit.
 
+For high-dimensional fixed effects, clustered inference, headless plotting, or cross-software reproduction, read [replication-lessons.md](references/replication-lessons.md). Match estimation samples before coefficients: in particular, reproduce iterative singleton removal and software-specific finite-sample corrections rather than assuming dummy-variable OLS is an exact substitute.
+
 Before delivery, verify bundle hashes and report actual statuses for the requested run. Stata and R support is limited to the estimators and graphics exercised by their certificates; do not generalize them to staged methods. Cloud remains awaiting a user-selected destination and authorization. Hand the downstream agent `bundle.json` plus engine receipts, not a free-text summary alone.

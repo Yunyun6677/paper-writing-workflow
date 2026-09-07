@@ -2,9 +2,11 @@
 
 一套面向经济学、管理学与政治学研究的开放、可审计论文工作流。项目将文献检索与 Zotero 归档、结构化综述、文献地图、创新点发现，以及 Python–Stata–R 实证分析连接成统一的数据契约，方便不同 agent 和人工环节可靠交接。
 
-**当前公开版本：v0.2.0（2026-09-06）**
+**当前公开版本：v0.3.0（2026-09-07）**
 
-> 当前状态：可复用原型。文献综述与实证分析两个 skill 已完成；Python、Stata 16 与 R 4.6.1 的标准接口和跨引擎一致性测试已跑通，两项真实论文的局部复现可供审计。云备份与更多因果推断设计仍在路线图中。历次变化见 [CHANGELOG.md](CHANGELOG.md)。
+> 当前状态：可复用原型。文献综述与实证分析两个 skill 已完成；Python、Stata 16 与 R 4.6.1 的标准接口和跨引擎一致性测试已跑通，四项真实论文的局部复现可供审计。云备份与更多因果推断设计仍在路线图中。历次变化见 [CHANGELOG.md](CHANGELOG.md)。
+
+第一次使用、不会代码？从 [零基础使用指南](docs/beginner-guide-zh.md) 开始。它包含数据怎么交、方法怎么说、六组可直接复制的提示词，以及结果表应该怎样阅读。
 
 ## 能做什么
 
@@ -121,6 +123,13 @@ $env:R_SCRIPT = "C:/Program Files/R/R-4.6.1/bin/Rscript.exe"
 - [三引擎一致性回执](work/replications/card-krueger-1994/run/parity-v2.json)
 - [公开结果清单](work/replications/card-krueger-1994/replication_bundle.public.json)
 - [可继续执行的方法目录](skills/economics-empirical-analysis/references/replication-catalog.md)
+
+3. 两项新增中国案例：Yang 等（2023）中国公民诚信现场实验已完成 Table 1、Figure 1 的 Python 重建，以及 Table 2 第 1–9 列的 Python–Stata 一致性核验；Wiebe（2020）中国官员晋升研究已完成 Table 1 与 Table 2 LPM 第 1–3 列，并发现、修复了高维固定效应单例样本差异。
+
+- [中国相关三论文能力对比](docs/china-replication-benchmark.md)
+- [机器可读对比结果](outputs/replication-benchmark/china-cases.json)
+- [公民诚信案例报告](work/replications/civic-honesty-china/REPORT.md)
+- [官员晋升案例报告](work/replications/meritocratic-promotion-china/REPORT.md)
 
 论文 PDF、作者原始数据及压缩包没有在本仓库重新分发。公开结果清单保存来源 URL 和 SHA-256；下载作者材料后，可将数据路径显式传给脚本。每个案例只声称复现指定表格，不把数值一致误写为对识别假设的独立验证。
 

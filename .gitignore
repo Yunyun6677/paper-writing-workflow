@@ -65,6 +65,21 @@ work/replications/card-krueger-1994/run/r-plot-v1/
 work/replications/card-krueger-1994/run/parity.json
 !work/replications/card-krueger-1994/run/r/output-v3-bridge/execution.log
 !work/replications/card-krueger-1994/run/r-plot-v2/execution.log
+!work/replications/civic-honesty-china/
+work/replications/civic-honesty-china/source/
+work/replications/civic-honesty-china/original/
+work/replications/civic-honesty-china/run/**/analysis.csv
+work/replications/civic-honesty-china/run/**/*.dta
+work/replications/civic-honesty-china/run/python/output-v1/
+work/replications/civic-honesty-china/run/python/output-v2/
+work/replications/civic-honesty-china/run/parity.json
+work/replications/civic-honesty-china/run/stata/output-v2/
+!work/replications/meritocratic-promotion-china/
+work/replications/meritocratic-promotion-china/source/
+work/replications/meritocratic-promotion-china/original/
+work/replications/meritocratic-promotion-china/run/**/analysis.csv
+work/replications/meritocratic-promotion-china/run/**/*.dta
+work/replications/meritocratic-promotion-china/run/python/output-v1/
 
 # OS and editor noise
 .DS_Store

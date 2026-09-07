@@ -1,0 +1,32 @@
+{
+  "schema_version": "replication-bundle/1.0",
+  "project_id": "wiebe-2020-meritocratic-promotion-selected-results",
+  "status": "partial",
+  "release_date": "2026-09-07",
+  "source": {
+    "repository": "https://github.com/maswiebe/meritocratic_promotion",
+    "paper": "https://michaelwiebe.com/assets/ch1.pdf",
+    "commit": "bc82d1152fd228e206ab661dd02e64b9cca0d580",
+    "redistributed": false,
+    "analysis_data_sha256": "5ed19e385b530793a040cad728e67f30d1365b6b46faa89e856c763338473ff9",
+    "paper_pdf_sha256": "bbfe7ef772339e52fe1eacf9c8a71ac5d509972aa6932bec1471539d60602ff4"
+  },
+  "executed": ["Table 1", "Table 2 LPM columns 1-3", "LPM coefficient plot"],
+  "engine_status": {"python": "complete-with-se-review", "stata": "authorization-pending", "r": "not-planned"},
+  "public_artifacts": {
+    "table1_sha256": "6c1de52e8ebd8573b42a45b384fd326bbd2b08582be1f3aac7ccc2ed7c4fb8f6",
+    "table2_lpm_sha256": "c0fb1c5bff132c7e3936f7f856f2581ddc59e304175f246a89fdf6ca048d4da8",
+    "figure_png_sha256": "f24e7c526efee278ed9892427515956d9b4cfcc18e747b093143e2543cf2a55d",
+    "figure_svg_sha256": "5e2be5914b67e8d5da072cc8ad06f99b2aacf61be75cffeb2a14d8b1eed456c1"
+  },
+  "acceptance": {
+    "sample_sizes_match": true,
+    "displayed_coefficients_match": true,
+    "displayed_standard_errors_match": false
+  },
+  "limitations": [
+    "Only Table 1 and Table 2 LPM columns 1-3 were reconstructed.",
+    "Original Stata parity and nonlinear models are pending.",
+    "Source data and original code are not redistributed because no repository-level license was found."
+  ]
+}

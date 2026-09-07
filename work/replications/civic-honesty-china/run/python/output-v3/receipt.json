@@ -1,0 +1,43 @@
+{
+  "schema_version": "replication-receipt/1.0",
+  "status": "complete",
+  "paper_doi": "10.1073/pnas.2213824120",
+  "engine": "python",
+  "source_files": {
+    "experiment": {
+      "sha256": "2497f522a9887e7446e736221b8db284ccba60030ec6823bc9b3bfd28a4d707e",
+      "records": 496
+    },
+    "survey": {
+      "sha256": "d351c0de02b924db297b20642cd9a32a251a3b0c1460fd659df07ec0dcf9fce9",
+      "records": 2310
+    }
+  },
+  "artifacts": [
+    {
+      "path": "figure1.png",
+      "bytes": 58267,
+      "sha256": "af93d0fdd85dba46cd9e69df6dd41f33cd6465b9e46db158d5a2e128d9a87830"
+    },
+    {
+      "path": "figure1.svg",
+      "bytes": 37735,
+      "sha256": "f874b3b20f61cb348be5a109cdba5c0e65b85c4b26188f79bc7f47d917757ec1"
+    },
+    {
+      "path": "figure1_data.csv",
+      "bytes": 244,
+      "sha256": "f910c200b220139b4be48e277437944f934be412c0895e02b99201e643e7a637"
+    },
+    {
+      "path": "table1_results.csv",
+      "bytes": 508,
+      "sha256": "96bc05abed23446ec5bda34595ba603f5e937b040ab7364c1c5c5a58408b7687"
+    },
+    {
+      "path": "table2_results.csv",
+      "bytes": 937,
+      "sha256": "43918efd1eaa36a7c85202c51170660cbb069b8df0855a600ff820d443d5e629"
+    }
+  ]
+}

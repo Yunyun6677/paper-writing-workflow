@@ -1,0 +1,39 @@
+{
+  "schema_version": "replication-benchmark/1.0",
+  "generated_date": "2026-09-07",
+  "cases": [
+    {
+      "case_id": "adh2013-china-syndrome",
+      "title": "The China Syndrome: Local Labor Market Effects of Import Competition in the United States",
+      "status": "complete",
+      "source_access": "public",
+      "methods": ["weighted 2SLS", "shift-share exposure", "clustered standard errors"],
+      "completed": ["Table 3 columns 1-6", "Python-Stata parity", "published rounding check"],
+      "incomplete": ["remaining exhibits", "modern shift-share diagnostics", "R implementation"],
+      "engine_status": {"python": "complete", "stata": "complete", "r": "not-run"},
+      "handoff": null
+    },
+    {
+      "case_id": "yang2023-civic-honesty-china",
+      "title": "Unraveling Controversies over Civic Honesty Measurement: An Extended Field Replication in China",
+      "status": "partial",
+      "source_access": "public",
+      "methods": ["field experiment", "Pearson chi-squared test", "fixed-effect OLS", "HC1 standard errors"],
+      "completed": ["Table 1", "Table 2 columns 1-9 in Python and Stata", "Python-Stata parity", "Figure 1 reconstruction", "published headline checks"],
+      "incomplete": ["supplementary exhibits", "cross-country analysis", "RCT audit", "higher-precision Stata serialization rerun"],
+      "engine_status": {"python": "complete", "stata": "complete", "r": "not-run"},
+      "handoff": null
+    },
+    {
+      "case_id": "wiebe2020-meritocratic-promotion-china",
+      "title": "Does Meritocratic Promotion Explain China's Growth?",
+      "status": "review-required",
+      "source_access": "public",
+      "methods": ["linear probability model", "high-dimensional fixed effects", "clustered standard errors"],
+      "completed": ["Table 1", "Table 2 LPM columns 1-3 in Python", "iterative singleton removal", "sample and coefficient checks", "coefficient plot"],
+      "incomplete": ["strict clustered-SE parity", "original Stata archive", "conditional Logit", "Ordered Logit", "specification curve and robustness families"],
+      "engine_status": {"python": "review-required", "stata": "authorization-pending", "r": "not-run"},
+      "handoff": "Authorize Stata 16 to run the author's bundled reghdfe version and resolve finite-sample standard-error differences."
+    }
+  ]
+}
