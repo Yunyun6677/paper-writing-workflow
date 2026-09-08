@@ -19,6 +19,7 @@ Build a lawful, auditable chain from a CNKI result to a verified local full text
 ## Before operating CNKI
 
 1. Confirm that the `chrome-devtools-cnki` MCP tools are callable. If not, read [Chrome setup](references/chrome-setup.md). A configuration written during the current session does not make tools callable until Codex starts a new session.
+   When choosing or changing the integration route, consult [CNKI integration landscape](references/integration-landscape.md) and preserve its credential and browser-profile boundaries.
 2. Confirm Zotero Desktop status before any archive request. Use the Zotero skill for local search, collection inspection, and final verification.
 3. Create or reuse the run's `acquisition-ledger.json` under the existing `literature-acquisition/1.0` schema. Read the parent review skill's `references/acquisition-handoff.md` when a paper cannot be obtained.
 4. Search Zotero and the project literature folders first. Reuse an existing valid attachment rather than downloading or creating a duplicate.

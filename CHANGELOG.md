@@ -2,6 +2,18 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.4.1] - 2026-09-08
+
+### Added
+
+- Windows 下的“用户可见交接模式”：使用仅监听本机的调试端口和独立 Chrome 资料目录，让用户能够处理知网登录或可见拼图。
+- 知网接入方案对比，明确 Chrome DevTools、Zotero translators 与人工下载/Jasminum 回退路线的用途和边界。
+
+### Security and reliability
+
+- 保持“专用浏览器配置、禁止 Cookie 导出、官方下载后独立校验、Zotero 附件复核”四层控制。
+- 记录真实检索测试状态：人大机构访问与精确题名检索成功；遇到可见验证码时按协议暂停并交给用户处理。
+
 ## [0.4.0] - 2026-09-08
 
 ### Added
@@ -77,3 +89,4 @@
 [0.2.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.2.0
 [0.3.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.3.0
 [0.4.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.4.0
+[0.4.1]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.4.1

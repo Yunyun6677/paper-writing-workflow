@@ -25,6 +25,25 @@ After registration, fully restart Codex or start a new Codex session. Merely wri
 
 On first use, the MCP launches the dedicated Chrome profile. The user signs into CNKI or the university access portal manually. Never copy cookies or credentials into prompts, files, scripts, or logs.
 
+## User-visible handoff mode
+
+The default MCP-launched window can be difficult to surface on some Windows/Codex setups. If a login or CAPTCHA handoff is expected and the user cannot see that window, switch to a manually launched, dedicated Chrome instance instead of connecting to the user's daily browser.
+
+1. Stop the MCP-owned dedicated Chrome instance before reusing its profile; never open the same profile from two Chrome processes.
+2. Start Chrome visibly with a loopback-only debugging port and a dedicated data directory:
+
+```powershell
+& 'C:\Program Files\Google\Chrome\Application\chrome.exe' `
+  --remote-debugging-port=9222 `
+  --user-data-dir='D:\AI\Codex\paper-writing-workflow\.runtime\chrome-cnki-interactive' `
+  'https://www.cnki.net/'
+```
+
+3. Configure a separate MCP entry with `--browser-url=http://127.0.0.1:9222` plus `--slim`, `--no-usage-statistics`, `--no-performance-crux`, and `--redact-network-headers`.
+4. Restart Codex, connect only after the visible Chrome window is open, and let the user perform login/CAPTCHA actions in that window.
+
+Keep the debugging listener on `127.0.0.1`, close the dedicated browser when the acquisition session ends, and never browse unrelated sensitive sites in that profile. This mode is a human-handoff fallback, not permission to inspect the user's ordinary Chrome profile.
+
 ## Probe
 
 The setup is complete only when all are true:

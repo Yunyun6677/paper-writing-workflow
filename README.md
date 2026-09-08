@@ -2,7 +2,7 @@
 
 一套面向经济学、管理学与政治学研究的开放、可审计论文工作流。项目将文献检索与 Zotero 归档、结构化综述、文献地图、创新点发现，以及 Python–Stata–R 实证分析连接成统一的数据契约，方便不同 agent 和人工环节可靠交接。
 
-**当前公开版本：v0.4.0（2026-09-08）**
+**当前开发版本：v0.4.1（2026-09-08）**
 
 > 当前状态：可复用原型。文献综述与实证分析两个 skill 已完成；Python、Stata 16 与 R 4.6.1 的标准接口和跨引擎一致性测试已跑通，四项真实论文的局部复现可供审计。云备份与更多因果推断设计仍在路线图中。历次变化见 [CHANGELOG.md](CHANGELOG.md)。
 
@@ -88,7 +88,7 @@ py -m venv .venv-empirical
 
 知网模块使用独立的 Chrome 研究配置，不接管日常 Chrome 标签页，也不导出 Cookie。用户在独立窗口中自行完成学校/知网登录；程序只使用页面上正式提供的检索、导出与 PDF/CAJ 下载功能。下载后必须经过文件签名、页数、标题匹配和 SHA-256 核验，才能进入项目目录和 Zotero。
 
-环境配置、权限边界与验证步骤见 [CNKI Chrome 配置](skills/cnki-literature-acquisition/references/chrome-setup.md)。实际检索时可直接提出：
+环境配置、权限边界与验证步骤见 [CNKI Chrome 配置](skills/cnki-literature-acquisition/references/chrome-setup.md)；与外部方案的取舍见 [知网接入方案对比](skills/cnki-literature-acquisition/references/integration-landscape.md)。实际检索时可直接提出：
 
 > 在知网中检索 2020—2026 年《中国行政管理》发表的乡村治理研究，筛选与村民参与或基层组织相关的论文；将能合法获得的全文下载、核验并归档到当前研究项目和 Zotero，无法取得的生成明确交接。
 
