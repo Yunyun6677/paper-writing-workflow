@@ -1,6 +1,6 @@
 # Research OS routing
 
-This repository contains four task skills. Before acting, read the matching `SKILL.md` completely and follow its linked reference only when that mode is needed.
+This repository contains five task skills. Before acting, read the matching `SKILL.md` completely and follow its linked reference only when that mode is needed.
 
 | Request | Skill |
 | --- | --- |
@@ -8,8 +8,11 @@ This repository contains four task skills. Before acting, read the matching `SKI
 | CNKI or Chinese core-journal retrieval | `skills/cnki-literature-acquisition/SKILL.md` |
 | International DOI, Google Scholar, publisher or OA retrieval | `skills/international-literature-acquisition/SKILL.md` |
 | Data cleaning, Python, Stata, R, econometrics or replication | `skills/economics-empirical-analysis/SKILL.md` |
+| Complete economics paper, research design, writing, audit, revision or submission package | `skills/economics-paper-workflow/SKILL.md` |
 
 Use multiple skills only when the request genuinely crosses stages. Acquisition-only work does not authorize a literature review; analysis-only work does not authorize changing the research question.
+
+For an end-to-end paper request, use `economics-paper-workflow` as the orchestrator and invoke the four specialist skills only for their scoped stages. Do not treat the orchestrator as proof that a specialist stage or estimator succeeded.
 
 ## Repository invariants
 

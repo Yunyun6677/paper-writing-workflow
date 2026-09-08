@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/economics-paper-project.schema.json",
+  "title": "Economics paper project manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "title_working",
+    "paper_type",
+    "stage",
+    "research_question",
+    "target_journals",
+    "contribution_claims",
+    "data_sensitivity",
+    "approvals",
+    "output_format"
+  ],
+  "properties": {
+    "schema_version": {"const": "economics-paper-project/1.0"},
+    "project_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,63}$"},
+    "title_working": {"type": "string", "minLength": 3, "maxLength": 300},
+    "paper_type": {
+      "enum": ["empirical", "theoretical", "mixed", "measurement", "replication", "review"]
+    },
+    "stage": {
+      "enum": ["idea", "design", "evidence", "analysis", "draft", "revision", "submission"]
+    },
+    "research_question": {"type": "string", "minLength": 10},
+    "target_journals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "family"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "family": {
+            "enum": ["chinese_economics", "chinese_management", "chinese_public_administration", "international_economics", "interdisciplinary", "undecided"]
+          },
+          "guideline_url": {"type": "string", "format": "uri"},
+          "guideline_checked_at": {"type": "string", "format": "date"}
+        }
+      }
+    },
+    "contribution_claims": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 3}
+    },
+    "research_design": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit_of_analysis", "treatment_or_exposure", "outcomes", "estimand", "identification_strategy", "assumptions", "threats", "inference_plan"],
+      "properties": {
+        "unit_of_analysis": {"type": "string", "minLength": 1},
+        "treatment_or_exposure": {"type": "string", "minLength": 1},
+        "outcomes": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "estimand": {"type": "string", "minLength": 3},
+        "identification_strategy": {"type": "string", "minLength": 3},
+        "assumptions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "threats": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "inference_plan": {"type": "string", "minLength": 3}
+      }
+    },
+    "data_sensitivity": {"enum": ["synthetic", "public", "restricted", "personal"]},
+    "literature_project_id": {"type": ["string", "null"]},
+    "empirical_run_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "default": []},
+    "approvals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question_and_contribution", "research_design", "outline_and_journal"],
+      "properties": {
+        "question_and_contribution": {"type": "boolean"},
+        "research_design": {"type": "boolean"},
+        "outline_and_journal": {"type": "boolean"}
+      }
+    },
+    "output_format": {"const": "latex"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"paper_type": {"enum": ["empirical", "mixed", "measurement", "replication"]}}},
+      "then": {"required": ["research_design"]}
+    }
+  ]
+}

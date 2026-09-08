@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/design-register.schema.json",
+  "title": "Research design register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "paper_type", "research_question", "research_design", "approval", "changes"],
+  "properties": {
+    "schema_version": {"const": "design-register/1.0"},
+    "project_id": {"type": "string"},
+    "paper_type": {"type": "string"},
+    "research_question": {"type": "string"},
+    "research_design": {"type": ["object", "null"]},
+    "approval": {"type": "boolean"},
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["changed_at", "field", "old_value", "new_value", "reason", "approved"],
+        "properties": {
+          "changed_at": {"type": "string", "format": "date-time"},
+          "field": {"type": "string"},
+          "old_value": {},
+          "new_value": {},
+          "reason": {"type": "string"},
+          "approved": {"type": "boolean"}
+        }
+      }
+    }
+  }
+}

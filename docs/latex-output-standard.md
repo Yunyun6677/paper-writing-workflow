@@ -47,5 +47,6 @@ xelatex -interaction=nonstopmode main.tex
 | CNKI/international acquisition | `acquisition-report.tex` when a report is requested | acquisition ledger and per-download verification JSON |
 | Empirical analysis | `results/report.tex`, model tables `.tex`, figures PDF/PNG | coefficients CSV/JSON, bundle, engine receipts, logs |
 | Replication | `replication-report.tex` | source manifest, hashes, code and comparison JSON |
+| Complete paper workflow | `paper/main.tex`, `audit/audit-report.tex`, submission fragments | project manifest, design register, numerical claims, checkpoints and reproducibility manifest |
 
 JSON/CSV remain authoritative for program-to-program transfer. LaTeX is authoritative for reading, editing and publication.

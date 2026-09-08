@@ -2,6 +2,21 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.7.0] - 2026-09-08
+
+### Added
+
+- `economics-paper-workflow` 总控 skill：覆盖选题、识别设计、证据、分析、大纲、LaTeX 写作、审计、修订和投稿复现包。
+- `economics-paper-project/1.0` schema、非覆盖式项目初始化器和确定性论文审计器。
+- 研究设计人工确认门、文献 claim--evidence 与实证 numeric--artifact 双重防火墙。
+- 面向国内主流经济学论文的 GitHub 项目对比、能力地图和分阶段路线图。
+- 计量方法准入政策，明确区分已认证 OLS/有限 FE 能力与 DID、IV、RD、SCM、DML 等待测试适配器。
+
+### Security and usability
+
+- 新项目默认进入被 Git 忽略的 `projects/`，拒绝覆盖同名项目；外部上传、投稿、登录和设计变更继续需要用户授权。
+- README 新增完整论文项目提示词，统一说明五个 skill 的最小输入、产物和能力边界。
+
 ## [0.6.1] - 2026-09-08
 
 ### Fixed
@@ -136,3 +151,4 @@
 [0.5.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.5.0
 [0.6.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.6.0
 [0.6.1]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.6.1
+[0.7.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.7.0

@@ -2,7 +2,7 @@
 
 面向经济学、管理学和政治学研究的可审计工作流：获取并核验文献、归档 Zotero、撰写综述、处理数据，并用 Python、Stata、R 完成可复现实证分析。
 
-**当前版本：v0.6.1（2026-09-08）**
+**当前版本：v0.7.0（2026-09-08）**
 
 **项目状态：可复用原型；不等同于无人监督的自动论文生成器。**
 
@@ -16,7 +16,7 @@
 - 最终论文、综述和分析报告以 UTF-8 LaTeX 交付；JSON/CSV 继续承担 agent 间的机器交接。
 - 不绕过登录、付费墙、验证码或其他访问控制，不上传无授权的论文与受限数据。
 
-## 四个 Skill
+## 五个 Skill
 
 | Skill | 适合做什么 | 用户至少提供 | 主要输出 |
 | --- | --- | --- | --- |
@@ -24,6 +24,7 @@
 | `cnki-literature-acquisition` | 知网与中文核心文献获取 | 主题/题名、期刊范围、年份、目标 Zotero 项目 | 核验全文、获取台账、Zotero 附件或人工交接 |
 | `international-literature-acquisition` | DOI、Google Scholar、OpenAlex、Unpaywall、出版社全文 | 主题/题名/DOI、年份、来源偏好、目标 Zotero 项目 | 合法全文、版本与哈希、Zotero 附件或人工交接 |
 | `economics-empirical-analysis` | CSV/XLSX/DTA 清洗，Python/Stata/R 分析与复现 | 研究问题、数据字典、观察单位、变量、模型和推断方式 | `report.tex`、LaTeX 表格、PDF/SVG 图、代码、结果包与运行回执 |
+| `economics-paper-workflow` | 经济学论文全流程设计、写作、审计、修订与投稿包 | 研究问题、论文类型、目标期刊、预期贡献、数据敏感级别；实证论文还需识别设计 | 标准 LaTeX 论文树、design register、审计报告、修订日志与投稿检查清单 |
 
 完整边界和执行规则以各目录中的 `SKILL.md` 为准。根目录 [AGENTS.md](AGENTS.md) 会在 Codex 打开本仓库后自动完成任务路由。
 
@@ -137,6 +138,23 @@ Zotero 项目分类：[填写]
 
 如果方法尚未确定，请明确写：“先比较方法成立所需条件，只做诊断；得到我确认后再运行因果模型。”
 
+### E. 完整经济学论文项目
+
+```text
+请使用 economics-paper-workflow skill 作为总控，并按需要调用四个 specialist skill。
+工作类型：新建论文 / 继续已有项目 / 全文重写 / 投稿前审计
+研究问题：[填写]
+论文类型：实证 / 理论 / 测度 / 复现 / 综述 / 混合
+目标期刊或期刊类型：[填写]
+预期贡献：[填写；不知道可写“先帮助澄清，不要替我锁定”]
+数据敏感级别：合成 / 公开 / 受限 / 个人
+现有材料：[论文、数据、代码、文献库或项目路径]
+
+先建立 project.json 和 design register。研究问题、识别策略、主要结果、样本规则、推断方式和大纲必须经过我确认；不得根据显著性改变设定。正文数字只能来自已验证的表图或模型产物。最终输出可编译 LaTeX、references.bib、审计报告、修订日志、数据代码声明和投稿检查清单。
+```
+
+总控 skill 不会凭空补齐未执行的环节：例如未取得全文就不能声称“系统综述完成”，未通过方法证书就不能声称“已支持现代 DID”。架构比较、能力边界与路线图见 [经济学论文全流程能力评估](docs/economics-workflow-gap-analysis.md)。
+
 ## LaTeX 交付边界
 
 最终给人阅读、修改或投稿的内容使用 LaTeX：
@@ -173,7 +191,7 @@ outputs/<project>/
 ## 项目结构
 
 ```text
-skills/       四个工作流入口与执行脚本
+skills/       五个工作流入口与执行脚本
 schemas/      agent 间的机器可读契约
 templates/    LaTeX 等可复用模板
 scripts/      Zotero 与通用工具
@@ -193,5 +211,6 @@ projects/     默认不公开的个人研究项目
 - 知网官方全文下载、本地校验和 Zotero 附件归档已跑通。
 - 外文 DOI → OpenAlex/Crossref → 合法 PDF 的真实下载测试已跑通。
 - 实证执行器会生成 LaTeX 系数表、PDF 图和 `report.tex`；当前机器未安装 LaTeX，因此仍需在 TeX Live/MiKTeX 环境完成最终编译测试。
+- 完整论文项目初始化与结构审计已加入；具体高级计量方法仍按独立真值测试、公开复现和跨引擎证书逐项准入。
 
 版本变更见 [CHANGELOG.md](CHANGELOG.md)。第三方论文、数据和软件继续适用各自许可；本仓库原创代码与文档使用 [MIT License](LICENSE)。

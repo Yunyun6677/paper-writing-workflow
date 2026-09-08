@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/numeric-claims.schema.json",
+  "title": "Manuscript numeric claim registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "claims"],
+  "properties": {
+    "schema_version": {"const": "numeric-claims/1.0"},
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_id", "tex_location", "displayed_value", "unit", "source_artifact", "source_hash", "verification_status"],
+        "properties": {
+          "claim_id": {"type": "string", "minLength": 1},
+          "tex_location": {"type": "string", "minLength": 1},
+          "displayed_value": {"type": ["number", "string"]},
+          "unit": {"type": "string"},
+          "source_artifact": {"type": ["string", "null"]},
+          "project_run_spec_id": {"type": ["string", "null"]},
+          "source_hash": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"},
+          "verification_status": {"enum": ["pending", "verified", "mismatch", "blocked"]}
+        }
+      }
+    }
+  }
+}

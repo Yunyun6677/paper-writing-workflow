@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/paper-audit.schema.json",
+  "title": "Paper audit report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "created_at", "overall_status", "checks"],
+  "properties": {
+    "schema_version": {"const": "paper-audit/1.0"},
+    "project_id": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "overall_status": {"enum": ["pass", "review-required", "blocked"]},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status", "detail"],
+        "properties": {
+          "name": {"type": "string"},
+          "status": {"enum": ["pass", "not-run", "review-required", "blocked"]},
+          "detail": {"type": "string"}
+        }
+      }
+    }
+  }
+}
