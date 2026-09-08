@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lawful full-text resolution",
+  "type": "object",
+  "required": ["schema_version", "created_at", "query", "work", "candidates", "attempts", "status", "secrets_logged"],
+  "properties": {
+    "schema_version": {"const": "fulltext-resolution/1.0"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "query": {"type": "object"},
+    "work": {"type": ["object", "null"]},
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "url", "url_type", "is_oa", "version", "license", "score", "download_status", "local_file", "sha256"],
+        "properties": {
+          "source": {"type": "string"},
+          "url": {"type": "string"},
+          "url_type": {"enum": ["pdf", "landing-page", "unknown"]},
+          "is_oa": {"type": ["boolean", "null"]},
+          "version": {"type": ["string", "null"]},
+          "license": {"type": ["string", "null"]},
+          "score": {"type": "integer"},
+          "download_status": {"enum": ["not-attempted", "verified", "not-pdf", "failed", "blocked"]},
+          "local_file": {"type": ["string", "null"]},
+          "sha256": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "attempts": {"type": "array", "items": {"type": "object"}},
+    "status": {"enum": ["resolved", "downloaded", "needs-human", "not-found"]},
+    "secrets_logged": {"const": false}
+  }
+}

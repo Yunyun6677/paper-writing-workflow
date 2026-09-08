@@ -2,7 +2,7 @@
 
 一套面向经济学、管理学与政治学研究的开放、可审计论文工作流。项目将文献检索与 Zotero 归档、结构化综述、文献地图、创新点发现，以及 Python–Stata–R 实证分析连接成统一的数据契约，方便不同 agent 和人工环节可靠交接。
 
-**当前开发版本：v0.4.1（2026-09-08）**
+**当前开发版本：v0.5.0（2026-09-08）**
 
 > 当前状态：可复用原型。文献综述与实证分析两个 skill 已完成；Python、Stata 16 与 R 4.6.1 的标准接口和跨引擎一致性测试已跑通，四项真实论文的局部复现可供审计。云备份与更多因果推断设计仍在路线图中。历次变化见 [CHANGELOG.md](CHANGELOG.md)。
 
@@ -15,6 +15,7 @@
 | 文献综述 | 七角色专家协议、中英文检索、全文核验、证据卡、引文审计 | 综述、证据矩阵、核验书目 |
 | 文献管理 | Zotero 本地读取、RIS/BibTeX 导入、项目制分类、获取失败交接 | 导入计划、获取台账、审计记录 |
 | 中文核心获取 | 专用 Chrome 会话访问知网、结构化检索、官方下载、PDF/CAJ 校验 | 下载核验 JSON、本地全文、Zotero 附件 |
+| 外文全文获取 | DOI 核验、OpenAlex/Unpaywall 开放全文解析、授权出版社下载、版本记录 | 全文解析 JSON、PDF、哈希与 Zotero 附件 |
 | 研究设计 | 概念—机制—结果梳理、文献地图、独立创新点组合 | JSON/SVG 地图、创新卡 |
 | 实证分析 | CSV/XLSX/DTA 摄取、清洗审计、OLS/固定效应、稳健或聚类标准误 | 结果表、图、报告、哈希清单 |
 | Stata 协作 | Stata 16 独立批处理、完成标记、Python–Stata 数值比对 | `.do`、结果 CSV、执行回执 |
@@ -43,6 +44,7 @@
 ├─ skills/
 │  ├─ social-science-literature-review/  # 文献综述专家 skill
 │  ├─ cnki-literature-acquisition/        # 知网检索、下载核验与 Zotero 归档
+│  ├─ international-literature-acquisition/ # 外文 DOI、开放全文、授权下载与归档
 │  └─ economics-empirical-analysis/       # Python–Stata–R 实证 skill
 ├─ schemas/                               # 跨模块数据契约
 ├─ scripts/                               # 通用工作流与 Zotero 工具
@@ -92,7 +94,23 @@ py -m venv .venv-empirical
 
 > 在知网中检索 2020—2026 年《中国行政管理》发表的乡村治理研究，筛选与村民参与或基层组织相关的论文；将能合法获得的全文下载、核验并归档到当前研究项目和 Zotero，无法取得的生成明确交接。
 
-### 5. 连接 Stata
+### 5. 获取外文全文
+
+外文模块先核验 DOI 和题录，再按“现有附件 → OpenAlex/Unpaywall 开放版本 → 出版社或机构库 → 学校订阅 → 人工交接”的顺序寻找全文。Google Scholar 只作为低频发现入口；程序不接入 Sci-Hub，也不绕过付费墙、登录或验证码。
+
+```powershell
+python skills/international-literature-acquisition/scripts/resolve_open_access.py `
+  --doi "10.1257/aer.103.6.2121" `
+  --output work/fulltext-resolution.json
+```
+
+添加 `--download-dir work/downloads` 后，程序只尝试下载明确标为开放获取、且响应内容通过 PDF 结构检查的候选。可把联系邮箱设置为 `UNPAYWALL_EMAIL`，把 OpenAlex 密钥设置为 `OPENALEX_API_KEY`；这些值只进入系统环境变量，不写入仓库或结果文件。ScienceDirect 订阅全文通过专用研究浏览器和用户已有的学校访问下载，随后归档到 Zotero。
+
+方案取舍与操作边界见 [GitHub 组件评估](skills/international-literature-acquisition/references/github-landscape.md)、[来源路由](skills/international-literature-acquisition/references/source-routing.md) 和 [授权浏览器步骤](skills/international-literature-acquisition/references/browser-procedure.md)。
+
+> 围绕“数字贸易与劳动力市场”检索 30 篇外文文献，核验 DOI；优先取得开放全文，必要时使用我已登录的人大图书馆出版社页面。把核验成功的 PDF 归档到当前研究项目和 Zotero，逐篇记录版本与来源，无法取得的核心文献生成明确交接。
+
+### 6. 连接 Stata
 
 Stata 是专有软件，本仓库不包含安装程序或许可证。将 `STATA_EXE` 指向已授权的 Windows 可执行文件，或在命令中传入 `--stata-exe`：
 
@@ -103,7 +121,7 @@ $env:STATA_EXE = "C:/Program Files/Stata18/StataSE-64.exe"
 
 Stata 16 使用可审计的批处理桥；Stata 17 及以上可在重新通过一致性测试后评估官方 PyStata。
 
-### 6. 连接 R 与生成图形
+### 7. 连接 R 与生成图形
 
 安装 R 后，将 `R_SCRIPT` 指向 `Rscript.exe`。R 桥支持环境自检、结构化分析脚本和标准系数图；所有任务使用新输出目录并生成 `engine-execution/1.0` 回执：
 

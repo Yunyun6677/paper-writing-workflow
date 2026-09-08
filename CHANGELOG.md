@@ -2,6 +2,24 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.5.0] - 2026-09-08
+
+### Added
+
+- `international-literature-acquisition` skill：以 DOI 为主键，通过 Crossref、OpenAlex 和可选的 Unpaywall 定位外文开放全文，并保留出版社/学校订阅浏览器交接。
+- `fulltext-resolution/1.0` 数据契约和标准库实现的解析器，输出候选来源、开放状态、文献版本、许可证、下载状态、本地路径与 SHA-256。
+- GitHub 组件评估和来源路由，覆盖 OpenAlex Official CLI、Unpaywall、Elsevier `elsapy`、Zotero Connector、`scholarly`、PaperQA2 与 `paperscraper`。
+
+### Verified
+
+- 使用 Autor、Dorn 与 Hanson（2013）的 DOI 完成联网测试：Crossref 和 OpenAlex 题录一致；出版社/机构库路线失败后，从 NBER 取得并验证 1.1 MB 的工作论文 PDF，全过程未记录密钥。
+- OA 解析器的离线测试与 skill 结构校验通过。
+
+### Security and access
+
+- 不接入 Sci-Hub 或其他绕过付费墙、登录、验证码和技术保护措施的下载路线。
+- Google Scholar 仅用于低频发现；ScienceDirect 全文限开放获取或用户已授权的机构订阅，浏览器凭据不进入脚本和日志。
+
 ## [0.4.1] - 2026-09-08
 
 ### Added
@@ -90,3 +108,4 @@
 [0.3.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.3.0
 [0.4.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.4.0
 [0.4.1]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.4.1
+[0.5.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.5.0
