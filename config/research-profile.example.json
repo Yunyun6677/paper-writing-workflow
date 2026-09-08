@@ -26,7 +26,8 @@
     "anti_fabrication": "verified-real-sources-only",
     "expert_panel_roles": 7,
     "require_literature_map": true,
-    "require_independent_innovation_report": true
+    "require_independent_innovation_report": true,
+    "human_readable_output": "latex"
   },
   "secrets": {
     "policy": "environment-only",

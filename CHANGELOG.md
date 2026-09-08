@@ -2,6 +2,25 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.6.0] - 2026-09-08
+
+### Added
+
+- 根目录 `AGENTS.md`：Codex 打开仓库后可按自然语言请求路由四个 skill，并统一权限、证据与发布边界。
+- 面向新手的四组完整提示词，明确每个 skill 的最小输入、执行范围和验收产物。
+- LaTeX 输出规范及可编译中文报告模板。
+
+### Changed
+
+- README 重构为“能力—边界—安装—输入—调用—编译”的短路径。
+- 文献综述的正式综述、创新点报告和实证分析报告以 UTF-8 LaTeX 为标准交付；JSON/CSV 继续作为机器交接格式。
+- 实证执行器新增 `coefficients.tex`、`coefficients.pdf` 和 `results/report.tex`，保留原有 CSV/JSON/SVG 供审计。
+
+### Verified
+
+- 全部 16 项 Python 实证测试通过；新增 LaTeX 表格与报告进入哈希结果包。
+- 新增和修改的 JSON Schema 均通过解析检查。当前机器没有 LaTeX 发行版，因此 `.tex` 的真实编译检查需在安装 TeX Live 或 MiKTeX 后完成。
+
 ## [0.5.0] - 2026-09-08
 
 ### Added
@@ -109,3 +128,4 @@
 [0.4.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.4.0
 [0.4.1]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.4.1
 [0.5.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.5.0
+[0.6.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.6.0

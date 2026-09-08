@@ -16,5 +16,5 @@
   "sources": ["OpenAlex", "Crossref", "RePEc", "NBER", "CNKI-export"],
   "target_collection": "01_research_projects/example-project",
   "max_results_per_source": 100,
-  "notes": "Verify every record and inspect lawfully acquired full text before substantive synthesis."
+  "notes": "Verify every record and inspect lawfully acquired full text before substantive synthesis. Deliver the final human-readable review as UTF-8 LaTeX."
 }

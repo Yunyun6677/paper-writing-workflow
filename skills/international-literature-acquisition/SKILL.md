@@ -62,6 +62,7 @@ Use `scripts/zotero_import_local_fulltext.py` only after verification. Attach to
 
 - Resolver output: `schemas/fulltext-resolution.schema.json`.
 - Run state: `schemas/literature-acquisition.schema.json`.
+- When the user requests a human-readable acquisition report, produce `acquisition-report.tex` under `docs/latex-output-standard.md`; keep resolver and ledger JSON as the authoritative machine handoff.
 - Allowed acquisition states: `pending`, `acquiring`, `fulltext-verified`, `archived-local`, `needs-human`, `deferred-by-user`.
 - A substantive review may cite a record as read only after `fulltext-verified` and actual reading.
 - Report every unresolved core or user-requested paper with attempted routes, exact blocker, required user action, and resume condition. Never silently replace it with an easier paper.

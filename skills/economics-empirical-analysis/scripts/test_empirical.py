@@ -43,6 +43,16 @@ class EmpiricalTests(unittest.TestCase):
         np.testing.assert_allclose(table.estimate,beta,rtol=1e-10)
         np.testing.assert_allclose(table.std_error,np.sqrt(np.diag(cov)),rtol=1e-10)
 
+    def test_latex_deliverables_are_generated_and_hashed(self):
+        bundle = self.execute()
+        run = self.root/'runs/test'
+        expected = ['results/report.tex', 'models/base/coefficients.tex', 'models/base/coefficients.pdf']
+        artifact_paths = {item['path'] for item in bundle['artifacts']}
+        for relative in expected:
+            self.assertTrue((run/relative).is_file())
+            self.assertIn(relative, artifact_paths)
+        self.assertIn('\\documentclass', (run/'results/report.tex').read_text(encoding='utf-8'))
+
     def test_idempotent_verified_reuse(self):
         one=self.execute(); two=self.execute(); self.assertEqual(one,two)
 

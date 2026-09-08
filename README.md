@@ -1,200 +1,197 @@
-# Social Science Paper-Writing Workflow
+# Research OS：社会科学论文工作流
 
-一套面向经济学、管理学与政治学研究的开放、可审计论文工作流。项目将文献检索与 Zotero 归档、结构化综述、文献地图、创新点发现，以及 Python–Stata–R 实证分析连接成统一的数据契约，方便不同 agent 和人工环节可靠交接。
+面向经济学、管理学和政治学研究的可审计工作流：获取并核验文献、归档 Zotero、撰写综述、处理数据，并用 Python、Stata、R 完成可复现实证分析。
 
-**当前开发版本：v0.5.0（2026-09-08）**
+**当前版本：v0.6.0（2026-09-08）**
 
-> 当前状态：可复用原型。文献综述与实证分析两个 skill 已完成；Python、Stata 16 与 R 4.6.1 的标准接口和跨引擎一致性测试已跑通，四项真实论文的局部复现可供审计。云备份与更多因果推断设计仍在路线图中。历次变化见 [CHANGELOG.md](CHANGELOG.md)。
+**项目状态：可复用原型；不等同于无人监督的自动论文生成器。**
 
-第一次使用、不会代码？从 [零基础使用指南](docs/beginner-guide-zh.md) 开始。它包含数据怎么交、方法怎么说、六组可直接复制的提示词，以及结果表应该怎样阅读。
+第一次使用可先阅读 [零基础使用指南](docs/beginner-guide-zh.md)；版本变化见 [CHANGELOG.md](CHANGELOG.md)。
 
-## 能做什么
+## 核心原则
 
-| 模块 | 已实现能力 | 主要产物 |
-| --- | --- | --- |
-| 文献综述 | 七角色专家协议、中英文检索、全文核验、证据卡、引文审计 | 综述、证据矩阵、核验书目 |
-| 文献管理 | Zotero 本地读取、RIS/BibTeX 导入、项目制分类、获取失败交接 | 导入计划、获取台账、审计记录 |
-| 中文核心获取 | 专用 Chrome 会话访问知网、结构化检索、官方下载、PDF/CAJ 校验 | 下载核验 JSON、本地全文、Zotero 附件 |
-| 外文全文获取 | DOI 核验、OpenAlex/Unpaywall 开放全文解析、授权出版社下载、版本记录 | 全文解析 JSON、PDF、哈希与 Zotero 附件 |
-| 研究设计 | 概念—机制—结果梳理、文献地图、独立创新点组合 | JSON/SVG 地图、创新卡 |
-| 实证分析 | CSV/XLSX/DTA 摄取、清洗审计、OLS/固定效应、稳健或聚类标准误 | 结果表、图、报告、哈希清单 |
-| Stata 协作 | Stata 16 独立批处理、完成标记、Python–Stata 数值比对 | `.do`、结果 CSV、执行回执 |
-| R 协作 | R 独立批处理、任意分析脚本桥、SVG/PNG 绘图、环境记录 | `.R`、图形、会话信息、执行回执 |
-| 论文复现 | 公开材料下载说明、原始结果追踪、三引擎复核 | 复现报告与可复现代码 |
+- 不虚构文献、全文、数据、代码运行或实证结果。
+- “搜到题名”不等于“读过全文”；“模型运行成功”不等于“因果识别成立”。
+- 原始输入保持不变；检索、清洗、建模、失败和人工决策均留痕。
+- 最终论文、综述和分析报告以 UTF-8 LaTeX 交付；JSON/CSV 继续承担 agent 间的机器交接。
+- 不绕过登录、付费墙、验证码或其他访问控制，不上传无授权的论文与受限数据。
 
-## 工作流
+## 四个 Skill
 
-```text
-研究请求
-   ├─→ 文献专家面板 → 题录核验 → 合法全文 → Zotero 项目库
-   │                         ↓
-   │             证据卡 → 文献地图 → 文献综述
-   │                              └→ 独立创新点报告
-   └─→ 实证请求 → 数据摄取 → Python / Stata / R → 一致性审计
-                                          ↓
-                                 可验证结果包 → 论文写作
-```
+| Skill | 适合做什么 | 用户至少提供 | 主要输出 |
+| --- | --- | --- | --- |
+| `social-science-literature-review` | 系统综述、证据卡、文献地图、创新点 | 研究问题、范围、语言、时间范围、目标期刊或学科 | `main.tex`、`innovation-report.tex`、`references.bib`、证据矩阵与文献地图 |
+| `cnki-literature-acquisition` | 知网与中文核心文献获取 | 主题/题名、期刊范围、年份、目标 Zotero 项目 | 核验全文、获取台账、Zotero 附件或人工交接 |
+| `international-literature-acquisition` | DOI、Google Scholar、OpenAlex、Unpaywall、出版社全文 | 主题/题名/DOI、年份、来源偏好、目标 Zotero 项目 | 合法全文、版本与哈希、Zotero 附件或人工交接 |
+| `economics-empirical-analysis` | CSV/XLSX/DTA 清洗，Python/Stata/R 分析与复现 | 研究问题、数据字典、观察单位、变量、模型和推断方式 | `report.tex`、LaTeX 表格、PDF/SVG 图、代码、结果包与运行回执 |
 
-各阶段不依赖自由文本“口头交接”，而使用 `schemas/` 和 skill 内的 JSON Schema。无法取得的重要全文会形成明确的人类交接项，不会被静默遗漏。
+完整边界和执行规则以各目录中的 `SKILL.md` 为准。根目录 [AGENTS.md](AGENTS.md) 会在 Codex 打开本仓库后自动完成任务路由。
 
-## 仓库结构
+## 五分钟开始
 
-```text
-.
-├─ skills/
-│  ├─ social-science-literature-review/  # 文献综述专家 skill
-│  ├─ cnki-literature-acquisition/        # 知网检索、下载核验与 Zotero 归档
-│  ├─ international-literature-acquisition/ # 外文 DOI、开放全文、授权下载与归档
-│  └─ economics-empirical-analysis/       # Python–Stata–R 实证 skill
-├─ schemas/                               # 跨模块数据契约
-├─ scripts/                               # 通用工作流与 Zotero 工具
-├─ config/                                # 可公开配置模板
-├─ examples/                              # 请求示例
-├─ outputs/                               # 已脱敏的示范成果
-└─ work/replications/                     # 可公开的复现代码与核验结果
-```
-
-## 快速开始
-
-### 1. 获取代码并建立 Python 环境
+### 1. 下载并打开项目
 
 ```powershell
 git clone https://github.com/Yunyun6677/paper-writing-workflow.git
 cd paper-writing-workflow
+```
+
+用 Codex 打开仓库根目录。你可以直接用自然语言描述任务，也可以明确写“使用 `skill-name`”。
+
+### 2. 建立 Python 环境
+
+```powershell
 py -m venv .venv-empirical
 ./.venv-empirical/Scripts/python.exe -m pip install -r skills/economics-empirical-analysis/requirements.txt
 ./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/empirical.py doctor
 ```
 
-运行实证模块测试：
+只做文献工作时，可以暂不安装 Stata 和 R。
+
+### 3. 准备输入
+
+- 文献任务：研究问题、概念同义词、时间范围、语言、来源和 Zotero 项目名。
+- 数据任务：数据文件、每行代表什么、变量字典、缺失值编码、模型与标准误设定。
+- 论文复现：论文全文、官方数据/代码来源、准备复现的具体表或图。
+
+私人数据放在 `inputs/`；个人研究项目放在 `projects/`。二者默认不会上传 GitHub。
+
+### 4. 调用 Skill
+
+不需要执行特殊按钮。把下面对应提示词交给 Codex 即可。若任务同时涉及检索、Zotero 和实证分析，可以依次调用多个 skill；每一步通过 JSON/CSV schema 交接。
+
+### 5. 编译成果
+
+中文成果推荐 TeX Live 或 MiKTeX，并使用 XeLaTeX：
 
 ```powershell
-./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/test_empirical.py
-./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/test_r_bridge.py
+xelatex main.tex
+bibtex main
+xelatex main.tex
+xelatex main.tex
 ```
 
-### 2. 创建本地研究画像
+实证报告位于运行目录的 `results/report.tex`，进入该目录后执行 `xelatex report.tex`。详细规则见 [LaTeX 输出规范](docs/latex-output-standard.md)。
 
-复制 `config/research-profile.example.json` 为 `config/research-profile.json`，再按自己的领域和偏好修改。后者已被 Git 忽略，适合保存个人化配置；仍不要在其中保存密码或 API Key。
+## 可直接复制的提示词
 
-研究任务使用 `examples/research-request.example.json` 或对应 schema 新建，不要覆盖既有项目记录。
+### A. 社会科学文献综述
 
-### 3. 连接 Zotero
+```text
+请使用 social-science-literature-review skill。
+研究问题：[填写]
+学科与目标期刊：[填写]
+核心概念及同义词：[填写]
+时间范围：[填写]
+语言：中文/英文/两者
+希望覆盖的理论、机制或争议：[填写]
+Zotero 项目分类：[填写]
 
-- 本地只读：保持 Zotero Desktop 运行并启用本地 API。
-- 自动写入：只在需要时设置 `ZOTERO_USER_ID` 与 `ZOTERO_API_KEY` 环境变量。
-- API Key 仅保存在操作系统的环境变量或安全凭据库；不要粘贴到对话、配置文件、日志或 Git。
-- 付费数据库使用你自己的合法机构访问。工作流不绕过登录、付费墙或技术保护措施。
-
-### 4. 连接中国知网
-
-知网模块使用独立的 Chrome 研究配置，不接管日常 Chrome 标签页，也不导出 Cookie。用户在独立窗口中自行完成学校/知网登录；程序只使用页面上正式提供的检索、导出与 PDF/CAJ 下载功能。下载后必须经过文件签名、页数、标题匹配和 SHA-256 核验，才能进入项目目录和 Zotero。
-
-环境配置、权限边界与验证步骤见 [CNKI Chrome 配置](skills/cnki-literature-acquisition/references/chrome-setup.md)；与外部方案的取舍见 [知网接入方案对比](skills/cnki-literature-acquisition/references/integration-landscape.md)。实际检索时可直接提出：
-
-> 在知网中检索 2020—2026 年《中国行政管理》发表的乡村治理研究，筛选与村民参与或基层组织相关的论文；将能合法获得的全文下载、核验并归档到当前研究项目和 Zotero，无法取得的生成明确交接。
-
-### 5. 获取外文全文
-
-外文模块先核验 DOI 和题录，再按“现有附件 → OpenAlex/Unpaywall 开放版本 → 出版社或机构库 → 学校订阅 → 人工交接”的顺序寻找全文。Google Scholar 只作为低频发现入口；程序不接入 Sci-Hub，也不绕过付费墙、登录或验证码。
-
-```powershell
-python skills/international-literature-acquisition/scripts/resolve_open_access.py `
-  --doi "10.1257/aer.103.6.2121" `
-  --output work/fulltext-resolution.json
+不得虚构文献。只有获得并阅读全文的论文才能支持实质性判断。
+输出 main.tex、独立的 innovation-report.tex、references.bib、证据矩阵和一张文献地图；无法取得的重要全文必须明确交接。
 ```
 
-添加 `--download-dir work/downloads` 后，程序只尝试下载明确标为开放获取、且响应内容通过 PDF 结构检查的候选。可把联系邮箱设置为 `UNPAYWALL_EMAIL`，把 OpenAlex 密钥设置为 `OPENALEX_API_KEY`；这些值只进入系统环境变量，不写入仓库或结果文件。ScienceDirect 订阅全文通过专用研究浏览器和用户已有的学校访问下载，随后归档到 Zotero。
+### B. 中文全文与 Zotero
 
-方案取舍与操作边界见 [GitHub 组件评估](skills/international-literature-acquisition/references/github-landscape.md)、[来源路由](skills/international-literature-acquisition/references/source-routing.md) 和 [授权浏览器步骤](skills/international-literature-acquisition/references/browser-procedure.md)。
+```text
+请使用 cnki-literature-acquisition skill。
+主题或论文题名：[填写]
+期刊范围：[填写]
+年份范围：[填写]
+需要数量：[填写]
+Zotero 项目分类：[填写]
 
-> 围绕“数字贸易与劳动力市场”检索 30 篇外文文献，核验 DOI；优先取得开放全文，必要时使用我已登录的人大图书馆出版社页面。把核验成功的 PDF 归档到当前研究项目和 Zotero，逐篇记录版本与来源，无法取得的核心文献生成明确交接。
-
-### 6. 连接 Stata
-
-Stata 是专有软件，本仓库不包含安装程序或许可证。将 `STATA_EXE` 指向已授权的 Windows 可执行文件，或在命令中传入 `--stata-exe`：
-
-```powershell
-$env:STATA_EXE = "C:/Program Files/Stata18/StataSE-64.exe"
-./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/stata_bridge.py --smoke --output work/stata-smoke
+使用我已有的合法知网/学校权限。逐篇核验题名、作者、期刊和年份；下载后检查文件真实性并导入 Zotero。遇到登录或验证码时让我处理；失败论文不得静默遗漏。
 ```
 
-Stata 16 使用可审计的批处理桥；Stata 17 及以上可在重新通过一致性测试后评估官方 PyStata。
+### C. 外文全文与 Zotero
 
-### 7. 连接 R 与生成图形
+```text
+请使用 international-literature-acquisition skill。
+主题、题名或 DOI：[填写]
+时间范围：[填写]
+来源偏好：OpenAlex、Unpaywall、Google Scholar、出版社、机构库
+需要数量：[填写]
+Zotero 项目分类：[填写]
 
-安装 R 后，将 `R_SCRIPT` 指向 `Rscript.exe`。R 桥支持环境自检、结构化分析脚本和标准系数图；所有任务使用新输出目录并生成 `engine-execution/1.0` 回执：
-
-```powershell
-$env:R_SCRIPT = "C:/Program Files/R/R-4.6.1/bin/Rscript.exe"
-./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/r_bridge.py --smoke --output work/r-smoke
-./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/r_bridge.py --plot --input PATH_TO/coefficients.csv --output work/r-plot
+先查重，再核验 DOI 和题录；优先开放版本，必要时使用我已授权的学校订阅浏览器。记录版本、来源、许可证和哈希。不要绕过付费墙；无法取得的核心论文生成明确交接。
 ```
 
-任意 R 分析脚本还可通过 `--analysis --input ... --analysis-script ... --output ...` 运行。脚本必须写入完成标记、会话信息和至少一个 CSV/JSON 结果，桥接层负责日志、哈希与失败留痕。
+### D. Python、Stata、R 实证分析
 
-## 已验证复现案例
+```text
+请使用 economics-empirical-analysis skill。
+研究问题：[填写]
+数据文件：[填写路径或上传]
+每行代表：[填写观察单位]
+因变量：[变量名与含义]
+核心解释变量：[变量名与含义]
+控制变量：[填写]
+固定效应：[填写]
+标准误/聚类层级：[填写]
+权重与缺失值编码：[填写]
+希望使用：Python / Stata / R
 
-项目现有两个真实数据案例：
+先检查数据和识别条件，再执行模型；不要按显著性修改样本或设定。输出可重复代码、report.tex、LaTeX 表格、PDF/SVG 图、模型结果和机器可读运行回执。
+```
 
-1. Autor、Dorn 与 Hanson（2013）*The China Syndrome* 的 Table 3 第 1–6 列。Python 与 Stata 的最大系数绝对差为 `5.17e-13`，最大标准误绝对差为 `3.86e-09`，并与作者公布的舍入结果一致。
+如果方法尚未确定，请明确写：“先比较方法成立所需条件，只做诊断；得到我确认后再运行因果模型。”
 
-- [复现报告](work/replications/adh2013-china-syndrome/REPORT.md)
-- [Stata 代码](work/replications/adh2013-china-syndrome/run/stata/replicate_table3.do)
-- [Python 代码](work/replications/adh2013-china-syndrome/run/python/replicate_table3.py)
-- [公开结果清单](work/replications/adh2013-china-syndrome/replication_bundle.public.json)
+## LaTeX 交付边界
 
-2. Card 与 Krueger（1994）*Minimum Wages and Employment* 的 Table 3 核心 DID 与 Table 4 第 1–5 列。Python、Stata 16 与 R 4.6.1 的最大跨引擎差低于 `1.21e-13`，并生成了 R 系数图。
+最终给人阅读、修改或投稿的内容使用 LaTeX：
 
-- [复现报告](work/replications/card-krueger-1994/REPORT.md)
-- [Python、Stata 与 R 代码](work/replications/card-krueger-1994/run/)
-- [三引擎一致性回执](work/replications/card-krueger-1994/run/parity-v2.json)
-- [公开结果清单](work/replications/card-krueger-1994/replication_bundle.public.json)
-- [可继续执行的方法目录](skills/economics-empirical-analysis/references/replication-catalog.md)
+```text
+outputs/<project>/
+├─ main.tex 或 report.tex
+├─ references.bib
+├─ sections/*.tex
+├─ tables/*.tex
+├─ figures/*.{pdf,png}
+└─ manifest.json
+```
 
-3. 两项新增中国案例：Yang 等（2023）中国公民诚信现场实验已完成 Table 1、Figure 1 的 Python 重建，以及 Table 2 第 1–9 列的 Python–Stata 一致性核验；Wiebe（2020）中国官员晋升研究已完成 Table 1 与 Table 2 LPM 第 1–3 列，并发现、修复了高维固定效应单例样本差异。
+以下内容不应强行转换为 LaTeX：原始数据、CSV 系数表、JSON 证据卡、哈希清单、执行日志、Python/Stata/R 源代码。它们是复现和 agent 交接所需的原始证据；LaTeX 报告引用或概括它们。
 
-- [中国相关三论文能力对比](docs/china-replication-benchmark.md)
-- [机器可读对比结果](outputs/replication-benchmark/china-cases.json)
-- [公民诚信案例报告](work/replications/civic-honesty-china/REPORT.md)
-- [官员晋升案例报告](work/replications/meritocratic-promotion-china/REPORT.md)
+## 软件与账号
 
-论文 PDF、作者原始数据及压缩包没有在本仓库重新分发。公开结果清单保存来源 URL 和 SHA-256；下载作者材料后，可将数据路径显式传给脚本。每个案例只声称复现指定表格，不把数值一致误写为对识别假设的独立验证。
+- **Zotero**：本地读取需要 Zotero Desktop；自动分类需要个人库 API Key。密钥只放系统环境变量。
+- **知网/出版社**：由用户在专用研究浏览器中登录并处理验证码，程序不读取密码或导出 Cookie。
+- **OpenAlex/Unpaywall/Elsevier**：按提供方要求配置环境变量；是否能下载全文仍取决于开放许可或机构订阅。
+- **Stata**：需要合法安装及 `STATA_EXE`；本项目不复制许可证。
+- **R**：需要 `Rscript.exe`；额外包应使用项目级锁文件。
 
-## 示例成果
+## 明确不做什么
 
-- `outputs/v2/`：贸易开放与农村基层政治参与综述、文献地图及独立创新点报告。
-- `outputs/ai-token-economics/`：人工智能经济学综述、证据卡、文献地图与研究入口。
-- `outputs/literature-workflow-contract-v1.md`：文献模块的交接约定。
+- 不使用 Sci-Hub 或其他规避访问控制的来源。
+- 不把摘要、搜索片段、预览页或 DOI 页面当作全文。
+- 不把普通 OLS/固定效应自动描述为因果效应。
+- 不根据显著性自动改变模型、样本、标准误或异常值规则。
+- 不公开个人 Zotero 状态、受限全文、未经脱敏数据、API Key 或本机许可信息。
+- 不保证所有论文都能自动取得；核心论文不可得时必须说明下一步。
 
-这些成果用于展示工作流结构，不替代研究者对原文、数据、识别策略和引用的再次核查。
+## 项目结构
 
-## 数据、隐私与版权
+```text
+skills/       四个工作流入口与执行脚本
+schemas/      agent 间的机器可读契约
+templates/    LaTeX 等可复用模板
+scripts/      Zotero 与通用工具
+docs/         新手指南和输出规范
+examples/     可复制的请求示例
+outputs/      可公开的脱敏成果
+work/         默认不公开的运行与复现材料
+projects/     默认不公开的个人研究项目
+```
 
-- 不提交 API Key、账户、许可证序列号、个人 Zotero 快照或本机绝对路径。
-- 不提交用户原始数据、受限全文或许可证不明确的第三方材料。
-- 原始数据默认不可变；所有转换、筛选、合并和缺失值处理必须留痕。
-- Zotero 云端同步成功与本地归档成功分别记录。
-- 对无法合法自动取得的核心文献，记录题录、失败原因和用户下一步操作。
-- 自动分析不以“得到显著结果”为优化目标，也不自动把相关性解释为因果性。
+进一步说明见 [零基础使用指南](docs/beginner-guide-zh.md)、[贡献规范](CONTRIBUTING.md) 和 [安全说明](SECURITY.md)。
 
-提交前请运行测试，并检查暂存文件中是否存在凭据、私人数据和大文件。更完整的协作规则见 [CONTRIBUTING.md](CONTRIBUTING.md)，安全问题见 [SECURITY.md](SECURITY.md)。
+## 验证状态
 
-## 路线图
+- Python、Stata 16、R 4.6.1 的标准接口及跨引擎一致性测试已跑通。
+- Autor–Dorn–Hanson、Card–Krueger 及两项中国相关论文已完成限定范围的公开复现。
+- 知网官方全文下载、本地校验和 Zotero 附件归档已跑通。
+- 外文 DOI → OpenAlex/Crossref → 合法 PDF 的真实下载测试已跑通。
+- 实证执行器会生成 LaTeX 系数表、PDF 图和 `report.tex`；当前机器未安装 LaTeX，因此仍需在 TeX Live/MiKTeX 环境完成最终编译测试。
 
-- 增加现代 DID、IV、RD、面板与调查抽样设计的独立审计门。
-- 为 OSF、Zenodo 或机构存储增加显式授权的加密备份适配器。
-- 增加可移植的项目初始化器、持续集成和跨版本 Stata 证书。
-- 把 Zotero 获取台账、实证结果包和写作引用进一步统一为端到端项目 manifest。
-
-## 版本规则
-
-项目使用语义化版本：破坏兼容性的契约变更提升主版本，向后兼容的新功能提升次版本，修复与文档调整提升补丁版本。每个公开版本同时保留 Git tag、GitHub Release、发布日期和变更记录；日常开发以 `main` 分支最新提交为准。
-
-## 致谢与许可
-
-文献工作流的早期设计参考了 [fakerqwq/social-science-paper-writing-skill](https://github.com/fakerqwq/social-science-paper-writing-skill) 的模块化思路，并根据可核验全文、Zotero 项目制归档、七角色协议、强制文献地图和实证复现需求重新设计；没有照搬其内容。
-
-知网模块参考了 [cookjohn/cnki-skills](https://github.com/cookjohn/cnki-skills) 通过 Chrome DevTools 进行直接导航、DOM 结构化提取与可见验证码检测的思路；本项目增加了专用浏览器配置、禁止 Cookie 导出、下载字节校验、项目台账和 Zotero 附件复核。
-
-本仓库原创代码与文档采用 [MIT License](LICENSE)。第三方论文、数据和软件继续适用各自许可。
+版本变更见 [CHANGELOG.md](CHANGELOG.md)。第三方论文、数据和软件继续适用各自许可；本仓库原创代码与文档使用 [MIT License](LICENSE)。

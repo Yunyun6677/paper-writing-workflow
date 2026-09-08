@@ -13,6 +13,7 @@
     "deliverable": {"const": "literature-review"},
     "languages": {"type": "array", "items": {"enum": ["zh-CN", "en"]}, "minItems": 1},
     "citation_style": {"type": "string"},
+    "output_format": {"const": "latex"},
     "expert_panel": {
       "type": "object",
       "properties": {

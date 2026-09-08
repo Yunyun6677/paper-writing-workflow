@@ -21,6 +21,13 @@ inputs/
 
 # Logs and generated binary artifacts
 *.log
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
 *.dta
 *.gph
 *.zip

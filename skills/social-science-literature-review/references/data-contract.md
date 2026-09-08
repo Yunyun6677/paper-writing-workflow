@@ -28,13 +28,15 @@ Use `cloud-synced`, `local-only`, or `metadata-only`. The current workflow admit
 
 ## Required full-review artifacts
 
-- `review-style-benchmark.md` and `.json`: benchmark selection, influence source/date, inspected full text, extracted writing features, and adopted or rejected choices.
+- `review-style-benchmark.tex` and `.json`: benchmark selection, influence source/date, inspected full text, extracted writing features, and adopted or rejected choices.
 - `candidate-ledger.json`: the single cross-language candidate ledger and reproducible search trail.
 - `evidence-cards/*.json`: one card per included work.
-- `concept-matrix.md` or `.csv`: theories, mechanisms, settings, methods, results, disagreements, and limitations.
+- `concept-matrix.csv` and `tables/concept-matrix.tex`: theories, mechanisms, settings, methods, results, disagreements, and limitations.
 - `literature-map.json`: evidence-traceable nodes and typed edges.
-- `literature-map.svg`: rendered figure embedded in the final review.
+- `literature-map.svg`: editable figure source.
+- `figures/literature-map.pdf` or `.png`: figure embedded in the final review.
 - `innovation-cards/*.json`: ranked, falsifiable contribution candidates linked to evidence and map gaps.
+- `main.tex`, `innovation-report.tex`, and `references.bib`: canonical human-readable deliverables following `docs/latex-output-standard.md`.
 - `run-status.json`: status of all seven roles and resumable stage checkpoints.
 - `zotero-audit.json`: created, updated, classified, skipped, and failed mutations without credentials.
 

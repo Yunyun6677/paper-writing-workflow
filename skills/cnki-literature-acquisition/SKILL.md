@@ -74,4 +74,5 @@ CAJ remains `format: caj`; never rename it `.pdf`. A CAJ file does not satisfy a
 - one `cnki-download-verification/1.0` JSON record per attempt;
 - verified project PDF/CAJ path or an explicit `needs-human` handoff;
 - Zotero item and attachment keys for every `archived-local` paper;
+- when the user requests a human-readable acquisition report, produce `acquisition-report.tex` under `docs/latex-output-standard.md`; do not replace the machine ledger with prose;
 - no claim that a paper was studied until its full text was actually read.

@@ -28,7 +28,7 @@ From the workspace root:
 ./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/empirical.py backup --run-dir PATH_TO_RUN --destination work/empirical-backups
 ```
 
-The bundled runner supports CSV, XLSX and DTA input; explicit missing-code conversion, keep/drop filters, and validated left joins; descriptive statistics; numeric OLS with optional categorical fixed-effect dummies, HC1/HC3 or one-way clustered covariance. Exports analysis CSV/DTA, coefficient CSV/JSON, covariance matrices, Markdown report, coefficient SVG, code snapshot and environment versions. XLSX is an intake format; styled Excel/Word/PDF reports are downstream adapters, not v1 completion claims.
+The bundled runner supports CSV, XLSX and DTA input; explicit missing-code conversion, keep/drop filters, and validated left joins; descriptive statistics; numeric OLS with optional categorical fixed-effect dummies, HC1/HC3 or one-way clustered covariance. It exports analysis CSV/DTA, coefficient CSV/JSON, covariance matrices, reusable LaTeX tables, a canonical `results/report.tex`, PDF/SVG coefficient figures, code snapshots and environment versions. Machine handoffs remain JSON/CSV; follow the repository's `docs/latex-output-standard.md` for human-readable delivery. XLSX is an intake format, not a report format.
 
 Stata: read [stata-handoff.md](references/stata-handoff.md). The configured Stata/SE 16 installation uses an isolated Windows batch process and has passed both a synthetic smoke test and Python–Stata parity tests for the v1 estimators. Stata 17+ may use official PyStata only after a fresh parity test. Never inspect/copy license files or alter the user's existing Stata session.
 

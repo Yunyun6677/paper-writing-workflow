@@ -42,6 +42,75 @@ def sha(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
+def latex_escape(value):
+    replacements = {
+        '\\': r'\textbackslash{}', '&': r'\&', '%': r'\%', '$': r'\$',
+        '#': r'\#', '_': r'\_', '{': r'\{', '}': r'\}',
+        '~': r'\textasciitilde{}', '^': r'\textasciicircum{}',
+    }
+    return ''.join(replacements.get(char, char) for char in str(value))
+
+
+def write_coefficient_latex(table, path, spec_id):
+    rows = [
+        r'\begin{table}[htbp]', r'\centering',
+        r'\caption{Coefficient estimates: ' + latex_escape(spec_id) + '}',
+        r'\begin{tabular}{lrrrrr}', r'\toprule',
+        r'Term & Estimate & Std. error & $p$-value & 95\% CI low & 95\% CI high \\',
+        r'\midrule',
+    ]
+    for row in table.itertuples(index=False):
+        estimate = f'{float(row.estimate):.6g}'
+        stderr = f'{float(row.std_error):.6g}'
+        pvalue = f'{float(row.p_value):.6g}'
+        low = f'{float(row.ci_low):.6g}'
+        high = f'{float(row.ci_high):.6g}'
+        rows.append(f'{latex_escape(row.term)} & {estimate} & {stderr} & {pvalue} & {low} & {high} \\\\')
+    rows.extend([r'\bottomrule', r'\end{tabular}', r'\end{table}'])
+    Path(path).write_text('\n'.join(rows) + '\n', encoding='utf-8')
+
+
+def write_report_latex(request, model_states, limitations, root):
+    rows = [
+        r'\documentclass[UTF8]{ctexart}',
+        r'\usepackage[a4paper,margin=2.5cm]{geometry}',
+        r'\usepackage{booktabs}',
+        r'\usepackage{graphicx}',
+        r'\usepackage[hidelinks]{hyperref}',
+        r'\title{Empirical run: ' + latex_escape(request['run_id']) + '}',
+        r'\author{paper-writing-workflow}',
+        r'\date{}',
+        r'\begin{document}',
+        r'\maketitle',
+        r'\section{Research question}',
+        latex_escape(request['question']),
+        r'\section{Models}',
+    ]
+    for state in model_states:
+        spec_id = state['spec_id']
+        rows.append(r'\subsection{' + latex_escape(spec_id) + '}')
+        if state['status'] == 'complete':
+            result = read_json(root / 'models' / spec_id / 'result.json')
+            rows.append(latex_escape(
+                f"N={result['n_used']}; missing exclusions={result['n_missing_excluded']}; "
+                f"covariance={result['spec']['covariance']}."
+            ))
+            rows.extend([
+                r'\input{../models/' + spec_id + r'/coefficients.tex}',
+                r'\begin{figure}[htbp]',
+                r'\centering',
+                r'\includegraphics[width=0.85\linewidth]{../models/' + spec_id + r'/coefficients.pdf}',
+                r'\caption{Coefficient estimates and 95\% confidence intervals.}',
+                r'\end{figure}',
+            ])
+        else:
+            rows.append(r'\textbf{Failed:} ' + latex_escape(state.get('error', 'unknown error')))
+    rows.extend([r'\section{Limitations}', r'\begin{itemize}'])
+    rows.extend(r'\item ' + latex_escape(item) for item in limitations)
+    rows.extend([r'\end{itemize}', r'\end{document}'])
+    (root / 'results' / 'report.tex').write_text('\n'.join(rows) + '\n', encoding='utf-8')
+
+
 def validate(value, name):
     jsonschema.Draft202012Validator(read_json(SKILL / 'schemas' / name)).validate(value)
 
@@ -131,6 +200,7 @@ def estimate(frame, spec, out):
     if not np.isfinite(table.drop(columns='term').to_numpy()).all():
         raise ValueError('Nonfinite inference; inspect perfect fit or degenerate covariance')
     table.to_csv(out / 'coefficients.csv', index=False)
+    write_coefficient_latex(table, out / 'coefficients.tex', spec['spec_id'])
     fit.cov_params().to_csv(out / 'covariance.csv', index=True)
     sample_ids = [int(i) for i in sample.index]
     write_json(out / 'sample.json', {'processed_row_indices': sample_ids})
@@ -152,7 +222,9 @@ def estimate(frame, spec, out):
     ax.set_yticks(range(len(visible)), visible.term)
     ax.axvline(0, color='grey', linestyle='--'); ax.set_xlabel('Coefficient and 95% CI')
     ax.set_title(spec['spec_id']); fig.tight_layout()
-    fig.savefig(out / 'coefficients.svg'); plt.close(fig)
+    fig.savefig(out / 'coefficients.svg')
+    fig.savefig(out / 'coefficients.pdf')
+    plt.close(fig)
     return result
 
 
@@ -261,18 +333,12 @@ def run(request_path, output_root, stata_exe=None):
         pyreadstat.write_dta(frame, str(root / 'processed' / 'analysis.dta'), version=15)
         frame.describe(include='all').to_csv(root / 'results' / 'descriptive.csv')
         state['stage'] = 'estimation'; write_json(root / 'checkpoint.json', state)
-        report = ['# Empirical run: ' + request['run_id'], '', request['question'], '',
-                  'Synthetic demonstration.' if request['sensitivity'] == 'synthetic' else 'Local analysis; not approved for external release.', '']
         for spec in request['models']:
             try:
                 result = estimate(frame, spec, root / 'models' / spec['spec_id'])
                 state['models'].append({'spec_id': spec['spec_id'], 'status': 'complete'})
-                report.extend(['## ' + spec['spec_id'], '', f"N={result['n_used']}; missing exclusions={result['n_missing_excluded']}; covariance={spec['covariance']}.",
-                               '', f"[Coefficient table](../models/{spec['spec_id']}/coefficients.csv)", '',
-                               f"![Coefficients](../models/{spec['spec_id']}/coefficients.svg)", ''])
             except Exception as exc:
                 state['models'].append({'spec_id': spec['spec_id'], 'status': 'failed', 'error': str(exc)})
-                report.extend(['## ' + spec['spec_id'], '', 'FAILED: ' + str(exc), ''])
             write_json(root / 'checkpoint.json', state)
         stata_script(request, root)
         status = 'complete' if all(m['status'] == 'complete' for m in state['models']) else 'partial'
@@ -283,8 +349,7 @@ def run(request_path, output_root, stata_exe=None):
                           'comparisons':stata_receipt['comparisons']}
             if any(x['status']=='review-required' for x in stata_receipt['comparisons']):
                 status='partial'; limits.append('At least one Python–Stata comparison requires review.')
-        report.extend(['## Limitations', ''] + limits)
-        (root / 'results' / 'report.md').write_text('\n'.join(report), encoding='utf-8')
+        write_report_latex(request, state['models'], limits, root)
     except Exception as exc:
         status = 'failed'; state['error'] = str(exc)
     state.update(status=status, stage='finished'); write_json(root / 'checkpoint.json', state)
