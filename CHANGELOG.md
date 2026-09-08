@@ -2,6 +2,12 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.6.1] - 2026-09-08
+
+### Fixed
+
+- 将实证测试数量更正为 17 项，并保持 README 的当前版本号与已发布标签一致。
+
 ## [0.6.0] - 2026-09-08
 
 ### Added
@@ -18,7 +24,7 @@
 
 ### Verified
 
-- 全部 16 项 Python 实证测试通过；新增 LaTeX 表格与报告进入哈希结果包。
+- 全部 17 项 Python 实证测试通过；新增 LaTeX 表格与报告进入哈希结果包。
 - 新增和修改的 JSON Schema 均通过解析检查。当前机器没有 LaTeX 发行版，因此 `.tex` 的真实编译检查需在安装 TeX Live 或 MiKTeX 后完成。
 
 ## [0.5.0] - 2026-09-08
@@ -129,3 +135,4 @@
 [0.4.1]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.4.1
 [0.5.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.5.0
 [0.6.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.6.0
+[0.6.1]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.6.1
