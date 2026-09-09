@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/research-event.schema.json",
+  "title": "Append-only Research OS runtime event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "event_id", "run_id", "at", "type", "payload"],
+  "properties": {
+    "schema_version": {"const": "research-event/1.0"},
+    "event_id": {"type": "string", "minLength": 12},
+    "run_id": {"type": "string"},
+    "at": {"type": "string", "format": "date-time"},
+    "type": {"type": "string", "minLength": 3},
+    "payload": {"type": "object"}
+  }
+}

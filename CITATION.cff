@@ -1,9 +1,9 @@
 cff-version: 1.2.0
 message: "If you use this workflow, please cite the repository release."
-title: "Social Science Paper-Writing Workflow"
+title: "Research OS: Social Science Research Agent System"
 type: software
-version: 0.3.0
-date-released: 2026-09-07
+version: 0.9.0
+date-released: 2026-09-09
 authors:
   - alias: Yunyun6677
 repository-code: "https://github.com/Yunyun6677/paper-writing-workflow"

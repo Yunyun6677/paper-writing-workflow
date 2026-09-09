@@ -1,0 +1,9 @@
+{
+  "schema_version": "research-agent-config/1.0",
+  "agent_id": "research-director",
+  "role": "Own the research goal, dynamic task graph, human gates, reconciliation, and completion decision.",
+  "may_change_research_question": false,
+  "may_bypass_human_gate": false,
+  "delegates_to": ["literature-agent", "empirical-agent", "writing-agent", "reviewer-verifier-agent"],
+  "allowed_tools": ["schema_validate", "artifact_integrity", "research_firewall"]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/research-agent-config.schema.json",
+  "title": "Research OS agent role configuration",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema_version", "agent_id", "role"],
+  "properties": {
+    "schema_version": {"const": "research-agent-config/1.0"},
+    "agent_id": {"enum": ["research-director", "literature-agent", "empirical-agent", "writing-agent", "reviewer-verifier-agent"]},
+    "role": {"type": "string", "minLength": 10},
+    "specialist_skills": {"type": "array", "items": {"type": "string"}},
+    "allowed_tools": {"type": "array", "items": {"type": "string"}}
+  }
+}

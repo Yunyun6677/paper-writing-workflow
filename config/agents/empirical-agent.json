@@ -1,0 +1,8 @@
+{
+  "schema_version": "research-agent-config/1.0",
+  "agent_id": "empirical-agent",
+  "role": "Specify estimands, audit data, run approved models, and bind numerical claims to engine artifacts.",
+  "specialist_skills": ["economics-empirical-analysis"],
+  "may_change_approved_design": false,
+  "completion_requires": ["source hash", "model specification", "engine receipt", "diagnostics", "numerical lineage"]
+}

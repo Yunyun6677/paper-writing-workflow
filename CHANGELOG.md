@@ -2,6 +2,23 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.9.0] - 2026-09-09
+
+### Added
+
+- 框架中立的 Research Agent kernel：Research Director、四个 Specialist Agents 与 deterministic tool registry。
+- `research-state/1.0`、`research-event/1.0` 和 agent observation 契约，统一项目、任务 DAG、人工动作、证据、实证、手稿、审计、工具/Agent 运行、错误与 checkpoint。
+- 可执行的调度循环、结构化委派、human interrupt/resume、有限重试、观察后动态追加任务、DAG 无环检查和 final-gate 依赖保护。
+- 原子 state/checkpoint、追加式 JSONL event trace、checkpoint 哈希核验和旧项目 reference-only 迁移回执。
+- Agent runtime 差距分析、OpenAI Agents SDK/LangGraph/Microsoft Agent Framework/ACI/Research Agent 框架比较及 schema migration strategy。
+- 13 项 runtime/contract 测试覆盖初始化、等待状态保持、resume、损坏状态恢复、有界重试、动态规划安全、配置契约、非破坏迁移、运行评估和检查点完整性。
+
+### Capability boundary
+
+- 当前版本提供真实可运行的状态与调度内核；真实 LLM provider 由宿主或未来 adapter 回传结构化 observation，尚不声称所有外部工具已注册为生产级 Tool。
+- 已有五个 Skill、专业 schema 和确定性脚本继续是权威执行协议；ResearchState 引用而不复制其事实内容。
+- Research Director 不能绕过研究问题、识别设计、数据伦理、主要结果、外部上传或投稿的人工门。
+
 ## [0.8.0] - 2026-09-09
 
 ### Added
@@ -168,3 +185,4 @@
 [0.6.1]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.6.1
 [0.7.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.7.0
 [0.8.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.8.0
+[0.9.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.9.0

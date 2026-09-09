@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/research-agent-observation.schema.json",
+  "title": "Structured specialist agent observation",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["status"],
+  "properties": {
+    "status": {"enum": ["complete", "failed", "needs-human"]},
+    "summary": {"type": "string"},
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": {"type": "string"},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+        }
+      }
+    },
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "human_action": {"type": "string"},
+    "next_tasks": {"type": "array", "items": {"type": "object"}}
+  }
+}

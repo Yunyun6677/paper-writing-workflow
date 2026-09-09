@@ -51,6 +51,7 @@ scripts/zotero_upload_fulltext.py
 scripts/zotero_link_fulltext.py
 
 # Working data are private by default. Publish only the audited replication slice.
+projects/
 work/*
 !work/replications/
 work/replications/*

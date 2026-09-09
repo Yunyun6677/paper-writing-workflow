@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/research-state-migration.schema.json",
+  "title": "Non-destructive ResearchState migration receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "strategy", "source_project", "created_at", "sources", "guarantees"],
+  "properties": {
+    "schema_version": {"const": "research-state-migration/1.0"},
+    "strategy": {"const": "reference-only"},
+    "source_project": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "sources": {"type": "array", "items": {"type": "object"}},
+    "guarantees": {"type": "array", "minItems": 3, "items": {"type": "string"}}
+  }
+}

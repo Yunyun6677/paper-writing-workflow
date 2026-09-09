@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/agent-run-evaluation.schema.json",
+  "title": "Deterministic Research Agent run evaluation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "evaluated_at", "status", "metrics", "integrity_errors"],
+  "properties": {
+    "schema_version": {"const": "agent-run-evaluation/1.0"},
+    "run_id": {"type": "string"},
+    "evaluated_at": {"type": "string", "format": "date-time"},
+    "status": {"enum": ["pass", "waiting", "review-required", "blocked"]},
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tasks_total", "tasks_complete", "tasks_blocked", "tasks_waiting", "completion_rate", "errors", "retries", "artifacts", "checkpoints"],
+      "properties": {
+        "tasks_total": {"type": "integer", "minimum": 0},
+        "tasks_complete": {"type": "integer", "minimum": 0},
+        "tasks_blocked": {"type": "integer", "minimum": 0},
+        "tasks_waiting": {"type": "integer", "minimum": 0},
+        "completion_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "errors": {"type": "integer", "minimum": 0},
+        "retries": {"type": "integer", "minimum": 0},
+        "artifacts": {"type": "integer", "minimum": 0},
+        "checkpoints": {"type": "integer", "minimum": 0}
+      }
+    },
+    "integrity_errors": {"type": "array", "items": {"type": "string"}}
+  }
+}

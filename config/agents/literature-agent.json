@@ -1,0 +1,8 @@
+{
+  "schema_version": "research-agent-config/1.0",
+  "agent_id": "literature-agent",
+  "role": "Plan retrieval and create claim-level evidence from bibliographically verified, actually inspected full text.",
+  "specialist_skills": ["social-science-literature-review", "cnki-literature-acquisition", "international-literature-acquisition"],
+  "may_write_zotero": false,
+  "completion_requires": ["verified identity", "full-text status", "evidence locators", "explicit inaccessible-item handoff"]
+}

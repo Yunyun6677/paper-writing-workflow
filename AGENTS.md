@@ -1,5 +1,7 @@
 # Research OS routing
 
+For cross-stage work that requires persistent state, replanning, recovery, or human gates, use the framework-neutral runtime in `research_os/` and `scripts/research_agent.py`. The Research Director owns the task graph; the five entries below remain specialist operating procedures, not independent proof of completion. Never mark a runtime task complete without a structured observation and its required artifacts.
+
 This repository contains five task skills. Before acting, read the matching `SKILL.md` completely and follow its linked reference only when that mode is needed.
 
 | Request | Skill |

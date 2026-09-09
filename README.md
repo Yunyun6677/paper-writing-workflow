@@ -1,10 +1,10 @@
 # Research OS：社会科学论文工作流
 
-面向经济学、管理学和政治学研究的可审计工作流：获取并核验文献、归档 Zotero、撰写综述、处理数据，并用 Python、Stata、R 完成可复现实证分析。
+面向经济学、管理学和政治学研究的可审计 Research Agent System：由一个 Research Director 管理持久状态、动态任务图、失败恢复和人工门控，四个 Specialist Agents 使用已有五个 Skills 与确定性工具完成文献、实证、写作和核验。
 
-**当前版本：v0.8.0（2026-09-09）**
+**当前版本：v0.9.0（2026-09-09）**
 
-**项目状态：可复用原型；不等同于无人监督的自动论文生成器。**
+**项目状态：可运行的 Agent kernel 原型；模型 adapter 与全部外部工具尚未完成生产认证，不等同于无人监督的自动论文生成器。**
 
 第一次使用可先阅读 [零基础使用指南](docs/beginner-guide-zh.md)；版本变化见 [CHANGELOG.md](CHANGELOG.md)。
 
@@ -16,7 +16,19 @@
 - 最终论文、综述和分析报告以 UTF-8 LaTeX 交付；JSON/CSV 继续承担 agent 间的机器交接。
 - 不绕过登录、付费墙、验证码或其他访问控制，不上传无授权的论文与受限数据。
 
-## 五个 Skill
+## Agent、Skill 与 Tool
+
+这三个概念不再混用：
+
+- **Agent** 有独立目标、复杂判断、多轮任务和状态。系统只设 Research Director、Literature、Empirical、Writing、Reviewer/Verifier 五个角色。
+- **Skill** 是专家遵循的可复用操作规范。已有五个 Skill 继续保持职责边界，不被复制成新 Agent。
+- **Tool** 是窄接口的确定性操作，例如 Zotero、CNKI browser、OpenAlex、PDF parser、Python、Stata、R、LaTeX、Git 和 schema validator。
+
+`research_os/` 提供框架中立运行内核：统一 `ResearchState`、有类型的任务 DAG、原子 checkpoint、追加式 event trace、结构化 agent observation、有限重试、动态追加任务与 human interrupt/resume。真实模型执行目前由宿主或未来 adapter 完成；没有 observation 的任务不会被写成完成。
+
+架构审计见 [Agent runtime 差距分析](docs/agent-runtime-gap-analysis.md)，框架选择依据见 [Agent 框架比较](docs/agent-framework-benchmark.md)，旧项目接入见 [ResearchState 迁移策略](docs/research-state-migration.md)。
+
+## 五个 Specialist Skill
 
 | Skill | 适合做什么 | 用户至少提供 | 主要输出 |
 | --- | --- | --- | --- |
@@ -78,9 +90,18 @@ py -m venv .venv-empirical
 
 私人数据放在 `inputs/`；个人研究项目放在 `projects/`。二者默认不会上传 GitHub。
 
-### 4. 调用 Skill
+### 4. 调用 Agent 或 Skill
 
-不需要执行特殊按钮。把下面对应提示词交给 Codex 即可。若任务同时涉及检索、Zotero 和实证分析，可以依次调用多个 skill；每一步通过 JSON/CSV schema 交接。
+单阶段任务可以直接调用下面的 Skill。跨阶段、需要中断恢复的论文项目使用 Research Agent runtime；每一步仍通过 JSON/CSV schema 交接。
+
+先用已经验证的 `economics-paper-project/1.0` manifest 初始化运行：
+
+```powershell
+./.venv-empirical/Scripts/python.exe scripts/research_agent.py init `
+  --manifest PATH_TO_PROJECT_JSON --run-root .runtime/research-runs
+```
+
+运行器遇到 specialist task 会产生 assignment packet 并暂停，等待通过 `observe` 写入经过 schema 验证的结果；遇到高风险决策会产生 human action，通过 `decide --approve/--reject --rationale ...` 恢复。同一 `run-dir` 可以执行 `resume`，不会把等待状态当成失败，也不会重建一个新项目；若 canonical state 损坏，`recover` 会从最近一个内容哈希匹配的 checkpoint 恢复。完整命令见脚本的 `--help`。
 
 ### 5. 编译成果
 
@@ -222,6 +243,7 @@ outputs/<project>/
 
 ```text
 skills/       五个工作流入口与执行脚本
+research_os/  持久状态、任务 DAG、工具注册、迁移和运行循环
 schemas/      agent 间的机器可读契约
 templates/    LaTeX 等可复用模板
 scripts/      Zotero 与通用工具
@@ -243,5 +265,6 @@ projects/     默认不公开的个人研究项目
 - 实证执行器会生成 LaTeX 系数表、PDF 图和 `report.tex`；当前机器未安装 LaTeX，因此仍需在 TeX Live/MiKTeX 环境完成最终编译测试。
 - 完整论文项目初始化与结构审计已加入；具体高级计量方法仍按独立真值测试、公开复现和跨引擎证书逐项准入。
 - 高级方法准入器的 11 个方法分支均已通过合成结构测试；它只报告数据与设计准备状态，不输出或伪造效应估计。
+- Research Agent kernel 的 13 项 runtime/contract 测试已通过，覆盖统一状态、委派回传、人工中断恢复、损坏状态恢复、有界重试、动态 DAG、配置契约、非破坏迁移、运行评估与 checkpoint 篡改。
 
 版本变更见 [CHANGELOG.md](CHANGELOG.md)。第三方论文、数据和软件继续适用各自许可；本仓库原创代码与文档使用 [MIT License](LICENSE)。

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/research-state.schema.json",
+  "title": "Persistent Research OS runtime state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "project_id", "run_id", "research_question", "research_goal",
+    "paper_type", "current_stage", "task_graph", "active_task", "completed_tasks",
+    "blocked_tasks", "pending_human_actions", "decisions", "evidence_registry",
+    "literature_state", "empirical_state", "manuscript_state", "audit_state",
+    "artifacts", "tool_runs", "agent_runs", "errors", "retry_count", "checkpoints",
+    "parent_run_id", "created_at", "updated_at"
+  ],
+  "properties": {
+    "schema_version": {"const": "research-state/1.0"},
+    "project_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,63}$"},
+    "run_id": {"type": "string", "format": "uuid"},
+    "research_question": {"type": "string", "minLength": 10},
+    "research_goal": {"type": "string", "minLength": 3},
+    "paper_type": {"enum": ["empirical", "theoretical", "mixed", "measurement", "replication", "review"]},
+    "current_stage": {"type": "string", "minLength": 1},
+    "task_graph": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/task"}},
+    "active_task": {"type": ["string", "null"]},
+    "completed_tasks": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "blocked_tasks": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "pending_human_actions": {"type": "array", "items": {"$ref": "#/$defs/humanAction"}},
+    "decisions": {"type": "array", "items": {"type": "object"}},
+    "evidence_registry": {"$ref": "#/$defs/domainState"},
+    "literature_state": {"$ref": "#/$defs/domainState"},
+    "empirical_state": {"$ref": "#/$defs/domainState"},
+    "manuscript_state": {"$ref": "#/$defs/domainState"},
+    "audit_state": {"$ref": "#/$defs/domainState"},
+    "artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+    "tool_runs": {"type": "array", "items": {"type": "object"}},
+    "agent_runs": {"type": "array", "items": {"type": "object"}},
+    "errors": {"type": "array", "items": {"type": "object"}},
+    "retry_count": {"type": "integer", "minimum": 0},
+    "checkpoints": {"type": "array", "items": {"$ref": "#/$defs/checkpoint"}},
+    "parent_run_id": {"type": ["string", "null"]},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "task": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["task_id", "title", "kind", "owner", "status", "depends_on", "inputs", "expected_outputs", "acceptance_criteria", "max_retries", "retry_count", "requires_human_approval", "tool_name", "observation", "error"],
+      "properties": {
+        "task_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,95}$"},
+        "title": {"type": "string", "minLength": 3},
+        "kind": {"enum": ["agent", "tool", "human_gate", "verifier"]},
+        "owner": {"enum": ["research-director", "literature-agent", "empirical-agent", "writing-agent", "reviewer-verifier-agent"]},
+        "status": {"enum": ["pending", "running", "waiting-agent", "waiting-human", "complete", "failed", "blocked", "skipped"]},
+        "depends_on": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "inputs": {"type": "object"},
+        "expected_outputs": {"type": "array", "items": {"type": "string"}},
+        "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
+        "max_retries": {"type": "integer", "minimum": 0, "maximum": 5},
+        "retry_count": {"type": "integer", "minimum": 0},
+        "requires_human_approval": {"type": "boolean"},
+        "tool_name": {"type": ["string", "null"]},
+        "observation": {"type": ["object", "null"]},
+        "error": {"type": ["string", "null"]}
+      }
+    },
+    "humanAction": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["action_id", "task_id", "question", "status", "created_at"],
+      "properties": {
+        "action_id": {"type": "string"},
+        "task_id": {"type": "string"},
+        "question": {"type": "string"},
+        "status": {"enum": ["pending", "approved", "rejected", "deferred"]},
+        "created_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "domainState": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["artifact_refs"],
+      "properties": {
+        "status": {"enum": ["pending", "running", "complete", "partial", "blocked", "review-required", "not-applicable"]},
+        "schema_refs": {"type": "array", "items": {"type": "string"}},
+        "artifact_refs": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["artifact_id", "path", "sha256", "external"],
+      "properties": {
+        "artifact_id": {"type": "string"},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "schema_ref": {"type": "string"},
+        "external": {"type": "boolean"}
+      }
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkpoint_id", "path", "state_sha256", "reason", "created_at"],
+      "properties": {
+        "checkpoint_id": {"type": "string"},
+        "path": {"type": "string"},
+        "state_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "reason": {"type": "string"},
+        "created_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  }
+}
