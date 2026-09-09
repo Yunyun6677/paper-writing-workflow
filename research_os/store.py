@@ -117,6 +117,8 @@ class ResearchStateStore:
                     raise ValueError("content hash does not match checkpoint filename")
                 if candidate.get("schema_version") != "research-state/1.0":
                     raise ValueError("unsupported state schema")
+                from .contracts import upgrade_state_v010
+                candidate, _ = upgrade_state_v010(candidate)
                 atomic_json(self.state_path, candidate)
                 self.append_event("run.recovered", {"checkpoint": path.name})
                 self.checkpoint(candidate, "run-recovered")

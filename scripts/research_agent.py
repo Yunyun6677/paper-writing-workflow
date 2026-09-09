@@ -39,10 +39,14 @@ def main() -> int:
     migrate.add_argument("--project-dir", required=True)
     migrate.add_argument("--run-root", required=True)
     migrate.add_argument("--parent-run-id")
-    for name in ["run", "resume", "recover", "status", "verify", "evaluate"]:
+    for name in ["run", "resume", "recover", "reconstruct", "status", "verify", "evaluate"]:
         command = sub.add_parser(name)
         command.add_argument("--run-dir", required=True)
         command.add_argument("--project-dir", required=True)
+    pause = sub.add_parser("pause")
+    pause.add_argument("--run-dir", required=True)
+    pause.add_argument("--project-dir", required=True)
+    pause.add_argument("--reason", required=True)
     observe = sub.add_parser("observe")
     observe.add_argument("--run-dir", required=True)
     observe.add_argument("--project-dir", required=True)
@@ -64,11 +68,17 @@ def main() -> int:
             store = migrate_project(args.project_dir, args.run_root, args.parent_run_id)
             emit({"status": "migrated", "run_dir": str(store.run_dir), "receipt": str(store.run_dir / 'migration-receipt.json')})
         elif args.command in {"run", "resume"}:
-            state = runtime(args).run()
+            state = runtime(args).resume() if args.command == "resume" else runtime(args).run()
             emit({"run_id": state["run_id"], "stage": state["current_stage"], "completed": state["completed_tasks"], "blocked": state["blocked_tasks"], "pending_human_actions": state["pending_human_actions"]})
+        elif args.command == "pause":
+            state = runtime(args).pause(args.reason)
+            emit({"run_id": state["run_id"], "status": state["lifecycle_status"], "stage": state["current_stage"]})
+        elif args.command == "reconstruct":
+            state = runtime(args).reconstruct()
+            emit({"run_id": state["run_id"], "status": state["lifecycle_status"], "working_memory": state["memory"]["working"]})
         elif args.command == "status":
             state = ResearchStateStore(args.run_dir).load()
-            emit({"run_id": state["run_id"], "stage": state["current_stage"], "active_task": state["active_task"], "tasks": [{"task_id": t["task_id"], "owner": t["owner"], "status": t["status"]} for t in state["task_graph"]], "pending_human_actions": state["pending_human_actions"]})
+            emit({"run_id": state["run_id"], "lifecycle_status": state["lifecycle_status"], "stage": state["current_stage"], "active_task": state["active_task"], "tasks": [{"task_id": t["task_id"], "assigned_agent": t["assigned_agent"], "status": t["status"], "attempts": t["attempts"], "max_attempts": t["retry_policy"]["max_attempts"]} for t in state["task_graph"]], "pending_human_actions": state["pending_human_actions"]})
         elif args.command == "verify":
             store = ResearchStateStore(args.run_dir)
             errors = store.verify()

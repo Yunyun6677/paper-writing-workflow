@@ -1,5 +1,7 @@
 # Research OS Agent Runtime Gap Analysis
 
+> 2026-09-10 update: the v0.9 gaps for explicit outcome classification, bounded strategy replanning, dynamic review feedback, four memory layers, structured scientific guardrails, independent verifier context, unified tool manifests, and pause/resume/reconstruct have been implemented in v0.10. Remaining gaps concern production model adapters, production certification of staged external tools, distributed locking, and large-scale evaluation. See `docs/agent-runtime-v0.10.md`.
+
 审计日期：2026-09-09。审计范围包括 `AGENTS.md`、根目录说明、五个 `SKILL.md`、其 references/scripts、根目录 schemas/scripts/config/examples/docs。结论只描述已存在且可验证的能力，不将提示词中的角色设定算作已经运行的 Agent。
 
 ## 执行摘要

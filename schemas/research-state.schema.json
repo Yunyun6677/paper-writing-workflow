@@ -10,7 +10,7 @@
     "blocked_tasks", "pending_human_actions", "decisions", "evidence_registry",
     "literature_state", "empirical_state", "manuscript_state", "audit_state",
     "artifacts", "tool_runs", "agent_runs", "errors", "retry_count", "checkpoints",
-    "parent_run_id", "created_at", "updated_at"
+    "parent_run_id", "lifecycle_status", "runtime_control", "memory", "data_sensitivity", "created_at", "updated_at"
   ],
   "properties": {
     "schema_version": {"const": "research-state/1.0"},
@@ -19,6 +19,12 @@
     "research_question": {"type": "string", "minLength": 10},
     "research_goal": {"type": "string", "minLength": 3},
     "paper_type": {"enum": ["empirical", "theoretical", "mixed", "measurement", "replication", "review"]},
+    "data_sensitivity": {"enum": ["public", "synthetic", "restricted", "personal", "confidential"]},
+    "lifecycle_status": {"enum": ["initialized", "running", "paused", "waiting-agent", "waiting-human", "recovering", "blocked", "complete"]},
+    "runtime_control": {"type": "object", "required": ["max_total_steps", "max_total_tasks", "max_no_progress_cycles", "total_steps", "no_progress_cycles", "strategy_replans", "max_strategy_replans"], "additionalProperties": false, "properties": {
+      "max_total_steps": {"type": "integer", "minimum": 1}, "max_total_tasks": {"type": "integer", "minimum": 1}, "max_no_progress_cycles": {"type": "integer", "minimum": 1}, "total_steps": {"type": "integer", "minimum": 0}, "no_progress_cycles": {"type": "integer", "minimum": 0}, "strategy_replans": {"type": "integer", "minimum": 0}, "max_strategy_replans": {"type": "integer", "minimum": 0}
+    }},
+    "memory": {"type": "object", "required": ["working", "project", "researcher_preferences", "evidence"], "additionalProperties": false, "properties": {"working": {"type": "object"}, "project": {"type": "object"}, "researcher_preferences": {"type": "object"}, "evidence": {"type": "object"}}},
     "current_stage": {"type": "string", "minLength": 1},
     "task_graph": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/task"}},
     "active_task": {"type": ["string", "null"]},
@@ -45,13 +51,26 @@
     "task": {
       "type": "object",
       "additionalProperties": true,
-      "required": ["task_id", "title", "kind", "owner", "status", "depends_on", "inputs", "expected_outputs", "acceptance_criteria", "max_retries", "retry_count", "requires_human_approval", "tool_name", "observation", "error"],
+      "required": ["task_id", "task_type", "goal", "dependencies", "required_inputs", "expected_outputs", "assigned_agent", "allowed_tools", "status", "retry_policy", "timeout_seconds", "stopping_condition", "success_contract", "failure_contract", "verification_rules", "attempts", "title", "kind", "owner", "depends_on", "inputs", "acceptance_criteria", "max_retries", "retry_count", "requires_human_approval", "tool_name", "observation", "error"],
       "properties": {
         "task_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,95}$"},
+        "task_type": {"enum": ["agent", "tool", "human_gate", "verifier", "final_audit"]},
+        "goal": {"type": "string", "minLength": 3},
+        "dependencies": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "required_inputs": {"type": "object"},
+        "assigned_agent": {"enum": ["research-director", "literature-agent", "empirical-agent", "writing-agent", "reviewer-verifier-agent"]},
+        "allowed_tools": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "retry_policy": {"type": "object", "required": ["max_attempts", "retry_on"], "properties": {"max_attempts": {"type": "integer", "minimum": 1, "maximum": 10}, "retry_on": {"type": "array", "items": {"enum": ["FAIL_TRANSIENT"]}}}},
+        "timeout_seconds": {"type": "integer", "minimum": 1},
+        "stopping_condition": {"type": "string", "minLength": 3},
+        "success_contract": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "failure_contract": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "verification_rules": {"type": "array", "items": {"type": "string"}},
+        "attempts": {"type": "integer", "minimum": 0},
         "title": {"type": "string", "minLength": 3},
-        "kind": {"enum": ["agent", "tool", "human_gate", "verifier"]},
+        "kind": {"enum": ["agent", "tool", "human_gate", "verifier", "final_audit"]},
         "owner": {"enum": ["research-director", "literature-agent", "empirical-agent", "writing-agent", "reviewer-verifier-agent"]},
-        "status": {"enum": ["pending", "running", "waiting-agent", "waiting-human", "complete", "failed", "blocked", "skipped"]},
+        "status": {"enum": ["pending", "running", "waiting-agent", "waiting-human", "complete", "failed", "blocked", "skipped", "superseded"]},
         "depends_on": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
         "inputs": {"type": "object"},
         "expected_outputs": {"type": "array", "items": {"type": "string"}},

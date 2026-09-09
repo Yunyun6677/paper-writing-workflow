@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/tool-manifest.schema.json",
+  "title": "Research OS tool manifest",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["name", "description", "input_schema", "output_schema", "side_effect_level", "permission_level", "retry_policy", "timeout", "credential_requirement", "data_sensitivity", "deterministic", "verifier", "adapter", "implementation_status"],
+  "properties": {
+    "name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$"},
+    "description": {"type": "string", "minLength": 10},
+    "input_schema": {"type": "object"},
+    "output_schema": {"type": "object"},
+    "side_effect_level": {"enum": ["none", "local-read", "local-write", "external-read", "external-write", "high-risk"]},
+    "permission_level": {"enum": ["automatic", "explicit-approval", "manual"]},
+    "retry_policy": {"type": "object", "required": ["max_attempts"]},
+    "timeout": {"type": "integer", "minimum": 1},
+    "credential_requirement": {"type": "string"},
+    "data_sensitivity": {"type": "array", "items": {"enum": ["public", "synthetic", "restricted", "personal", "confidential"]}},
+    "deterministic": {"type": "boolean"},
+    "verifier": {"type": "string"},
+    "adapter": {"enum": ["native", "mcp", "browser", "external-handoff"]},
+    "implementation_status": {"enum": ["available", "staged", "manual"]}
+  }
+}

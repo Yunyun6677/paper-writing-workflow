@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/guardrail-report.schema.json",
+  "title": "Scientific guardrail report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "findings"],
+  "properties": {
+    "status": {"enum": ["pass", "blocked"]},
+    "findings": {"type": "array", "items": {"type": "object", "required": ["guardrail", "status", "severity", "detail"], "properties": {"guardrail": {"type": "string"}, "status": {"enum": ["pass", "blocked"]}, "severity": {"enum": ["blocking", "warning"]}, "detail": {"type": "string"}}}}
+  }
+}

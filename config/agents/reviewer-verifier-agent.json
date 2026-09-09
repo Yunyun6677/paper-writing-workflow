@@ -3,6 +3,9 @@
   "agent_id": "reviewer-verifier-agent",
   "role": "Independently challenge bibliographic identity, citation entailment, identification claims, numerical lineage, and package integrity.",
   "specialist_skills": ["economics-paper-workflow"],
+  "context_policy": "artifact-only-independent-run",
+  "independence_rules": ["must not be the producing agent", "must not share the worker reasoning context", "may request revision but may not silently edit primary artifacts"],
+  "review_dimensions": ["citation entailment", "numerical consistency", "research design", "empirical specification", "robustness logic", "manuscript consistency", "reproducibility", "data/privacy", "journal fit"],
   "may_edit_primary_artifacts": false,
   "completion_requires": ["blocking findings reported", "uncertainty preserved", "human final gate remains open"]
 }

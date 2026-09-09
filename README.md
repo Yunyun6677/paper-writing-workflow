@@ -2,7 +2,7 @@
 
 面向经济学、管理学和政治学研究的可审计 Research Agent System：由一个 Research Director 管理持久状态、动态任务图、失败恢复和人工门控，四个 Specialist Agents 使用已有五个 Skills 与确定性工具完成文献、实证、写作和核验。
 
-**当前版本：v0.9.0（2026-09-09）**
+**当前版本：v0.10.0（2026-09-10）**
 
 **项目状态：可运行的 Agent kernel 原型；模型 adapter 与全部外部工具尚未完成生产认证，不等同于无人监督的自动论文生成器。**
 
@@ -24,9 +24,13 @@
 - **Skill** 是专家遵循的可复用操作规范。已有五个 Skill 继续保持职责边界，不被复制成新 Agent。
 - **Tool** 是窄接口的确定性操作，例如 Zotero、CNKI browser、OpenAlex、PDF parser、Python、Stata、R、LaTeX、Git 和 schema validator。
 
-`research_os/` 提供框架中立运行内核：统一 `ResearchState`、有类型的任务 DAG、原子 checkpoint、追加式 event trace、结构化 agent observation、有限重试、动态追加任务与 human interrupt/resume。真实模型执行目前由宿主或未来 adapter 完成；没有 observation 的任务不会被写成完成。
+`research_os/` 提供框架中立运行内核：统一 `ResearchState`、有类型的动态任务 DAG、原子 checkpoint、追加式 event trace、结构化 agent observation、分类失败恢复、科研 guardrails 与 human interrupt/resume。真实模型执行目前由宿主或未来 adapter 完成；没有 observation 和独立 verifier 的任务不会被写成科学上已通过。
 
-架构审计见 [Agent runtime 差距分析](docs/agent-runtime-gap-analysis.md)，框架选择依据见 [Agent 框架比较](docs/agent-framework-benchmark.md)，旧项目接入见 [ResearchState 迁移策略](docs/research-state-migration.md)。
+运行循环是：`GOAL → LOAD STATE → PLAN → SELECT → EXECUTE → OBSERVE → VERIFY → UPDATE STATE → DECIDE`。结果只能进入 `PASS`、`FAIL_TRANSIENT`、`FAIL_STRATEGY`、`BLOCKED`、`HIGH_RISK_DECISION` 或 `GOAL_COMPLETE`；最后一种仍必须进入独立 final audit。每个任务都声明最大尝试次数、超时、停止条件、成功/失败契约和验证规则，并受全局步数、任务数与重规划预算约束。
+
+任务图不是固定直线。Reviewer 可以通过结构化 `replan: new_evidence` 追加“补充文献 → 手稿修订”，或通过 `replan: robustness` 追加“稳健性分析 → 手稿修订”；新任务自动成为 final audit 和最终人工门的依赖。
+
+实现细节见 [Agent Runtime v0.10](docs/agent-runtime-v0.10.md)，架构审计见 [Agent runtime 差距分析](docs/agent-runtime-gap-analysis.md)，框架选择依据见 [Agent 框架比较](docs/agent-framework-benchmark.md)，旧项目接入见 [ResearchState 迁移策略](docs/research-state-migration.md)。
 
 ## 五个 Specialist Skill
 
@@ -101,7 +105,9 @@ py -m venv .venv-empirical
   --manifest PATH_TO_PROJECT_JSON --run-root .runtime/research-runs
 ```
 
-运行器遇到 specialist task 会产生 assignment packet 并暂停，等待通过 `observe` 写入经过 schema 验证的结果；遇到高风险决策会产生 human action，通过 `decide --approve/--reject --rationale ...` 恢复。同一 `run-dir` 可以执行 `resume`，不会把等待状态当成失败，也不会重建一个新项目；若 canonical state 损坏，`recover` 会从最近一个内容哈希匹配的 checkpoint 恢复。完整命令见脚本的 `--help`。
+运行器遇到 specialist task 会产生 assignment packet 并暂停，等待通过 `observe` 写入经过 schema 验证的结果；遇到高风险决策会产生 human action，通过 `decide --approve/--reject --rationale ...` 恢复。同一 `run-dir` 可以执行 `pause --reason ...` 和 `resume`；新会话先运行 `reconstruct`，它会读取 project state、重建当前任务并核对制品。若 canonical state 损坏，`recover` 会从最近一个内容哈希匹配的 checkpoint 恢复。完整命令见脚本的 `--help`。
+
+统一 Tool Registry 位于 `config/tool-registry.json`。每个工具声明输入/输出 schema、副作用、权限、重试、超时、凭据、数据敏感性、确定性和 verifier。Zotero、浏览器与文献服务优先采用 MCP/受控浏览器 adapter；Python、Stata、R、PDF 和 LaTeX 保留本地 native adapter。`staged` 只表示接口已定义，不表示生产认证完成。
 
 ### 5. 编译成果
 

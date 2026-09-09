@@ -2,6 +2,21 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.10.0] - 2026-09-10
+
+### Added
+
+- 显式 Research Director 决策循环和六类 observation outcome；瞬时失败重试、策略失败重规划、阻塞交接、高风险审批与完成后 final audit 分开处理。
+- 完整任务契约、动态文献/稳健性反馈分支、独立 Worker--Verifier 结构，以及任务/步数/策略重规划三类防无限循环预算。
+- Citation、Fulltext、Numerical Claim、Causal Claim、Specification 与 Sensitive Data 六项结构化科研护栏。
+- Working、Project、Researcher Preference、Evidence 四层记忆；长期记忆拒绝 secret 和受限原始数据正文。
+- 统一 Tool Registry 与 native/MCP/browser adapter 边界；新增 pause、resume、reconstruct 命令。
+
+### Compatibility
+
+- 五个已有 Skill 保持不变，继续承担 domain policy、SOP 和约束；Agent runtime 只负责状态、规划、执行、验证和恢复。
+- `research-state/1.0` 采用向后兼容的增量字段升级，并保留旧任务字段别名，现有 run 可继续读取；新 run 以规范任务字段为权威来源。
+
 ## [0.9.0] - 2026-09-09
 
 ### Added

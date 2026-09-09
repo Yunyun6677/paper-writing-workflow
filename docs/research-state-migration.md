@@ -1,5 +1,9 @@
 # ResearchState Schema Migration Strategy
 
+## v0.9 run state → v0.10 additive contract
+
+The runtime upgrades an existing `research-state/1.0` in memory and immediately writes a checkpointed `state.compatibility-upgraded` event. It adds lifecycle controls, bounded-runtime budgets, four memory namespaces, data-sensitivity defaults, and canonical task fields while retaining all old task aliases, artifacts, observations, errors, decisions, and checkpoints. Missing legacy sensitivity is conservatively treated as `restricted`. The old `verification` firewall node is mapped to `final_audit`; no scientific success is inferred during migration.
+
 ## 原则
 
 `research-state/1.0` 是运行控制平面，不取代已有专业事实 schema。迁移采用 **reference-only / copy-never**：读取旧文件、记录路径和 SHA-256、建立 artifact reference、写新的 state 与 migration receipt；绝不静默改写旧项目、原始数据、全文、模型结果或审计文件。

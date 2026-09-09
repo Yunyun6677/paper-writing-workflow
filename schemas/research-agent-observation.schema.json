@@ -4,9 +4,12 @@
   "title": "Structured specialist agent observation",
   "type": "object",
   "additionalProperties": true,
-  "required": ["status"],
+  "anyOf": [{"required": ["status"]}, {"required": ["outcome"]}],
   "properties": {
     "status": {"enum": ["complete", "failed", "needs-human"]},
+    "outcome": {"enum": ["PASS", "FAIL_TRANSIENT", "FAIL_STRATEGY", "BLOCKED", "HIGH_RISK_DECISION", "GOAL_COMPLETE"]},
+    "replacement_tasks": {"type": "array", "items": {"type": "object"}},
+    "replan": {"enum": ["new_evidence", "robustness"]},
     "summary": {"type": "string"},
     "artifacts": {
       "type": "array",
