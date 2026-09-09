@@ -1,0 +1,109 @@
+\documentclass[UTF8]{ctexart}
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage{amsmath,booktabs,longtable,array,hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+\title{Research OS 计量方法入门与能力边界}
+\author{}
+\date{2026年9月9日}
+
+\begin{document}
+\maketitle
+
+\section{先理解三种状态}
+
+\begin{longtable}{p{0.17\linewidth}p{0.75\linewidth}}
+\toprule
+状态 & 含义 \\
+\midrule
+已认证估计 & 本仓库已经执行合成测试或公开复现，结果格式与适用边界有记录。\\
+已整合准入检查 & 可以检查变量、面板、处理组、权重或图结构，并生成结构化交接；尚未估计效应。\\
+待认证估计器 & 已选定候选第三方估计器，但必须完成版本锁定、真值测试、公开复现和跨引擎核验。\\
+\bottomrule
+\end{longtable}
+
+当前已认证的是描述统计、数值型 OLS、有限规模分类固定效应、HC1/HC3 和单向聚类协方差。下列十类高级方法均已接入设计准入检查，但估计器仍按方法逐项认证。``准入检查通过''不能写成``因果效应已经识别''。
+
+\section{现代 DID 与事件研究}
+
+对在不同时间进入政策的组，核心对象通常是组别 $g$ 在时期 $t$ 的处理组平均效应：
+\[
+ATT(g,t)=E[Y_t(1)-Y_t(0)\mid G=g].
+\]
+它适合政策分批落地且存在可信未处理或尚未处理对照组的面板/重复截面。事件研究把效应按距政策发生的相对时间排列，用来描述动态效应和处理前系数；处理前不显著并不能证明平行趋势。结论应说明估计对象、对照组和聚合权重，不能把异质处理效应下的普通 TWFE 系数直接解释为统一平均效应。
+
+\section{工具变量（IV）}
+
+线性 2SLS 的直觉是：先用工具 $Z$ 提取内生变量 $D$ 的外生变动，再估计其与结果 $Y$ 的关系：
+\[
+D=\pi Z+X\delta+v,\qquad Y=\beta D+X\gamma+u.
+\]
+适用于处理变量与遗漏因素相关、同时存在具有关联性和排除限制的工具变量。第一阶段强不代表排除限制成立；弱工具时常规置信区间可能失真。存在异质效应时，$\beta$ 往往是由工具改变处理状态的人群的局部平均处理效应（LATE），不是全体平均效应。
+
+\section{回归不连续（RD）}
+
+当处理由运行变量 $R$ 是否跨过阈值 $c$ 决定时，尖锐 RD 的局部效应为
+\[
+\tau_{RD}=\lim_{r\downarrow c}E[Y\mid R=r]-\lim_{r\uparrow c}E[Y\mid R=r].
+\]
+适用于明确阈值规则、阈值附近个体无法精确操纵运行变量、潜在结果在阈值处连续的场景。它回答阈值附近的局部效应，不能自然外推到远离阈值的人群。需要报告带宽、局部多项式阶数、稳健偏差校正、密度/操纵和协变量连续性检查。
+
+\section{合成控制（SCM）}
+
+SCM 用若干未处理单位的非负权重构造反事实：
+\[
+Y_{1t}(0)\approx\sum_{j=2}^{J+1}w_jY_{jt},\qquad w_j\geq0,\quad\sum_jw_j=1.
+\]
+适合一个或少数地区受到政策、拥有较长处理前序列和合理供体池的研究。处理后差距是相对于加权供体的估计效应。处理前拟合差、结果依赖单个供体或安慰剂分布不支持时，不应作强因果解释。
+
+\section{合成双重差分（SDID）}
+
+SDID 同时选择单位权重和时间权重，再计算加权的双重差分。它试图结合 DID 对固定差异的调整与 SCM 对处理前轨迹的匹配。适合具有清晰处理区块、足够处理前时期与供体单位的面板。结论是已处理观测上的平均效应；标准误依赖适当的 placebo、bootstrap 或聚类方案。分期处理不能未经检验直接套用同步处理版本。
+
+\section{双重/去偏机器学习（DML）}
+
+部分线性模型可写为
+\[
+Y=\theta D+g(X)+\zeta,\qquad D=m(X)+V.
+\]
+DML 用机器学习拟合 $g(X)$ 与 $m(X)$，通过正交得分和交叉拟合估计低维参数 $\theta$。适合控制变量维度高、函数形式复杂但识别假设能够说明的场景。它减少对干扰函数形式的依赖，却不会自动解决遗漏混杂、反向因果或缺乏重叠；结论仍由所选 score 和处理变量类型决定。
+
+\section{复杂抽样}
+
+带权均值的直观形式为
+\[
+\widehat{\mu}=\frac{\sum_iw_iY_i}{\sum_iw_i},
+\]
+但复杂抽样推断还必须利用分层、PSU、多阶段结构、有限总体修正或复制权重。它适合 CFPS、CGSS 等具有抽样设计信息的调查。结论面向权重所代表的目标总体；普通 WLS 或仅在村级聚类不能替代完整的设计型方差估计。子总体分析不能简单先删除总体外样本再忽略原设计。
+
+\section{空间计量}
+
+空间滞后模型常写为
+\[
+y=\rho Wy+X\beta+u,
+\]
+其中 $W$ 是预先定义的空间权重矩阵。适合经济结果存在地理相互作用或空间相关的地区数据。$\beta$ 通常不能直接当作最终边际效应，因为反馈会产生直接、间接和总效应。必须说明邻接/距离规则、标准化方式、孤岛处理、空间诊断和权重矩阵的稳健性。
+
+\section{网络与干扰}
+
+存在干扰时，个体结果可写成 $Y_i(d_i,g_i)$：既取决于自身处理 $d_i$，也取决于由网络映射得到的邻居暴露 $g_i$。适合村庄关系、企业供应链、同伴或信息扩散研究。``直接效应''和``溢出效应''依赖事先定义的 exposure mapping；换一种网络边界或邻居定义可能改变估计对象。网络来源、缺边机制、社区相关和随机化/置换方案必须留痕。
+
+\section{动态面板 GMM}
+
+典型模型为
+\[
+y_{it}=\alpha y_{i,t-1}+X_{it}\beta+\mu_i+\varepsilon_{it}.
+\]
+差分 GMM 或系统 GMM 用更早的滞后作为矩条件，主要适合 $N$ 较大、$T$ 较小且含滞后因变量的面板。$\alpha$ 描述条件持续性，不自动等于政策因果效应。必须报告 AR(1)/AR(2)、Hansen/Sargan、工具变量数量、折叠/滞后限制；工具过多可能使检验失去识别力并产生虚假精确性。
+
+\section{如何使用准入检查}
+
+先复制 \texttt{examples/method-preflight-request.json}，填写研究问题、估计对象、数据路径和角色变量，然后运行：
+
+\begin{verbatim}
+python skills/economics-empirical-analysis/scripts/method_preflight.py \
+  --request request.json --output-dir work/preflight/design-v1
+\end{verbatim}
+
+输出包括机器可读的 \texttt{preflight.json} 和本报告格式的 \texttt{preflight-report.tex}。若状态为 \texttt{blocked}，先修复数据结构；若为 \texttt{review-required}，由研究者回答识别问题；只有在对应估计器产生带哈希的执行回执后，才能报告模型已经运行。
+
+\end{document}

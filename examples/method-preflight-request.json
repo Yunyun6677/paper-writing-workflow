@@ -1,0 +1,18 @@
+{
+  "schema_version": "econometric-method-request/1.0",
+  "project_id": "example-policy-panel",
+  "design_id": "did-v1",
+  "method": "did",
+  "question": "某项分期实施政策是否影响县级就业？",
+  "estimand": "政策实施后对已处理县的平均处理效应",
+  "data": {"path": "replace-with-your-data.csv", "encoding": "utf-8"},
+  "variables": {
+    "outcome": "employment",
+    "unit_id": "county_id",
+    "time_id": "year",
+    "treatment": "treated",
+    "cohort": "first_treat_year",
+    "controls": ["population", "gdp_pc"]
+  },
+  "options": {"never_treated_value": 0}
+}

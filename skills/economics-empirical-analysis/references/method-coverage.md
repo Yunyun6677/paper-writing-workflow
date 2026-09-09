@@ -14,7 +14,13 @@ Method names are not capabilities. Admit a method only after its estimand, ident
 
 Do not generalize these certificates to other estimators, multi-way clustering, survey designs or large high-dimensional panels.
 
-## Staged adapters
+## Integrated design preflight
+
+`method_preflight.py` validates a schema and inspects the declared data structure for modern DID, event studies, IV, RD, synthetic control, SDID, DML, complex surveys, spatial models, network/interference designs and dynamic panels. It emits `preflight.json` and a standalone `preflight-report.tex`.
+
+This is a real integrated capability, but it is not estimation. `design_status=ready-for-adapter` means the file passed automated structural checks; it does not establish identifying assumptions. Every preflight output fixes `estimation_status=not-run`.
+
+## Staged estimators
 
 The following are priority extensions, not current bundled capabilities:
 
@@ -41,4 +47,4 @@ The following are priority extensions, not current bundled capabilities:
 6. Document unsupported variants and version pins.
 7. Only then move the method from staged to certified.
 
-Useful upstream implementations include `py-econometrics/pyfixest`, `rdpackages/rdrobust` and `DoubleML/doubleml-for-py`. Their availability does not itself certify an adapter in this repository.
+Read [advanced method sources](advanced-method-sources.md) before selecting an engine. Upstream availability does not itself certify an adapter in this repository.

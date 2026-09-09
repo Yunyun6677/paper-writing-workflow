@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/econometric-method-request.schema.json",
+  "title": "Econometric method design and preflight request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "design_id", "method", "question", "estimand", "data", "variables"],
+  "properties": {
+    "schema_version": {"const": "econometric-method-request/1.0"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "design_id": {"$ref": "#/$defs/id"},
+    "method": {"enum": ["did", "event_study", "iv", "rd", "synthetic_control", "sdid", "dml", "complex_survey", "spatial", "network", "dynamic_panel"]},
+    "question": {"type": "string", "minLength": 5},
+    "estimand": {"type": "string", "minLength": 3},
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sheet": {"type": "string", "minLength": 1},
+        "encoding": {"type": "string", "default": "utf-8"}
+      }
+    },
+    "variables": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "outcome": {"type": "string"},
+        "unit_id": {"type": "string"},
+        "time_id": {"type": "string"},
+        "treatment": {"type": "string"},
+        "cohort": {"type": "string"},
+        "endogenous": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "instruments": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "controls": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "running": {"type": "string"},
+        "features": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "weight": {"type": "string"},
+        "strata": {"type": "string"},
+        "psu": {"type": "string"},
+        "fpc": {"type": "string"},
+        "spatial_id": {"type": "string"}
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cutoff": {"type": "number"},
+        "bandwidth": {"type": "number", "exclusiveMinimum": 0},
+        "treated_unit": {"type": ["string", "number"]},
+        "treatment_time": {"type": ["string", "number"]},
+        "never_treated_value": {"type": ["string", "number", "null"]},
+        "folds": {"type": "integer", "minimum": 2, "maximum": 20, "default": 5},
+        "weight_matrix_path": {"type": "string"},
+        "edge_source": {"type": "string"},
+        "edge_target": {"type": "string"},
+        "lag_order": {"type": "integer", "minimum": 1, "maximum": 10, "default": 1},
+        "instrument_lag_min": {"type": "integer", "minimum": 2},
+        "instrument_lag_max": {"type": "integer", "minimum": 2}
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"method": {"enum": ["did", "event_study"]}}}, "then": {"properties": {"variables": {"required": ["outcome", "unit_id", "time_id", "treatment", "cohort"]}}}},
+    {"if": {"properties": {"method": {"const": "iv"}}}, "then": {"properties": {"variables": {"required": ["outcome", "endogenous", "instruments"]}}}},
+    {"if": {"properties": {"method": {"const": "rd"}}}, "then": {"properties": {"variables": {"required": ["outcome", "running"]}, "options": {"required": ["cutoff"]}}, "required": ["options"]}},
+    {"if": {"properties": {"method": {"enum": ["synthetic_control", "sdid"]}}}, "then": {"properties": {"variables": {"required": ["outcome", "unit_id", "time_id", "treatment"]}}}},
+    {"if": {"properties": {"method": {"const": "dml"}}}, "then": {"properties": {"variables": {"required": ["outcome", "treatment", "features"]}}}},
+    {"if": {"properties": {"method": {"const": "complex_survey"}}}, "then": {"properties": {"variables": {"required": ["outcome", "weight", "strata", "psu"]}}}},
+    {"if": {"properties": {"method": {"enum": ["spatial", "network"]}}}, "then": {"properties": {"variables": {"required": ["outcome", "spatial_id"]}, "options": {"required": ["weight_matrix_path", "edge_source", "edge_target"]}}, "required": ["options"]}},
+    {"if": {"properties": {"method": {"const": "dynamic_panel"}}}, "then": {"properties": {"variables": {"required": ["outcome", "unit_id", "time_id"]}}}}
+  ],
+  "$defs": {"id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"}}
+}

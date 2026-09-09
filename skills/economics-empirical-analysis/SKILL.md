@@ -38,6 +38,15 @@ When learning from published replication packages, read [replication-catalog.md]
 
 Before proposing an estimator beyond the bundled runner, read [method coverage and admission policy](references/method-coverage.md). A maintained external package is a candidate adapter, not evidence that this repository has implemented or certified the method.
 
+For modern DID/event studies, IV, RD, synthetic control, SDID, DML, complex surveys, spatial/network designs or dynamic panels, validate the method-design request and run the structural preflight before installing or executing an estimator:
+
+```powershell
+./.venv-empirical/Scripts/python.exe skills/economics-empirical-analysis/scripts/method_preflight.py `
+  --request PATH_TO_METHOD_REQUEST_JSON --output-dir PATH_TO_NEW_PREFLIGHT_DIR
+```
+
+Use `schemas/econometric-method-request.schema.json`; see `examples/method-preflight-request.json`. Read [advanced method sources](references/advanced-method-sources.md) only when one of these methods is requested. The preflight's `ready-for-adapter` status is not a causal verdict or an estimation receipt.
+
 For high-dimensional fixed effects, clustered inference, headless plotting, or cross-software reproduction, read [replication-lessons.md](references/replication-lessons.md). Match estimation samples before coefficients: in particular, reproduce iterative singleton removal and software-specific finite-sample corrections rather than assuming dummy-variable OLS is an exact substitute.
 
 Before delivery, verify bundle hashes and report actual statuses for the requested run. Stata and R support is limited to the estimators and graphics exercised by their certificates; do not generalize them to staged methods. Cloud remains awaiting a user-selected destination and authorization. Hand the downstream agent `bundle.json` plus engine receipts, not a free-text summary alone.

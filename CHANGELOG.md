@@ -2,6 +2,21 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.8.0] - 2026-09-09
+
+### Added
+
+- 十一项高级方法入口：现代 DID、事件研究、IV、RD、合成控制、SDID、DML、复杂抽样、空间、网络/干扰和动态面板。
+- `econometric-method-request/1.0` 与 `econometric-method-preflight/1.0` 数据契约。
+- 数据结构准入工具，检查处理反转、面板键、阈值两侧支持、供体池、调查权重、孤岛、工具膨胀等风险，并输出 JSON 与独立 LaTeX 报告。
+- 初学者计量方法 LaTeX 指南，以及 PyFixest、did、linearmodels、rdrobust、scpi、synthdid、DoubleML、survey、PySAL 和 pydynpd 的来源评估。
+- 7 项高级方法准入测试覆盖全部 11 个分支及关键失败路径；项目自动测试总数增至 35 项。
+
+### Capability boundary
+
+- 高级方法当前为“设计准入已整合、专用估计器待逐项认证”；准入通过不等于模型运行或因果识别成立。
+- 继续保留已通过测试的 OLS、有限固定效应、HC1/HC3 和单向聚类估计能力，不用通用 OLS 冒充高级估计器。
+
 ## [0.7.0] - 2026-09-08
 
 ### Added
@@ -152,3 +167,4 @@
 [0.6.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.6.0
 [0.6.1]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.6.1
 [0.7.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.7.0
+[0.8.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.8.0

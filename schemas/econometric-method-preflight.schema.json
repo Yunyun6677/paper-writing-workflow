@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/econometric-method-preflight.schema.json",
+  "title": "Econometric method preflight result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "design_id", "method", "design_status", "estimation_status", "source", "summary", "issues", "adapter_route"],
+  "properties": {
+    "schema_version": {"const": "econometric-method-preflight/1.0"},
+    "project_id": {"type": "string"},
+    "design_id": {"type": "string"},
+    "method": {"type": "string"},
+    "design_status": {"enum": ["ready-for-adapter", "review-required", "blocked"]},
+    "estimation_status": {"const": "not-run"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "rows", "columns"],
+      "properties": {
+        "path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "rows": {"type": "integer", "minimum": 0}, "columns": {"type": "integer", "minimum": 0}
+      }
+    },
+    "summary": {"type": "object"},
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["severity", "code", "message"],
+        "properties": {"severity": {"enum": ["info", "review", "blocking"]}, "code": {"type": "string"}, "message": {"type": "string"}}
+      }
+    },
+    "adapter_route": {
+      "type": "object", "additionalProperties": false, "required": ["status", "preferred", "cross_check", "required_diagnostics"],
+      "properties": {
+        "status": {"enum": ["certified", "experimental", "staged"]},
+        "preferred": {"type": "array", "items": {"type": "string"}},
+        "cross_check": {"type": "array", "items": {"type": "string"}},
+        "required_diagnostics": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}
