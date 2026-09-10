@@ -1,0 +1,27 @@
+{
+  "literature": {
+    "citations": [
+      {"fingerprint": "10.1000/a", "source_exists": true, "entailment": true, "expected_doi": "10.1000/A", "actual_doi": "https://doi.org/10.1000/a", "fulltext_required": true, "fulltext_status": "FULL_TEXT_OBTAINED", "fulltext_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+      {"fingerprint": "10.1000/b", "source_exists": true, "entailment": true, "expected_doi": "10.1000/b", "actual_doi": "10.1000/b", "fulltext_required": true, "fulltext_status": "FULL_TEXT_OBTAINED", "fulltext_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}
+    ]
+  },
+  "empirical": {
+    "dataset_hash_before": "raw-hash", "dataset_hash_after": "raw-hash",
+    "rerun_hash_1": "result-hash", "rerun_hash_2": "result-hash", "tolerance": 1e-8,
+    "expected": [{"spec": "m1", "term": "treatment", "coefficient": 0.2, "standard_error": 0.05, "n": 100}],
+    "actual": [{"spec": "m1", "term": "treatment", "coefficient": 0.2, "standard_error": 0.05, "n": 100}]
+  },
+  "agent": {
+    "tasks": [{"status": "complete"}, {"status": "superseded"}],
+    "recoveries": [{"recovered": true}],
+    "routes": [{"expected_tool": "schema_validate", "actual_tool": "schema_validate"}],
+    "completion_claims": [{"claimed_complete": true, "artifacts_verified": true}],
+    "steps": 8, "max_steps": 10, "attempts": 2, "max_attempts": 3
+  },
+  "paper": {
+    "numeric_claims": [{"artifact_match": true}],
+    "citations": [{"citation_present": true, "supported": true}],
+    "evidence_requirements": [{"covered": true}],
+    "audits": [{"status": "pass"}]
+  }
+}

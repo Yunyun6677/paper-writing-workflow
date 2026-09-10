@@ -1,0 +1,42 @@
+{
+  "schema_version": "provider-registry/1.0",
+  "default_provider": "openai-agents",
+  "providers": [
+    {
+      "provider_id": "openai-agents",
+      "adapter": "openai-agents-sdk",
+      "enabled": false,
+      "base_url": null,
+      "credential_env": "OPENAI_API_KEY",
+      "default_model": null,
+      "supports_tools": true,
+      "supports_structured_output": true,
+      "native_tracing": true,
+      "content_policy": "explicitly-authorized-content"
+    },
+    {
+      "provider_id": "openai-compatible",
+      "adapter": "openai-compatible",
+      "enabled": false,
+      "base_url": null,
+      "credential_env": "RESEARCH_OS_PROVIDER_API_KEY",
+      "default_model": null,
+      "supports_tools": true,
+      "supports_structured_output": true,
+      "native_tracing": false,
+      "content_policy": "explicitly-authorized-content"
+    },
+    {
+      "provider_id": "local-openai-compatible",
+      "adapter": "local-openai-compatible",
+      "enabled": false,
+      "base_url": "http://127.0.0.1:11434/v1",
+      "credential_env": null,
+      "default_model": null,
+      "supports_tools": false,
+      "supports_structured_output": false,
+      "native_tracing": false,
+      "content_policy": "artifact-references-only"
+    }
+  ]
+}

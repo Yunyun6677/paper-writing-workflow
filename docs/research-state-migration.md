@@ -1,5 +1,14 @@
 # ResearchState Schema Migration Strategy
 
+## v0.10 run state → v0.11 additive observability contract
+
+The compatibility loader adds an `observability` pointer with local-only defaults.
+It does not copy trace content into ResearchState and does not change existing
+artifacts, decisions, task outcomes, or checkpoints. Existing runs begin writing
+`traces.jsonl` only after the upgraded runtime performs a new action. Provider
+configuration remains outside state and stores environment-variable names, never
+credential values.
+
 ## v0.9 run state → v0.10 additive contract
 
 The runtime upgrades an existing `research-state/1.0` in memory and immediately writes a checkpointed `state.compatibility-upgraded` event. It adds lifecycle controls, bounded-runtime budgets, four memory namespaces, data-sensitivity defaults, and canonical task fields while retaining all old task aliases, artifacts, observations, errors, decisions, and checkpoints. Missing legacy sensitivity is conservatively treated as `restricted`. The old `verification` firewall node is mapped to `final_audit`; no scientific success is inferred during migration.

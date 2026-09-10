@@ -1,0 +1,8 @@
+{
+  "fixture_type": "public-replication-summary",
+  "source": "work/replications/adh2013-china-syndrome/replication_bundle.public.json",
+  "scope": "Table 3 columns 1-6 only",
+  "max_coefficient_delta": 0.00000001,
+  "max_standard_error_delta": 0.00000001,
+  "required_status": "complete"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/provider-adapter.schema.json",
+  "title": "Framework-neutral model provider adapter",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["provider_id", "adapter", "enabled", "base_url", "credential_env", "default_model", "supports_tools", "supports_structured_output", "native_tracing", "content_policy"],
+  "properties": {
+    "provider_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]+$"},
+    "adapter": {"enum": ["openai-agents-sdk", "openai-compatible", "local-openai-compatible"]},
+    "enabled": {"type": "boolean"},
+    "base_url": {"type": ["string", "null"]},
+    "credential_env": {"type": ["string", "null"]},
+    "default_model": {"type": ["string", "null"]},
+    "supports_tools": {"type": "boolean"},
+    "supports_structured_output": {"type": "boolean"},
+    "native_tracing": {"type": "boolean"},
+    "content_policy": {"enum": ["artifact-references-only", "explicitly-authorized-content"]}
+  }
+}

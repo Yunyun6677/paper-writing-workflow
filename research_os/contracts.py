@@ -44,11 +44,12 @@ def sync_compatibility_aliases(item: dict[str, Any]) -> None:
 
 def upgrade_state_v010(state: dict[str, Any]) -> tuple[dict[str, Any], bool]:
     """Add v0.10 fields without deleting v0.9 state, artifacts, or history."""
-    changed = any(key not in state for key in ("data_sensitivity", "lifecycle_status", "runtime_control", "memory"))
+    changed = any(key not in state for key in ("data_sensitivity", "lifecycle_status", "runtime_control", "memory", "observability"))
     state.setdefault("data_sensitivity", "restricted")
     state.setdefault("lifecycle_status", "initialized")
     state.setdefault("runtime_control", {"max_total_steps": 500, "max_total_tasks": 100, "max_no_progress_cycles": 3, "total_steps": 0, "no_progress_cycles": 0, "strategy_replans": 0, "max_strategy_replans": 20})
     state.setdefault("memory", empty_memory())
+    state.setdefault("observability", {"trace_path": "traces.jsonl", "content_capture": False, "external_export_enabled": False})
     for item in state.get("task_graph", []):
         before = set(item)
         item.setdefault("task_type", item.get("kind", "agent"))

@@ -6,6 +6,7 @@ from typing import Any
 import jsonschema
 from .contracts import TERMINAL_TASK_STATUSES, dependencies, normalize_outcome, sync_compatibility_aliases, upgrade_state_v010
 from .memory import empty_memory
+from .observability import TraceRecorder
 from .planner import add_dynamic_tasks, default_graph, feedback_tasks, validate_dag
 from .store import ResearchStateStore, canonical_hash, sha256_file, utc_now
 from .tools import ToolRegistry, default_registry
@@ -24,6 +25,7 @@ def _ready(state: dict[str, Any]) -> list[dict[str, Any]]:
 class ResearchRuntime:
     def __init__(self, store: ResearchStateStore, project_dir: str | Path, tools: ToolRegistry | None = None):
         self.store, self.project_dir, self.tools = store, Path(project_dir).resolve(), tools or default_registry()
+        self.tracer = TraceRecorder(store.run_dir, Path(__file__).resolve().parents[1])
 
     @staticmethod
     def initialize(manifest_path: str | Path, run_root: str | Path, parent_run_id: str | None = None) -> ResearchStateStore:
@@ -45,7 +47,9 @@ class ResearchRuntime:
             "artifacts": [{"artifact_id": "project-manifest", "path": str(manifest_path), "sha256": sha256_file(manifest_path), "schema_ref": "economics-paper-project/1.0", "external": True}],
             "tool_runs": [], "agent_runs": [], "errors": [], "retry_count": 0, "checkpoints": [], "parent_run_id": parent_run_id,
             "runtime_control": {"max_total_steps": 500, "max_total_tasks": 100, "max_no_progress_cycles": 3, "total_steps": 0, "no_progress_cycles": 0, "strategy_replans": 0, "max_strategy_replans": 20},
-            "memory": empty_memory(), "created_at": utc_now(), "updated_at": utc_now(),
+            "memory": empty_memory(),
+            "observability": {"trace_path": "traces.jsonl", "content_capture": False, "external_export_enabled": False},
+            "created_at": utc_now(), "updated_at": utc_now(),
         }
         validate_dag(state["task_graph"]); ResearchRuntime._validate_state(state, repository)
         store = ResearchStateStore(run_dir); store.create(state); return store
@@ -90,14 +94,21 @@ class ResearchRuntime:
                 self._save(state, "run.stopped", {"status": state["current_stage"]}); return state
             item = ready[0]; state["active_task"] = state["current_stage"] = item["task_id"]
             item["status"] = "running"; item["attempts"] += 1; sync_compatibility_aliases(item)
+            task_started_at = utc_now()
             self._save(state, "task.started", {"task_id": item["task_id"], "task_type": item["task_type"], "attempt": item["attempts"]})
+            self.tracer.record(state=state, name="task.selected", kind="state", started_at=task_started_at,
+                               status="ok", task=item, agent="research-director")
             if item["task_type"] == "human_gate":
                 return self._handoff(state, item, item["goal"], high_risk=True)
             if item["task_type"] in {"agent", "verifier"}:
-                packet = {"agent_run_id": str(uuid.uuid4()), "task_id": item["task_id"], "agent": item["assigned_agent"], "status": "awaiting-observation", "instructions": item["goal"], "inputs": item["required_inputs"], "expected_outputs": item["expected_outputs"], "success_contract": item["success_contract"], "failure_contract": item["failure_contract"], "verification_rules": item["verification_rules"], "timeout_seconds": item["timeout_seconds"], "context_policy": "artifact-only" if item["task_type"] == "verifier" else "working-memory", "created_at": utc_now()}
+                packet = {"agent_run_id": str(uuid.uuid4()), "task_id": item["task_id"], "agent": item["assigned_agent"], "model": item.get("model", "provider-default-unreported"), "status": "awaiting-observation", "instructions": item["goal"], "inputs": item["required_inputs"], "expected_outputs": item["expected_outputs"], "success_contract": item["success_contract"], "failure_contract": item["failure_contract"], "verification_rules": item["verification_rules"], "timeout_seconds": item["timeout_seconds"], "context_policy": "artifact-only" if item["task_type"] == "verifier" else "working-memory", "created_at": utc_now()}
                 state["agent_runs"].append(packet); item["status"] = "waiting-agent"; state["active_task"] = None
-                self._save(state, "agent.delegated", packet); return state
+                self._save(state, "agent.delegated", packet)
+                self.tracer.record(state=state, name="agent.delegated", kind="agent", started_at=packet["created_at"],
+                                   status="waiting", task=item, agent=packet["agent"], model=packet["model"], inputs=packet["inputs"])
+                return state
             try:
+                tool_started_at = utc_now()
                 tool_inputs = dict(item["required_inputs"])
                 if item.get("tool_name") == "research_firewall":
                     registries = {"evidence_registry": state["evidence_registry"].get("artifact_refs", []), "manuscript_state": state["manuscript_state"].get("artifact_refs", [])}
@@ -105,12 +116,21 @@ class ResearchRuntime:
                     tool_inputs.setdefault("registries", registries)
                 approved = any(d.get("task_id") == item["task_id"] and d.get("approved") for d in state["decisions"])
                 observation = self.tools.execute(item["tool_name"], tool_inputs, self.project_dir, approved=approved, data_sensitivity=state["data_sensitivity"])
-                self._apply_observation(state, item, observation, "tool")
             except PermissionError as exc:
+                self.tracer.record(state=state, name=item.get("tool_name") or "tool", kind="tool", started_at=tool_started_at,
+                                   status="blocked", task=item, errors=[{"type": type(exc).__name__, "message": str(exc)}])
                 return self._handoff(state, item, str(exc), high_risk=True)
             except Exception as exc:
+                self.tracer.record(state=state, name=item.get("tool_name") or "tool", kind="tool", started_at=tool_started_at,
+                                   status="error", task=item, errors=[{"type": type(exc).__name__, "message": str(exc)}])
                 self._fail(state, item, str(exc), "tool", "FAIL_TRANSIENT")
                 if item["status"] == "blocked": return state
+            else:
+                self.tracer.record(state=state, name=item["tool_name"], kind="tool", started_at=tool_started_at,
+                                   status="ok", task=item, agent=item["assigned_agent"],
+                                   tool_calls=[{"name": item["tool_name"], "status": "completed"}],
+                                   inputs=tool_inputs, outputs=observation)
+                self._apply_observation(state, item, observation, "tool")
         state["active_task"] = None
         self._save(state, "run.yielded", {"reason": "invocation-step-limit", "max_steps": max_steps})
         return state
@@ -137,6 +157,16 @@ class ResearchRuntime:
         if item["status"] != "waiting-agent": raise RuntimeErrorState(f"Task is not awaiting an agent observation: {task_id}")
         schema = json.loads((Path(__file__).resolve().parents[1] / "schemas/research-agent-observation.schema.json").read_text(encoding="utf-8"))
         jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).validate(observation)
+        packet = next((x for x in reversed(state["agent_runs"]) if x.get("task_id") == task_id and x.get("status") == "awaiting-observation"), None)
+        started_at = packet.get("created_at", utc_now()) if packet else utc_now()
+        outcome = normalize_outcome(observation)
+        trace_status = "ok" if outcome in {"PASS", "GOAL_COMPLETE"} else ("blocked" if outcome in {"BLOCKED", "HIGH_RISK_DECISION"} else "error")
+        self.tracer.record(state=state, name="agent.observation", kind="agent", started_at=started_at,
+                           status=trace_status, task=item, agent=item["assigned_agent"],
+                           model=observation.get("model") or (packet.get("model") if packet else None),
+                           tool_calls=observation.get("tool_calls"), inputs=packet.get("inputs") if packet else None,
+                           outputs=observation, token_usage=observation.get("token_usage"),
+                           errors=[{"type": "AgentObservationError", "message": message} for message in observation.get("errors", [])])
         self._apply_observation(state, item, observation, "agent"); return state
 
     def decide(self, action_id: str, approved: bool, rationale: str, actor: str = "human") -> dict[str, Any]:
@@ -154,6 +184,9 @@ class ResearchRuntime:
             item["status"] = "blocked"; item["error"] = "Human decision rejected the gate"
             if item["task_id"] not in state["blocked_tasks"]: state["blocked_tasks"].append(item["task_id"])
             state["active_task"] = None; state["lifecycle_status"] = "blocked"; self._save(state, "human.rejected", decision)
+        self.tracer.record(state=state, name="human.decision", kind="human", started_at=action["created_at"],
+                           status="ok" if approved else "blocked", task=item, agent="research-director",
+                           human_decisions=[decision])
         return state
 
     def _apply_observation(self, state: dict[str, Any], item: dict[str, Any], observation: dict[str, Any], run_kind: str) -> None:
@@ -167,8 +200,15 @@ class ResearchRuntime:
         record = {"run_id": str(uuid.uuid4()), "task_id": item["task_id"], "name": item.get("tool_name") or item["assigned_agent"], "outcome": outcome, "observation_hash": canonical_hash(observation), "at": utc_now()}
         if run_kind == "tool": state["tool_runs"].append(record)
         if outcome in {"PASS", "GOAL_COMPLETE"}:
-            try: verified = self._verify_outputs(item, observation)
+            verification_started_at = utc_now()
+            try:
+                verified = self._verify_outputs(item, observation)
+                self.tracer.record(state=state, name="artifact.verification", kind="verification", started_at=verification_started_at,
+                                   status="ok", task=item, agent="reviewer-verifier-agent", outputs=verified)
             except Exception as exc:
+                self.tracer.record(state=state, name="artifact.verification", kind="verification", started_at=verification_started_at,
+                                   status="error", task=item, agent="reviewer-verifier-agent",
+                                   errors=[{"type": type(exc).__name__, "message": str(exc)}])
                 self._fail(state, item, str(exc), run_kind, "FAIL_TRANSIENT"); return
             for artifact in verified: self._register_artifact(state, item, artifact)
             if observation.get("next_tasks"):

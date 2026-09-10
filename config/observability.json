@@ -1,0 +1,14 @@
+{
+  "schema_version": "observability-policy/1.0",
+  "enabled": true,
+  "local_export_enabled": true,
+  "external_export_enabled": false,
+  "include_sensitive_content": false,
+  "allow_sensitive_external_export": false,
+  "local_path": "<run_dir>/traces.jsonl",
+  "compatibility": ["OpenTelemetry semantic attributes", "OpenAI Agents trace/span model"],
+  "notes": [
+    "Raw prompts, document text, dataset rows, credentials, and tool arguments are never included by the core recorder.",
+    "External exporters require explicit configuration; sensitive projects additionally require explicit approval."
+  ]
+}

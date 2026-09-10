@@ -2,6 +2,20 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
+## [0.11.0] - 2026-09-10
+
+### Added
+
+- 本地优先的 Research trace schema 与 recorder，覆盖 Agent、模型、任务、工具、制品引用、延迟、token、错误、重试和人工决策；兼容 OpenTelemetry/OpenAI Agents tracing 的映射边界。
+- `tests/agent-evals/` 四类确定性评测：Literature、Empirical、Agent、Paper；使用 synthetic fixture 与公开复现摘要，不复制用户私人数据。
+- Provider-neutral adapter contract、OpenAI-compatible transport 与 staged provider registry。
+- ADR-001 选择“轻量 Python canonical runtime + 可选 OpenAI Agents SDK adapter”，保留 LangGraph 和其他 provider 的扩展边界。
+
+### Privacy and capability boundary
+
+- 默认 trace 只写本地且禁止正文内容捕获；外部 exporter 默认关闭，敏感项目没有显式双重授权时不得外发。
+- Provider 配置只保存环境变量名称，不保存密钥；所有 provider 默认 disabled，本版本不声称已完成生产模型接入。
+
 ## [0.10.0] - 2026-09-10
 
 ### Added

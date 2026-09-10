@@ -2,7 +2,7 @@
 
 面向经济学、管理学和政治学研究的可审计 Research Agent System：由一个 Research Director 管理持久状态、动态任务图、失败恢复和人工门控，四个 Specialist Agents 使用已有五个 Skills 与确定性工具完成文献、实证、写作和核验。
 
-**当前版本：v0.10.0（2026-09-10）**
+**当前版本：v0.11.0（2026-09-10）**
 
 **项目状态：可运行的 Agent kernel 原型；模型 adapter 与全部外部工具尚未完成生产认证，不等同于无人监督的自动论文生成器。**
 
@@ -30,7 +30,15 @@
 
 任务图不是固定直线。Reviewer 可以通过结构化 `replan: new_evidence` 追加“补充文献 → 手稿修订”，或通过 `replan: robustness` 追加“稳健性分析 → 手稿修订”；新任务自动成为 final audit 和最终人工门的依赖。
 
-实现细节见 [Agent Runtime v0.10](docs/agent-runtime-v0.10.md)，架构审计见 [Agent runtime 差距分析](docs/agent-runtime-gap-analysis.md)，框架选择依据见 [Agent 框架比较](docs/agent-framework-benchmark.md)，旧项目接入见 [ResearchState 迁移策略](docs/research-state-migration.md)。
+实现细节见 [Agent Runtime v0.10](docs/agent-runtime-v0.10.md)，架构审计见 [Agent runtime 差距分析](docs/agent-runtime-gap-analysis.md)，框架选择依据见 [Agent 框架比较](docs/agent-framework-benchmark.md) 与 [ADR-001](docs/adr-001-agent-runtime-framework.md)，旧项目接入见 [ResearchState 迁移策略](docs/research-state-migration.md)。
+
+## 可观测性、评测与模型适配
+
+v0.11 为每个 run 增加本地 `traces.jsonl`：记录 Agent、实际模型或“未报告”、任务、工具元数据、输入/输出制品引用、延迟、token 用量、错误、重试和人工决策编号。默认不记录提示词、论文正文、数据行、工具参数、密钥或决策理由；第三方 trace 导出默认关闭，受限内容不能仅靠修改配置外发。
+
+`tests/agent-evals/` 使用 synthetic fixtures 和公开复现摘要测试文献、实证、Agent 与论文四类指标，包括引用/DOI/全文、系数/标准误/样本、失败恢复/错误路由/虚假完成/死循环，以及正文数字和证据覆盖。详见 [可观测性与评测说明](docs/observability-and-evaluation.md)。
+
+架构采用“轻量 Python 核心 + 可选 OpenAI Agents SDK adapter”：ResearchState、DAG、证据和制品始终框架中立；OpenAI Agents SDK 是 Codex 环境的首选未来模型执行层，LangGraph 保留为复杂分布式图的可选 adapter。`config/providers.json` 同时声明 OpenAI-compatible 和本地兼容接口，但默认全部关闭，不能把“接口已声明”理解为“模型已接通”。
 
 ## 五个 Specialist Skill
 

@@ -60,6 +60,9 @@ class ResearchAgentRuntimeTests(unittest.TestCase):
             runtime = ResearchRuntime(store, project)
             state = runtime.run()
             self.assertEqual(state["task_graph"][0]["status"], "waiting-agent")
+            traces = [json.loads(line) for line in (store.run_dir / "traces.jsonl").read_text(encoding="utf-8").splitlines()]
+            self.assertEqual([span["name"] for span in traces], ["task.selected", "agent.delegated"])
+            self.assertFalse(any(span["content_capture"] for span in traces))
             state = runtime.run()
             self.assertEqual(state["current_stage"], "waiting-agent")
             self.assertEqual(state["task_graph"][0]["status"], "waiting-agent")

@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 COMMANDS = [
     [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py", "-v"],
+    [sys.executable, "-m", "unittest", "discover", "-s", "tests/agent-evals", "-p", "test_*.py", "-v"],
     [sys.executable, "skills/economics-empirical-analysis/scripts/test_empirical.py"],
     [sys.executable, "skills/economics-empirical-analysis/scripts/test_method_preflight.py"],
     [sys.executable, "skills/economics-empirical-analysis/scripts/test_r_bridge.py"],

@@ -60,9 +60,9 @@ flowchart TD
 8. human interrupt 是一等状态，不是失败或聊天备注；
 9. trace/evaluation 以可验证 artifact 为单位，不以“模型说完成”为单位。
 
-## 框架决策
+## 框架决策（2026-09-10 更新）
 
-核心层暂不选择唯一上游框架。`research-state/1.0`、event log、DAG 和 tool contracts 使用普通 JSON/Python；未来 adapter 可以选择 OpenAI Agents SDK 作为默认模型运行器，以 LangGraph 承载特别长或多分支的 durable workflow，或在 Microsoft 环境接入 Agent Framework。任何 adapter 都必须证明：
+采用“轻量 Python canonical runtime + OpenAI Agents SDK 优先可选 adapter”的混合方案。`research-state/1.0`、event log、DAG 和 tool contracts 继续使用普通 JSON/Python；在 Codex 环境优先认证 OpenAI Agents SDK adapter，以 LangGraph 承载确实需要额外图执行能力的部署，或在 Microsoft 环境接入 Agent Framework。详细权衡见 [ADR-001](adr-001-agent-runtime-framework.md)。任何 adapter 都必须证明：
 
 - restart 后 ResearchState 与外部副作用不丢失、不重复；
 - pause/resume 不绕过人工门；

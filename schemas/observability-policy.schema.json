@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/observability-policy.schema.json",
+  "title": "Research OS observability policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "enabled", "local_export_enabled", "external_export_enabled", "include_sensitive_content", "allow_sensitive_external_export", "local_path", "compatibility", "notes"],
+  "properties": {
+    "schema_version": {"const": "observability-policy/1.0"},
+    "enabled": {"type": "boolean"},
+    "local_export_enabled": {"type": "boolean"},
+    "external_export_enabled": {"type": "boolean"},
+    "include_sensitive_content": {"const": false},
+    "allow_sensitive_external_export": {"type": "boolean"},
+    "local_path": {"const": "<run_dir>/traces.jsonl"},
+    "compatibility": {"type": "array", "items": {"type": "string"}},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}
