@@ -18,7 +18,7 @@
     "data_sensitivity": {"type": "array", "items": {"enum": ["public", "synthetic", "restricted", "personal", "confidential"]}},
     "deterministic": {"type": "boolean"},
     "verifier": {"type": "string"},
-    "adapter": {"enum": ["native", "mcp", "browser", "external-handoff"]},
+    "adapter": {"enum": ["native", "native-http", "mcp", "browser", "external-handoff"]},
     "implementation_status": {"enum": ["available", "staged", "manual"]}
   }
 }

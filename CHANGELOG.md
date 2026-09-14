@@ -2,7 +2,126 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
-## [0.11.0] - 2026-09-10
+## [Unreleased] - v0.11 development
+
+### Four-public-paper live benchmark (updated 2026-09-15)
+
+- Searched and source-verified four empirical papers with public full text or machine-readable full text plus public data: Autor--Dorn--Hanson (2013), Card--Krueger (1994), Yang et al. (2023), and Acemoglu--Johnson--Robinson (2001).
+- Re-executed selected 2SLS/shift-share, DID, experimental OLS/figure, and IV targets; all four artifact sets passed file and receipt hash verification.
+- Classified three targets as clean passes and retained Yang et al. as `complete_with_warning` because statsmodels reported a rank-deficient design matrix.
+- Added a portable source/hash manifest, a deterministic verifier, an AJR selected-table runner, a LaTeX report, and a tamper-detection unit test while keeping PDFs and raw datasets out of Git.
+- Full repository regression increased to 124 passing entry points. The four-paper selected-target benchmark does not satisfy the ten-paper v0.11 release gate or certify causal identification.
+
+### Trace contract completion (2026-09-14)
+
+- Extended local trace spans with agent-run ID, provider, tool, outcome, retry flag, provider-reported cost, and OpenTelemetry-compatible scalar attributes.
+- Preserved artifact hashes, token use, latency, errors, human decisions, and parent-span support while keeping content capture false and sensitive external export disabled by default.
+
+### Bounded model planning (2026-09-14)
+
+- Added provider-neutral initial/adaptive `PlanningAdapter` proposals while retaining deterministic `default_graph()`.
+- Added deterministic schema, cycle, role, tool, data-sensitivity, task-budget, high-risk human-gate, and final-audit dependency validation before any graph merge.
+- Routed specialist-proposed follow-up tasks and strategy replans through the bounded planner; models remain unable to mutate canonical state directly.
+- Made invalid specialist follow-up proposals fail closed before artifact registration and converted unsafe strategy replans into an auditable human handoff instead of a runtime crash.
+
+### Live Codex specialist integration (2026-09-14)
+
+- Added the full allowed-tool manifests, including input/output schemas and side-effect policy, to each bounded model assignment instead of exposing tool names alone.
+- The first live synthetic run correctly failed closed when the model omitted `idempotency_key`; after the contract fix, Runtime completed Codex request, local tool execution, verified continuation, PASS observation, and hash-backed artifact registration.
+- Kept this as a synthetic integration smoke rather than production certification; the representative ten-paper public-project Definition of Done remains outstanding.
+
+### Stage 14: external scholarly tools, partial (2026-09-14)
+
+- Added real HTTP adapters for Crossref/OpenAlex/Unpaywall DOI triangulation, Zotero Desktop local reads, and approval-gated Zotero Web collection creation.
+- Isolated credentials in environment variables, bounded response sizes, wrote hash-addressed artifacts, and added persistent idempotency for Zotero writes.
+- Live-tested Crossref against a public DOI. OpenAlex/Unpaywall live tests were skipped for missing credentials; Zotero Desktop live read was blocked because the app/API was not running; no real Zotero write was performed.
+- Kept Zotero attachment upload and authorized browser/CNKI integration staged rather than relabeling host Skills as executable Runtime tools.
+
+### Stage 13: versioned state backends (2026-09-14)
+
+- Added a framework-neutral `StateBackend` contract, retained the file backend as default, and added an opt-in SQLite backend discoverable across process restarts.
+- Added monotonically increasing state versions and optimistic compare-and-swap; stale writers are rejected before overwriting canonical state.
+- Added strictly ordered events, owner-checked run locks, transactional SQLite state/event updates, and portable JSON/JSONL mirrors.
+- Kept filesystem artifacts and checkpoints independent of backend choice; multi-host locking and automatic stale-lock leases remain uncertified.
+
+### Stage 12: evidence-aware evaluation (2026-09-14)
+
+- Expanded run evaluation into routing, planning, literature, empirical, writing, runtime, and efficiency metric groups while preserving v0.10 operational counters.
+- Derived scientific metrics only from registered, hash-matching EvidenceVerifier receipts and rechecked artifact integrity.
+- Represented unavailable comparisons as `null` plus an explicit unavailable-metric list instead of inferring success from task completion.
+- Retained the separate known-answer synthetic/public benchmark suite for DOI, duplication, coefficient, standard-error, sample, rerun, false-completion, and paper-audit tests.
+
+### Stage 11: least-context packing (2026-09-14)
+
+- Added deterministic context selection by task dependency, specialist role, artifact integrity, lexical relevance, recency, token budget, and project sensitivity.
+- Added bounded excerpts for verified textual artifacts while keeping CSV/XLSX/DTA and other raw-data formats reference-only.
+- Kept reviewer context artifact-only and excluded model/worker hidden reasoning; writing receives only completed dependency artifacts.
+- Added explicit sensitive-content authorization and pack receipts recording selected/excluded artifacts, estimated tokens, policy, and canonical hash.
+
+### Stage 10: local scientific memory (2026-09-14)
+
+- Added a framework-neutral SQLite `ScientificMemoryStore` for Project, ResearchQuestion, Decision, Claim, Evidence, Source, Artifact, Dataset, ModelRun, Task, and Revision entities plus typed provenance relations.
+- Synchronized canonical runtime transitions into the query index in one transaction while retaining JSON artifacts, hashes, state, and checkpoints as the portable evidence authority.
+- Added exact graph queries for claim/evidence and arbitrary outgoing relations; no vector database or inferred relationship is introduced.
+- Added fail-closed schema versioning and privacy checks that reject secrets and restricted raw text/rows/values while allowing artifact identifiers, locators, and hashes.
+
+### Stage 9: end-to-end execution and failure injection (2026-09-14)
+
+- Added three temporary, synthetic/public end-to-end projects covering literature-only execution, real Python OLS plus numerical verification, and independent reviewer rejection followed by a legal robustness/revision DAG branch.
+- Added failure injection for model timeout, malformed observation, missing artifact, tool timeout, network failure, duplicate side effects, process restart, checkpoint corruption, and human rejection.
+- Added a persistent project-local idempotency ledger: an identical side-effect request is replayed only when its input hash and produced artifact hashes still match; changed input under a reused key is rejected.
+- Passed all 98 repository test entry points. These results certify deterministic contracts in the tested environment, not live-provider scientific quality or production readiness.
+
+### Stage 8: artifact-backed evidence verification (2026-09-14)
+
+- Added deterministic full-text, citation identity/locator, numerical value, causal-language, and specification-drift verifiers.
+- Added model-assisted and human entailment receipt contracts recording model, input/output hashes, confidence, and timestamp.
+- Changed scientific guardrails so upstream passed flags cannot substitute for evidence-verification receipts.
+- Registered EvidenceVerifier as a reviewer-only real tool and validated exact, mismatch, hash, identity, language, and specification failure cases on synthetic artifacts.
+
+### Stage 7: executable specialist loop (2026-09-14)
+
+- Wired ResearchRuntime to AgentExecutor while preserving manual external observations as a compatibility mode.
+- Added bounded model-to-tool rounds, tool allow-lists, agent-scoped output paths, automatic artifact collection, and persisted tool observations.
+- Enforced artifact-only context for independent reviewers and dependency-derived approved artifacts for writers.
+- Added CLI selection for manual or Codex backends with an explicit sensitive-content authorization gate.
+- Passed deterministic four-specialist integration tests using real local tools and a separately authorized live synthetic Runtime→Codex tool-loop smoke.
+
+### Stage 6: bounded process execution (2026-09-14)
+
+- Added a no-shell local execution boundary with working-directory and absolute-path checks, an environment allow-list, secret filtering, and fail-closed behavior when OS-level network isolation is required.
+- Bound Windows subprocess trees to kill-on-close Job Objects. A fault-injection test first reproduced a surviving child process after parent timeout, then verified that the Job Object prevented the delayed side effect.
+- Routed Python, R, Stata, LaTeX and Codex CLI process lifetime through the stronger termination boundary.
+- Documented that local network denial and filesystem path policy are not an OS sandbox; executing untrusted code against restricted data remains uncertified.
+
+### Stage 5 - Real Tier-1 tool adapters
+
+- Connected hash-approved project-local Python, Stata, and R scripts to the unified Tool Registry.
+- Added page-addressable PDF extraction, read-only Git inspection, required-output checks, idempotency destinations, hashes, and native execution receipts.
+- Live-smoked Python, R 4.4.2, Stata/SE 16, PDF parsing, and Git inspection on synthetic fixtures.
+- Implemented the LaTeX adapter but kept it staged because no local compiler was discovered; remote Git writes remain staged.
+- Recorded the remaining subprocess isolation gap for stage 6 instead of treating thread timeout as process termination.
+
+### Stage 1: capability audit (2026-09-14)
+
+- 新增 `docs/v0.11-execution-gap-analysis.md`，按 documented / implemented / tested / production-certified 四级重新审计 v0.10。
+- 明确所有 Agent/Verifier 任务仍停在 `waiting-agent` 并依赖外部 `observe`，Tier-1 至 Tier-3 工具仍为 staged，科研 guardrail 主要依赖上游状态字段，memory 尚是结构，evaluation 尚未形成真实端到端评测。
+- 新增逐阶段更新的 `docs/v0.11-capability-matrix.md` 和阶段测试回执。
+- 将 README 的稳定版本恢复为 v0.10.0；以下原 v0.11 内容归为未发布开发工作，不视为生产认证。
+
+### Stages 2--3: executable model boundary (2026-09-14)
+
+- 新增 framework-neutral `ModelAdapter` 生命周期（run/resume/stream/cancel/usage）、受限 `AgentExecutionRequest` 与不拥有 canonical state 的 `AgentExecutor`。
+- 新增 CI 专用 `MockModelAdapter`，支持确定性 observation、timeout/exception 注入、恢复、事件、用量和取消测试。
+- 可执行 adapter 必须返回显式 observation outcome 并通过现有 schema；CLI 的 legacy status-only 回传只保留兼容性，不得通过真实模型执行边界。
+
+### Stage 4: executable provider adapters (2026-09-14)
+
+- 新增可选 `OpenAIAgentsAdapter`，将 Agents SDK 类型限制在 adapter 模块，默认关闭外部敏感 tracing，并使用 SQLite session 保存 SDK 上下文；依赖与真实 API 测试单独记录。
+- 新增 `CodexCLIAdapter`，通过 `codex exec --output-schema --json` 获取结构化 observation，默认采用 read-only、ephemeral 会话并保存本地请求、事件和错误记录。
+- CLI/SDK 的进程终止与恢复限制保持显式，在 execution-isolation 阶段完成前不标记生产认证。
+
+### Earlier development work
 
 ### Added
 

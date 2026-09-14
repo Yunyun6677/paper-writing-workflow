@@ -1,0 +1,50 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 7,
+  "status": "complete",
+  "artifact_exists": true,
+  "artifact": {
+    "status": "verified",
+    "synthetic": true
+  },
+  "artifact_sha256": "44a7d376710a52fd921ef9164d55737ee9a3bb873fecf40ffa1692479c7c9866",
+  "agent_runs": [
+    {
+      "agent_run_id": "0a6c7306-0d53-4d67-b65a-67bce811531a",
+      "task_id": "frame",
+      "agent": "research-director",
+      "model": "configured-codex-model",
+      "status": "PASS",
+      "instructions": "Use artifact_write to create design/codex-live-smoke.json containing a JSON object with keys status='verified' and synthetic=true. Do not claim completion until the tool result is returned.",
+      "inputs": {},
+      "expected_outputs": [
+        "design/codex-live-smoke.json"
+      ],
+      "success_contract": [
+        "declared outputs satisfy verification rules"
+      ],
+      "failure_contract": [
+        "record error and evidence",
+        "do not infer success",
+        "handoff after bounded recovery"
+      ],
+      "verification_rules": [],
+      "timeout_seconds": 900,
+      "context_policy": "least-context-worker",
+      "created_at": "2026-09-14T11:43:02.724798+00:00",
+      "observed_at": "2026-09-14T11:48:03.209317+00:00"
+    }
+  ],
+  "tool_runs": [
+    {
+      "run_id": "fa9078ec-4726-4209-aa8c-e1401ff7d372",
+      "task_id": "frame",
+      "name": "artifact_write",
+      "call_id": "frame-artifact-write-001",
+      "outcome": "complete",
+      "observation_hash": "f1c7e4e5aeb92d839200eafbe11086c6f472d1ff277563abf4e16cc06b5d26ed",
+      "at": "2026-09-14T11:45:14.514419+00:00"
+    }
+  ],
+  "production_certified": false
+}

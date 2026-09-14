@@ -10,6 +10,12 @@ from .observability import TraceRecorder
 from .planner import add_dynamic_tasks, default_graph, feedback_tasks, validate_dag
 from .store import ResearchStateStore, canonical_hash, sha256_file, utc_now
 from .tools import ToolRegistry, default_registry
+from .executor import AgentExecutor
+from .adapters.base import AgentExecutionRequest
+from .scientific_memory import ScientificMemoryStore
+from .context import ContextPacker
+from .state_backends import FileStateBackend, SQLiteStateBackend, StateBackend
+from .planning import BoundedPlanner
 
 class RuntimeErrorState(RuntimeError): pass
 
@@ -23,12 +29,21 @@ def _ready(state: dict[str, Any]) -> list[dict[str, Any]]:
     return [x for x in state["task_graph"] if x["status"] == "pending" and set(dependencies(x)).issubset(complete)]
 
 class ResearchRuntime:
-    def __init__(self, store: ResearchStateStore, project_dir: str | Path, tools: ToolRegistry | None = None):
+    def __init__(self, store: StateBackend, project_dir: str | Path, tools: ToolRegistry | None = None,
+                 agent_executors: dict[str, AgentExecutor] | None = None,
+                 allow_sensitive_context: bool = False):
         self.store, self.project_dir, self.tools = store, Path(project_dir).resolve(), tools or default_registry()
+        self._state_version: int | None = None
+        self.agent_executors = dict(agent_executors or {})
         self.tracer = TraceRecorder(store.run_dir, Path(__file__).resolve().parents[1])
+        self.scientific_memory = ScientificMemoryStore(store.run_dir / "scientific-memory.sqlite")
+        self.context_packer = ContextPacker(self.project_dir, allow_sensitive_content=allow_sensitive_context)
+        self.bounded_planner = BoundedPlanner(self.tools.manifests())
+        self.scientific_memory.ingest_state(self._load())
 
     @staticmethod
-    def initialize(manifest_path: str | Path, run_root: str | Path, parent_run_id: str | None = None) -> ResearchStateStore:
+    def initialize(manifest_path: str | Path, run_root: str | Path, parent_run_id: str | None = None,
+                   state_backend: str = "file") -> StateBackend:
         manifest_path, repository = Path(manifest_path).resolve(), Path(__file__).resolve().parents[1]
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         schema = json.loads((repository / "schemas/economics-paper-project.schema.json").read_text(encoding="utf-8"))
@@ -52,7 +67,10 @@ class ResearchRuntime:
             "created_at": utc_now(), "updated_at": utc_now(),
         }
         validate_dag(state["task_graph"]); ResearchRuntime._validate_state(state, repository)
-        store = ResearchStateStore(run_dir); store.create(state); return store
+        if state_backend not in {"file", "sqlite"}:
+            raise ValueError("state_backend must be file or sqlite")
+        store: StateBackend = FileStateBackend(run_dir) if state_backend == "file" else SQLiteStateBackend(run_dir)
+        store.create(state); return store
 
     @staticmethod
     def _validate_state(state: dict[str, Any], repository: Path | None = None) -> None:
@@ -62,13 +80,82 @@ class ResearchRuntime:
         validate_dag(state["task_graph"])
 
     def _save(self, state: dict[str, Any], event_type: str, payload: dict[str, Any]) -> None:
-        self._validate_state(state); self.store.save(state, event_type, payload)
+        self._validate_state(state)
+        self._state_version = self.store.save(
+            state, event_type, payload, expected_version=self._state_version
+        )
+        self.scientific_memory.ingest_state(state)
 
     def _load(self) -> dict[str, Any]:
-        state, changed = upgrade_state_v010(self.store.load())
+        state, self._state_version = self.store.load_with_version()
+        state, changed = upgrade_state_v010(state)
         if changed:
             self._save(state, "state.compatibility-upgraded", {"target": "v0.10 additive contract", "destructive": False})
         return state
+
+    def _agent_request(self, state: dict[str, Any], item: dict[str, Any], packet: dict[str, Any]) -> AgentExecutionRequest:
+        verifier = item["task_type"] == "verifier"
+        working = {} if verifier else {
+            "project_id": state["project_id"], "research_question": state["research_question"],
+            "research_goal": state["research_goal"], "paper_type": state["paper_type"],
+            "required_inputs": item["required_inputs"],
+            "approved_decisions": [{"task_id": d.get("task_id"), "rationale": d.get("rationale")} for d in state["decisions"] if d.get("approved")],
+        }
+        schema = json.loads((Path(__file__).resolve().parents[1] / "schemas/research-agent-observation.schema.json").read_text(encoding="utf-8"))
+        packed = self.context_packer.pack(state, item, item.get("context_token_budget", 6000))
+        return AgentExecutionRequest(
+            agent_run_id=packet["agent_run_id"], task_id=item["task_id"], agent_identity=item["assigned_agent"],
+            task_goal=item["goal"], allowed_skills=tuple(item.get("capabilities", [])),
+            allowed_tools=tuple(item["allowed_tools"]),
+            tool_specs=tuple(self.tools.describe(name) for name in item["allowed_tools"]),
+            working_context=working,
+            artifact_context=packed.artifacts, expected_output_schema=schema,
+            timeout_seconds=item["timeout_seconds"], token_budget=item.get("token_budget"),
+            cost_budget_usd=item.get("cost_budget_usd"), data_sensitivity=state["data_sensitivity"],
+            context_policy="artifact-only-independent-run" if verifier else "least-context-worker",
+            metadata={"expected_outputs": item["expected_outputs"], "success_contract": item["success_contract"],
+                      "failure_contract": item["failure_contract"], "verification_rules": item["verification_rules"],
+                      "context_pack_receipt": packed.receipt},
+        )
+
+    @staticmethod
+    def _enforce_agent_tool_scope(item: dict[str, Any], name: str, inputs: dict[str, Any]) -> None:
+        prefixes = {
+            "research-director": ("design/",), "literature-agent": ("literature/", "evidence/"),
+            "empirical-agent": ("design/", "analysis/"), "writing-agent": ("paper/",),
+            "reviewer-verifier-agent": ("audit/",),
+        }[item["assigned_agent"]]
+        output_keys = {"artifact_write": ("path",), "pdf_parser": ("output",),
+                       "python": ("output_directory",), "stata": ("output_directory",),
+                       "r": ("output_directory",), "latex": ("output_directory",),
+                       "bibliographic_lookup": ("output",), "zotero_local_read": ("output",),
+                       "zotero_collection_create": ("output",)}.get(name, ())
+        for key in output_keys:
+            normalized = str(inputs.get(key, "")).replace("\\", "/").lstrip("./")
+            if not any(normalized.startswith(prefix) for prefix in prefixes):
+                raise PermissionError(f"{item['assigned_agent']} cannot write {key} outside {prefixes}")
+
+    def _run_agent_tool(self, state: dict[str, Any], item: dict[str, Any], name: str,
+                        inputs: dict[str, Any], call_id: str) -> dict[str, Any]:
+        if name not in item["allowed_tools"]:
+            raise PermissionError(f"Tool is outside task allow-list: {name}")
+        self._enforce_agent_tool_scope(item, name, inputs)
+        approved = any(d.get("task_id") == item["task_id"] and d.get("approved") for d in state["decisions"])
+        started = utc_now()
+        result = self.tools.execute(name, inputs, self.project_dir, approved=approved,
+                                    data_sensitivity=state["data_sensitivity"])
+        record = {"run_id": str(uuid.uuid4()), "task_id": item["task_id"], "name": name, "call_id": call_id,
+                  "outcome": result.get("status"), "observation_hash": canonical_hash(result), "at": utc_now()}
+        state["tool_runs"].append(record)
+        self._save(state, "agent.tool.completed", record)
+        self.tracer.record(state=state, name=name, kind="tool", started_at=started,
+                           status="ok" if result.get("status") == "complete" else "error", task=item,
+                           agent=item["assigned_agent"], tool=name, outcome=result.get("status"),
+                           agent_run_id=next((run.get("agent_run_id") for run in reversed(state["agent_runs"]) if run.get("task_id") == item["task_id"]), None),
+                           provider="native" if self.tools.describe(name).get("adapter", "").startswith("native") else self.tools.describe(name).get("adapter"),
+                           tool_calls=[{"name": name, "call_id": call_id, "status": result.get("status")}],
+                           inputs=inputs, outputs=result)
+        return result
 
     def run(self, max_steps: int = 100) -> dict[str, Any]:
         state = self._load()
@@ -81,6 +168,35 @@ class ResearchRuntime:
             control["total_steps"] += 1
             ready = _ready(state)
             if not ready:
+                waiting = [t for t in state["task_graph"] if t["status"] == "waiting-agent" and t["assigned_agent"] in self.agent_executors]
+                if waiting:
+                    item = waiting[0]
+                    packet = next((x for x in reversed(state["agent_runs"]) if x.get("task_id") == item["task_id"] and x.get("status") == "awaiting-observation"), None)
+                    if packet is None:
+                        self._fail(state, item, "Waiting agent has no persisted assignment packet", "agent", "FAIL_TRANSIENT")
+                        continue
+                    executor = self.agent_executors[item["assigned_agent"]]
+                    request = self._agent_request(state, item, packet)
+                    try:
+                        observation = executor.resume(request, {"instruction": "resume persisted assignment"},
+                            lambda name, inputs, call_id: self._run_agent_tool(state, item, name, inputs, call_id))
+                    except PermissionError as exc:
+                        packet["status"] = "HIGH_RISK_DECISION"; packet["observed_at"] = utc_now()
+                        return self._handoff(state, item, str(exc), high_risk=True)
+                    except Exception as exc:
+                        packet["status"] = "FAIL_TRANSIENT"; packet["observed_at"] = utc_now()
+                        self._fail(state, item, str(exc), "agent", "FAIL_TRANSIENT")
+                        if item["status"] == "blocked": return state
+                        continue
+                    self.tracer.record(state=state, name="agent.observation", kind="agent", started_at=packet["created_at"],
+                        status="ok" if observation["outcome"] in {"PASS", "GOAL_COMPLETE"} else "error",
+                        task=item, agent=item["assigned_agent"], model=observation.get("model") or packet["model"],
+                        agent_run_id=packet["agent_run_id"], provider=observation.get("provider"), outcome=observation["outcome"],
+                        tool_calls=observation.get("tool_calls"), inputs={"artifact_context":request.artifact_context},
+                        outputs=observation, token_usage=observation.get("token_usage"),
+                        errors=[{"type":"AgentObservationError","message":message} for message in observation.get("errors", [])])
+                    self._apply_observation(state, item, observation, "agent")
+                    continue
                 unfinished = [t for t in state["task_graph"] if t["status"] not in TERMINAL_TASK_STATUSES]
                 statuses = {t["status"] for t in unfinished}
                 if not unfinished:
@@ -101,12 +217,38 @@ class ResearchRuntime:
             if item["task_type"] == "human_gate":
                 return self._handoff(state, item, item["goal"], high_risk=True)
             if item["task_type"] in {"agent", "verifier"}:
-                packet = {"agent_run_id": str(uuid.uuid4()), "task_id": item["task_id"], "agent": item["assigned_agent"], "model": item.get("model", "provider-default-unreported"), "status": "awaiting-observation", "instructions": item["goal"], "inputs": item["required_inputs"], "expected_outputs": item["expected_outputs"], "success_contract": item["success_contract"], "failure_contract": item["failure_contract"], "verification_rules": item["verification_rules"], "timeout_seconds": item["timeout_seconds"], "context_policy": "artifact-only" if item["task_type"] == "verifier" else "working-memory", "created_at": utc_now()}
+                executor = self.agent_executors.get(item["assigned_agent"])
+                model = executor.adapter.model_id if executor else item.get("model", "provider-default-unreported")
+                packet = {"agent_run_id": str(uuid.uuid4()), "task_id": item["task_id"], "agent": item["assigned_agent"], "model": model, "status": "awaiting-observation", "instructions": item["goal"], "inputs": item["required_inputs"], "expected_outputs": item["expected_outputs"], "success_contract": item["success_contract"], "failure_contract": item["failure_contract"], "verification_rules": item["verification_rules"], "timeout_seconds": item["timeout_seconds"], "context_policy": "artifact-only-independent-run" if item["task_type"] == "verifier" else "least-context-worker", "created_at": utc_now()}
                 state["agent_runs"].append(packet); item["status"] = "waiting-agent"; state["active_task"] = None
                 self._save(state, "agent.delegated", packet)
                 self.tracer.record(state=state, name="agent.delegated", kind="agent", started_at=packet["created_at"],
-                                   status="waiting", task=item, agent=packet["agent"], model=packet["model"], inputs=packet["inputs"])
-                return state
+                                   status="waiting", task=item, agent=packet["agent"], model=packet["model"],
+                                   agent_run_id=packet["agent_run_id"], provider=executor.adapter.provider_id if executor else None,
+                                   outcome="waiting-agent", inputs=packet["inputs"])
+                if executor is None:
+                    return state
+                request = self._agent_request(state, item, packet)
+                try:
+                    observation = executor.execute(request, lambda name, inputs, call_id: self._run_agent_tool(state, item, name, inputs, call_id))
+                except PermissionError as exc:
+                    packet["status"] = "HIGH_RISK_DECISION"; packet["observed_at"] = utc_now()
+                    return self._handoff(state, item, str(exc), high_risk=True)
+                except Exception as exc:
+                    packet["status"] = "FAIL_TRANSIENT"; packet["observed_at"] = utc_now()
+                    self._fail(state, item, str(exc), "agent", "FAIL_TRANSIENT")
+                    if item["status"] == "blocked": return state
+                    continue
+                self.tracer.record(state=state, name="agent.observation", kind="agent", started_at=packet["created_at"],
+                                   status="ok" if observation["outcome"] in {"PASS", "GOAL_COMPLETE"} else "error",
+                                   task=item, agent=item["assigned_agent"], model=observation.get("model") or packet["model"],
+                                   agent_run_id=packet["agent_run_id"], provider=observation.get("provider"), outcome=observation["outcome"],
+                                   tool_calls=observation.get("tool_calls"), inputs={"artifact_context": request.artifact_context},
+                                   outputs=observation, token_usage=observation.get("token_usage"),
+                                   errors=[{"type": "AgentObservationError", "message": message} for message in observation.get("errors", [])])
+                self._apply_observation(state, item, observation, "agent")
+                if item["status"] in {"blocked", "waiting-human"}: return state
+                continue
             try:
                 tool_started_at = utc_now()
                 tool_inputs = dict(item["required_inputs"])
@@ -118,16 +260,20 @@ class ResearchRuntime:
                 observation = self.tools.execute(item["tool_name"], tool_inputs, self.project_dir, approved=approved, data_sensitivity=state["data_sensitivity"])
             except PermissionError as exc:
                 self.tracer.record(state=state, name=item.get("tool_name") or "tool", kind="tool", started_at=tool_started_at,
-                                   status="blocked", task=item, errors=[{"type": type(exc).__name__, "message": str(exc)}])
+                                   status="blocked", task=item, tool=item.get("tool_name"), outcome="HIGH_RISK_DECISION",
+                                   errors=[{"type": type(exc).__name__, "message": str(exc)}])
                 return self._handoff(state, item, str(exc), high_risk=True)
             except Exception as exc:
                 self.tracer.record(state=state, name=item.get("tool_name") or "tool", kind="tool", started_at=tool_started_at,
-                                   status="error", task=item, errors=[{"type": type(exc).__name__, "message": str(exc)}])
+                                   status="error", task=item, tool=item.get("tool_name"), outcome="FAIL_TRANSIENT",
+                                   errors=[{"type": type(exc).__name__, "message": str(exc)}])
                 self._fail(state, item, str(exc), "tool", "FAIL_TRANSIENT")
                 if item["status"] == "blocked": return state
             else:
                 self.tracer.record(state=state, name=item["tool_name"], kind="tool", started_at=tool_started_at,
                                    status="ok", task=item, agent=item["assigned_agent"],
+                                   tool=item["tool_name"], outcome=observation.get("status"),
+                                   provider="native" if self.tools.describe(item["tool_name"]).get("adapter", "").startswith("native") else self.tools.describe(item["tool_name"]).get("adapter"),
                                    tool_calls=[{"name": item["tool_name"], "status": "completed"}],
                                    inputs=tool_inputs, outputs=observation)
                 self._apply_observation(state, item, observation, "tool")
@@ -164,6 +310,8 @@ class ResearchRuntime:
         self.tracer.record(state=state, name="agent.observation", kind="agent", started_at=started_at,
                            status=trace_status, task=item, agent=item["assigned_agent"],
                            model=observation.get("model") or (packet.get("model") if packet else None),
+                           agent_run_id=packet.get("agent_run_id") if packet else None,
+                           provider=observation.get("provider"), outcome=outcome,
                            tool_calls=observation.get("tool_calls"), inputs=packet.get("inputs") if packet else None,
                            outputs=observation, token_usage=observation.get("token_usage"),
                            errors=[{"type": "AgentObservationError", "message": message} for message in observation.get("errors", [])])
@@ -203,6 +351,12 @@ class ResearchRuntime:
             verification_started_at = utc_now()
             try:
                 verified = self._verify_outputs(item, observation)
+                if observation.get("next_tasks"):
+                    proposal = {"schema_version":"task-graph-proposal/1.0", "proposal_id":f"observation-{uuid.uuid4().hex}",
+                        "mode":"adaptive", "reason":"specialist proposed follow-up tasks", "parent_task_id":item["task_id"],
+                        "tasks":observation["next_tasks"]}
+                    self.bounded_planner.merge(state["task_graph"], proposal, data_sensitivity=state["data_sensitivity"],
+                                               max_tasks=state["runtime_control"]["max_total_tasks"])
                 self.tracer.record(state=state, name="artifact.verification", kind="verification", started_at=verification_started_at,
                                    status="ok", task=item, agent="reviewer-verifier-agent", outputs=verified)
             except Exception as exc:
@@ -211,8 +365,6 @@ class ResearchRuntime:
                                    errors=[{"type": type(exc).__name__, "message": str(exc)}])
                 self._fail(state, item, str(exc), run_kind, "FAIL_TRANSIENT"); return
             for artifact in verified: self._register_artifact(state, item, artifact)
-            if observation.get("next_tasks"):
-                add_dynamic_tasks(state["task_graph"], observation["next_tasks"], item["task_id"], state["runtime_control"]["max_total_tasks"])
             self._complete(state, item, observation, run_kind)
         elif outcome in {"BLOCKED", "HIGH_RISK_DECISION"}:
             self._handoff(state, item, observation.get("human_action", "Researcher input is required"), high_risk=outcome == "HIGH_RISK_DECISION")
@@ -230,7 +382,15 @@ class ResearchRuntime:
             additions = feedback_tasks(observation["replan"], item["task_id"], state["runtime_control"]["strategy_replans"])
         if not additions:
             self._handoff(state, item, "A strategy failure requires replacement_tasks or researcher direction", high_risk=False); return
-        add_dynamic_tasks(state["task_graph"], additions, item["task_id"], state["runtime_control"]["max_total_tasks"])
+        proposal = {"schema_version":"task-graph-proposal/1.0", "proposal_id":f"replan-{uuid.uuid4().hex}",
+            "mode":"adaptive", "reason":observation.get("summary", "strategy feedback"),
+            "parent_task_id":item["task_id"], "tasks":additions}
+        try:
+            self.bounded_planner.merge(state["task_graph"], proposal, data_sensitivity=state["data_sensitivity"],
+                                       max_tasks=state["runtime_control"]["max_total_tasks"])
+        except (ValueError, PermissionError, jsonschema.ValidationError) as exc:
+            self._handoff(state, item, f"Unsafe or invalid strategy proposal rejected: {exc}", high_risk=False)
+            return
         item = _task(state, item["task_id"])
         item["status"] = "superseded"; item["error"] = observation.get("summary", "strategy superseded")
         if item["task_id"] not in state["completed_tasks"]: state["completed_tasks"].append(item["task_id"])
@@ -263,9 +423,12 @@ class ResearchRuntime:
         reference = {"artifact_id": f"{item['task_id']}:{len(state['artifacts'])}", **artifact, "external": False}; state["artifacts"].append(reference)
         state["memory"]["evidence"]["artifact_refs"].append({"artifact_id": reference["artifact_id"], "sha256": reference["sha256"]})
         domain = {"literature": "literature_state", "empirical-design": "empirical_state", "analysis": "empirical_state", "writing": "manuscript_state", "manuscript-review": "audit_state", "final-audit": "audit_state"}.get(item["task_id"])
+        if domain is None:
+            domain = {"literature-agent":"literature_state", "empirical-agent":"empirical_state",
+                      "writing-agent":"manuscript_state", "reviewer-verifier-agent":"audit_state"}.get(item["assigned_agent"])
         if domain:
             ref = {"path": reference["path"], "sha256": reference["sha256"], "artifact_id": reference["artifact_id"]}; state[domain]["artifact_refs"].append(ref)
-            if item["task_id"] == "literature": state["evidence_registry"]["artifact_refs"].append(ref)
+            if item["assigned_agent"] == "literature-agent": state["evidence_registry"]["artifact_refs"].append(ref)
 
     def _complete(self, state: dict[str, Any], item: dict[str, Any], observation: dict[str, Any], run_kind: str) -> None:
         item["status"] = "complete"; item["error"] = None; state["active_task"] = None

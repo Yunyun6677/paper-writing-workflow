@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "verifier_type", "verification_method", "status", "input_hashes", "input_bundle_hash", "output", "output_hash", "confidence", "verifier_model", "timestamp"],
+  "properties": {
+    "schema_version": {"const": "evidence-verification/1.0"},
+    "verifier_type": {"enum": ["citation", "fulltext", "numeric", "causal", "specification"]},
+    "verification_method": {"enum": ["deterministic", "model-assisted", "human"]},
+    "status": {"enum": ["pass", "blocked"]},
+    "input_hashes": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}}},
+    "input_bundle_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "output": {"type": "object"},
+    "output_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "verifier_model": {"type": ["string", "null"]},
+    "timestamp": {"type": "string", "format": "date-time"}
+  }
+}

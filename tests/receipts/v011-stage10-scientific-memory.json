@@ -1,0 +1,24 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 10,
+  "date": "2026-09-14",
+  "status": "tested-not-production-certified",
+  "checks": {
+    "sqlite_schema_version": "passed",
+    "entity_upsert_transaction": "passed",
+    "relation_uniqueness": "passed",
+    "claim_evidence_source_query": "passed",
+    "model_run_dataset_query": "passed",
+    "runtime_state_indexing": "passed",
+    "json_authority_preserved": "passed",
+    "secret_rejection": "passed",
+    "restricted_content_rejection": "passed",
+    "e2e_regression_suite": "11 passed"
+  },
+  "limitations": [
+    "SQLite is an index and does not replace artifact files.",
+    "Cross-process locking and optimistic concurrency are deferred to the StateBackend stage.",
+    "Semantic relevance and token-bounded retrieval are deferred to ContextPacker."
+  ],
+  "production_certified": false
+}

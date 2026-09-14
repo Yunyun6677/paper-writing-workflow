@@ -1,0 +1,193 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 5,
+  "status": "tested-with-environment-boundary",
+  "results": {
+    "python": {
+      "schema_version": "native-tool-execution/1.0",
+      "status": "complete",
+      "tool": "python",
+      "executable_name": "python.exe",
+      "idempotency_key": "stage05-python-live",
+      "started_at": "2026-09-13T17:11:16.037069+00:00",
+      "elapsed_seconds": 0.172,
+      "returncode": 0,
+      "inputs": [
+        {
+          "path": "tests/fixtures/tier1/python_smoke.py",
+          "bytes": 213,
+          "sha256": "dcda88b75c109978a77ac8a04197547e98a2e07224c4ffddb9c3f39763b082b6"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/python/result.json",
+          "bytes": 40,
+          "sha256": "c0a4557d13db04cd6408599ff29f50fec06f0cec77c3c9c7bc2e3c64c6423365"
+        },
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/python/stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/python/stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/python/receipt.json",
+          "bytes": 1513,
+          "sha256": "db5b986423c0b3487b2c52d03c0ff35d6f16c49f086d07daec3a3b394633006f"
+        }
+      ],
+      "errors": [],
+      "isolation": {
+        "backend": "local-process",
+        "workspace_mode": "project-write",
+        "path_boundary": "enforced-for-cwd-and-existing-path-arguments",
+        "environment_allowlist": "enforced",
+        "process_tree_control": "windows-job-object",
+        "network_policy": "deny",
+        "network_enforcement": "declaration-only",
+        "filesystem_enforcement": "path-policy-not-os-sandbox"
+      },
+      "timed_out": false
+    },
+    "r": {
+      "schema_version": "native-tool-execution/1.0",
+      "status": "complete",
+      "tool": "r",
+      "executable_name": "Rscript.exe",
+      "idempotency_key": "stage05-r-live",
+      "started_at": "2026-09-13T17:11:16.484807+00:00",
+      "elapsed_seconds": 0.407,
+      "returncode": 0,
+      "inputs": [
+        {
+          "path": "tests/fixtures/tier1/r_smoke.R",
+          "bytes": 239,
+          "sha256": "41669b5f02ad104d4e89c95a43f9129d490eb35f289a3a8823af6e99266aa2f1"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/r/result.csv",
+          "bytes": 59,
+          "sha256": "a7aa9fdeeeb2fc4009a9efe35bb03a39e260fb65df78b73725704a87f47e5986"
+        },
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/r/stderr.txt",
+          "bytes": 188,
+          "sha256": "b3aad99a991f98252f3a0842635009f1fbec82b901a63d11a0168dadc69467cb"
+        },
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/r/stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/r/receipt.json",
+          "bytes": 1484,
+          "sha256": "b816ccbb2ef47ccb742796abe097263cd06d9e995ca2e8b47b0ad5e2a03eaf40"
+        }
+      ],
+      "errors": [],
+      "isolation": {
+        "backend": "local-process",
+        "workspace_mode": "project-write",
+        "path_boundary": "enforced-for-cwd-and-existing-path-arguments",
+        "environment_allowlist": "enforced",
+        "process_tree_control": "windows-job-object",
+        "network_policy": "deny",
+        "network_enforcement": "declaration-only",
+        "filesystem_enforcement": "path-policy-not-os-sandbox"
+      },
+      "timed_out": false
+    },
+    "stata": {
+      "schema_version": "native-tool-execution/1.0",
+      "status": "complete",
+      "tool": "stata",
+      "executable_name": "StataSE-64.exe",
+      "idempotency_key": "stage05-stata-live",
+      "started_at": "2026-09-13T17:11:18.702423+00:00",
+      "elapsed_seconds": 2.171,
+      "returncode": 0,
+      "inputs": [
+        {
+          "path": "tests/fixtures/tier1/stata_smoke.do",
+          "bytes": 255,
+          "sha256": "f438dcb28e105a9c3f84bd721cf5cf18e7576fdeea51749ef0559dbd51a44c0d"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/stata/result.csv",
+          "bytes": 16,
+          "sha256": "9fb9d2de0d5749fef9a26aed79d758a42607f1df1dcd233117beb83c1d93de5c"
+        },
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/stata/stata_smoke.log",
+          "bytes": 2363,
+          "sha256": "8d8cecb0b8be19c36d180df45498b205231b2523cdfa30651fba71e1d3281aa4"
+        },
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/stata/stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/stata/stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/stata/receipt.json",
+          "bytes": 1707,
+          "sha256": "94db9727112ebccea9f4e478627f95f742abdcf08031208f32da7c8f3542cc8b"
+        }
+      ],
+      "errors": [],
+      "isolation": {
+        "backend": "local-process",
+        "workspace_mode": "project-write",
+        "path_boundary": "enforced-for-cwd-and-existing-path-arguments",
+        "environment_allowlist": "enforced",
+        "process_tree_control": "windows-job-object",
+        "network_policy": "deny",
+        "network_enforcement": "declaration-only",
+        "filesystem_enforcement": "path-policy-not-os-sandbox"
+      },
+      "timed_out": false
+    },
+    "pdf_parser": {
+      "status": "complete",
+      "artifacts": [
+        {
+          "path": "work/v011-tier1-isolated-20260914-c/pdf/pages.json",
+          "bytes": 376,
+          "sha256": "19ce71666f4ccdba4ebbd4b4701f5d0c2633114f1731af1195559ccd959620db"
+        }
+      ],
+      "errors": [],
+      "page_count": 1,
+      "text_pages": 0
+    },
+    "git_inspect": {
+      "status": "complete",
+      "operation": "head",
+      "returncode": 0,
+      "elapsed_seconds": 0.125,
+      "stdout": "52b50948fcd64e174c42d0326980666bf2a58d42\n",
+      "stderr": "",
+      "artifacts": [],
+      "errors": []
+    },
+    "latex": {
+      "status": "unavailable",
+      "reason": "No latexmk/xelatex discovered"
+    }
+  },
+  "production_certified": false
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "tool", "executable_name", "idempotency_key", "started_at", "elapsed_seconds", "returncode", "inputs", "artifacts", "errors", "isolation", "timed_out"],
+  "properties": {
+    "schema_version": {"const": "native-tool-execution/1.0"},
+    "status": {"enum": ["complete", "failed"]},
+    "tool": {"enum": ["python", "stata", "r", "latex"]},
+    "executable_name": {"type": "string", "minLength": 1},
+    "idempotency_key": {"type": "string", "minLength": 8},
+    "started_at": {"type": "string", "format": "date-time"},
+    "elapsed_seconds": {"type": "number", "minimum": 0},
+    "returncode": {"type": "integer"},
+    "inputs": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+    "artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+    "errors": {"type": "array", "items": {"type": "string"}}
+    ,"isolation": {"type": "object"}
+    ,"timed_out": {"type": "boolean"}
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "bytes", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    }
+  }
+}

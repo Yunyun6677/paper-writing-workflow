@@ -1,0 +1,28 @@
+{
+  "adapter": "codex-cli",
+  "version": "0.154.0-alpha.6.2",
+  "outcome": "PASS",
+  "summary": "Codex CLI structured adapter smoke passed.",
+  "tool_calls": [],
+  "artifacts": [],
+  "token_usage": {
+    "input_tokens": 17236,
+    "output_tokens": 126,
+    "total_tokens": 17362,
+    "cached_tokens": 0,
+    "reasoning_tokens": 83,
+    "cost_usd": null
+  },
+  "event_types": [
+    "thread.started",
+    "turn.started",
+    "error",
+    "error",
+    "error",
+    "error",
+    "item.completed",
+    "item.completed",
+    "turn.completed"
+  ],
+  "production_certified": false
+}

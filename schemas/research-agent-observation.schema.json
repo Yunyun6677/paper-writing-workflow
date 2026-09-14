@@ -8,12 +8,16 @@
   "properties": {
     "status": {"enum": ["complete", "failed", "needs-human"]},
     "outcome": {"enum": ["PASS", "FAIL_TRANSIENT", "FAIL_STRATEGY", "BLOCKED", "HIGH_RISK_DECISION", "GOAL_COMPLETE"]},
+    "agent_run_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "provider": {"type": "string", "minLength": 1},
     "replacement_tasks": {"type": "array", "items": {"type": "object"}},
     "replan": {"enum": ["new_evidence", "robustness"]},
     "summary": {"type": "string"},
     "model": {"type": "string", "minLength": 1},
-    "token_usage": {"type": "object", "properties": {"input_tokens": {"type": "integer", "minimum": 0}, "output_tokens": {"type": "integer", "minimum": 0}, "total_tokens": {"type": "integer", "minimum": 0}, "cached_tokens": {"type": "integer", "minimum": 0}, "reasoning_tokens": {"type": "integer", "minimum": 0}}},
+    "token_usage": {"type": "object", "properties": {"input_tokens": {"type": "integer", "minimum": 0}, "output_tokens": {"type": "integer", "minimum": 0}, "total_tokens": {"type": "integer", "minimum": 0}, "cached_tokens": {"type": "integer", "minimum": 0}, "reasoning_tokens": {"type": "integer", "minimum": 0}, "cost_usd": {"type": ["number", "null"], "minimum": 0}}},
     "tool_calls": {"type": "array", "items": {"type": "object", "required": ["name"], "properties": {"name": {"type": "string"}, "call_id": {"type": "string"}, "status": {"type": "string"}}}},
+    "tool_requests": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["name", "call_id", "arguments"], "properties": {"name": {"type": "string"}, "call_id": {"type": "string", "minLength": 1}, "arguments": {"oneOf": [{"type": "object"}, {"type": "string"}]}}}},
     "artifacts": {
       "type": "array",
       "items": {

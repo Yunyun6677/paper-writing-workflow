@@ -1,0 +1,23 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 13,
+  "date": "2026-09-14",
+  "status": "tested-not-production-certified",
+  "checks": {
+    "file_state_version": "passed",
+    "sqlite_transaction": "passed",
+    "optimistic_concurrency_conflict": "passed-on-both-backends",
+    "strict_event_order": "passed-on-both-backends",
+    "owner_checked_run_lock": "passed-on-both-backends",
+    "restart_backend_discovery": "passed",
+    "sqlite_runtime_transition": "passed",
+    "checkpoint_integrity": "passed",
+    "legacy_runtime_regression": "9 passed"
+  },
+  "limitations": [
+    "Run locks require explicit release and do not yet use expiring leases.",
+    "The backend is single-host and not a distributed coordination service.",
+    "SQLite and file backends are not production-certified under high-contention workloads."
+  ],
+  "production_certified": false
+}

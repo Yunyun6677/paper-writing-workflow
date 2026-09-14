@@ -12,7 +12,8 @@ def _finding(name: str, passed: bool, detail: str, severity: str = "blocking") -
 def citation_guardrail(entries: list[dict[str, Any]]) -> list[dict[str, str]]:
     findings = []
     for entry in entries:
-        passed = bool(entry.get("citation_keys")) and bool(entry.get("evidence_refs")) and entry.get("verification_status") == "verified" and entry.get("entailment_status") == "passed"
+        receipt = entry.get("verification_receipt", {})
+        passed = bool(entry.get("citation_keys")) and bool(entry.get("evidence_refs")) and receipt.get("schema_version") == "evidence-verification/1.0" and receipt.get("verifier_type") == "citation" and receipt.get("status") == "pass"
         findings.append(_finding("Citation Guardrail", passed, f"claim {entry.get('claim_id', 'unknown')} citation entailment"))
     return findings
 
@@ -22,7 +23,8 @@ def fulltext_guardrail(entries: list[dict[str, Any]]) -> list[dict[str, str]]:
     for entry in entries:
         if not entry.get("used_in_manuscript"):
             continue
-        passed = entry.get("fulltext_status") == "obtained" and entry.get("actually_read") is True
+        receipt = entry.get("verification_receipt", {})
+        passed = entry.get("fulltext_status") == "obtained" and entry.get("actually_read") is True and receipt.get("verifier_type") == "fulltext" and receipt.get("status") == "pass"
         findings.append(_finding("Fulltext Guardrail", passed, f"source {entry.get('source_id', 'unknown')} full text read"))
     return findings
 
@@ -30,7 +32,8 @@ def fulltext_guardrail(entries: list[dict[str, Any]]) -> list[dict[str, str]]:
 def numerical_claim_guardrail(entries: list[dict[str, Any]]) -> list[dict[str, str]]:
     findings = []
     for entry in entries:
-        passed = bool(entry.get("source_artifact") and entry.get("source_hash")) and entry.get("source_exists") is True and entry.get("hash_match") is True and entry.get("verification_status") == "verified"
+        receipt = entry.get("verification_receipt", {})
+        passed = bool(entry.get("source_artifact") and entry.get("source_hash")) and receipt.get("verifier_type") == "numeric" and receipt.get("status") == "pass"
         findings.append(_finding("Numerical Claim Guardrail", passed, f"numeric claim {entry.get('claim_id', 'unknown')} lineage"))
     return findings
 
@@ -38,7 +41,8 @@ def numerical_claim_guardrail(entries: list[dict[str, Any]]) -> list[dict[str, s
 def causal_claim_guardrail(entries: list[dict[str, Any]]) -> list[dict[str, str]]:
     findings = []
     for entry in entries:
-        passed = entry.get("identification_status") == "passed" or entry.get("qualified_language") is True
+        receipt = entry.get("verification_receipt", {})
+        passed = receipt.get("verifier_type") == "causal" and receipt.get("status") == "pass"
         findings.append(_finding("Causal Claim Guardrail", passed, f"causal claim {entry.get('claim_id', 'unknown')} identification"))
     return findings
 
@@ -49,7 +53,8 @@ def specification_guardrail(entries: list[dict[str, Any]]) -> list[dict[str, str
     for entry in entries:
         if entry.get("field") not in protected:
             continue
-        passed = entry.get("reason") != "significance" and entry.get("approved") is True
+        receipt = entry.get("verification_receipt", {})
+        passed = entry.get("reason") != "significance" and entry.get("approved") is True and receipt.get("verifier_type") == "specification" and receipt.get("status") == "pass"
         findings.append(_finding("Specification Guardrail", passed, f"change to {entry.get('field')}"))
     return findings
 

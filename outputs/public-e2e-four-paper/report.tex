@@ -1,0 +1,46 @@
+\documentclass[UTF8,11pt]{ctexart}
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage{booktabs,tabularx,array,hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\title{四篇公开实证论文复现测试报告}
+\author{Research OS public benchmark}
+\date{2026年9月14日}
+
+\begin{document}
+\maketitle
+
+\section{测试目标与边界}
+
+本次测试选取四篇具有公开全文或机器可读全文、且有公开数据或复现包的实证论文。测试内容包括来源核验、文件哈希、数据读取、目标表或图的重新计算以及统一执行回执。这里的“通过”仅表示指定数值目标得到复现，不等于完成全文全部结果复现，也不等于重新证明论文的因果识别假设。
+
+\section{案例与结果}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.3cm}}
+\toprule
+论文 & 方法 & 实际复现目标 & 评估 \\
+\midrule
+Autor--Dorn--Hanson (2013) & 加权2SLS、shift-share暴露、聚类推断 & Table 3第1--6列；样本量、聚类数、系数与标准误对齐作者结果 & 通过 \\
+Card--Krueger (1994) & 双重差分与回归调整 & Table 3核心DID与Table 4第1--5列 & 通过 \\
+Yang等 (2023) & 现场实验、平衡比较、HC1稳健OLS & Table 1、Table 2与Figure 1 & 完成但有警告 \\
+Acemoglu--Johnson--Robinson (2001) & 跨国2SLS工具变量 & Table 4 Panel A第1--2列；系数、标准误与样本量匹配 & 通过 \\
+\bottomrule
+\end{tabularx}
+
+Yang等（2023）的表格和图已经生成，但统计软件报告设计矩阵秩亏。因此该案例保留为“完成但有警告”，在专门完成共线性和变量编码诊断之前，不升级为无条件通过。
+
+\section{来源与获取记录}
+
+\begin{itemize}
+  \item Autor--Dorn--Hanson：\href{https://economics.mit.edu/sites/default/files/publications/the\%20china\%20syndrome\%202013.pdf}{MIT作者全文}与\href{https://www.ddorn.net/data/Autor-Dorn-Hanson-ChinaSyndrome-FileArchive.zip}{David Dorn作者数据档案}。
+  \item Card--Krueger：David Card个人学术主页的\href{https://davidcard.berkeley.edu/papers/min-wage-ff-nj.pdf}{论文}与\href{https://davidcard.berkeley.edu/data_sets/njmin.zip}{数据}。本轮重新连接服务器超时，实际使用此前从同一作者地址取得且哈希核验一致的本地副本。
+  \item Yang等：\href{https://pmc.ncbi.nlm.nih.gov/articles/PMC10629568/}{PubMed Central文章及BioC机器可读全文}与\href{https://github.com/Science-replication-group/Unraveling_Controversies_over_Civic_Honesty_Measurement}{作者公开GitHub仓库}，仓库固定到提交 \texttt{5d7c9eeba928ba101252f221d114f05d64f116fc}。
+  \item Acemoglu--Johnson--Robinson：\href{https://www.aeaweb.org/articles?id=10.1257\%2Faer.91.5.1369}{AEA官方文章身份}与\href{https://economics.mit.edu/people/faculty/daron-acemoglu/data-archive}{MIT作者数据档案}重新核验，数值运行使用此前取得且哈希核验一致的公开本地副本。
+\end{itemize}
+
+所有本地论文、数据及运行产物位于被Git忽略的 \texttt{work/public-e2e-4papers-20260914/}，不会随仓库发布。公开仓库只保存来源清单、验证程序和不含原始数据的测试规范。
+
+\section{验收结论}
+
+四篇案例的输入与结果文件均通过清单哈希复核；其中三篇为干净通过，一篇为带警告完成。此前还尝试获取Wiebe（2020）的公开复现数据，但在限定下载时间内未完成，因此删除不完整临时文件且未将其计入四篇测试。该结果验证了多种数据格式与DID、IV/2SLS、实验回归和绘图链路，但尚未满足v0.11要求的十篇论文综合发布门槛。
+
+\end{document}

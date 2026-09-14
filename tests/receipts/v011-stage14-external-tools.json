@@ -1,0 +1,25 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 14,
+  "date": "2026-09-14",
+  "status": "partial-tested-not-production-certified",
+  "checks": {
+    "crossref_injected_transport": "passed",
+    "crossref_live_public_doi": "passed",
+    "crossref_live_doi": "10.1257/aer.103.6.2121",
+    "crossref_live_title": "The China Syndrome: Local Labor Market Effects of Import Competition in the United States",
+    "crossref_live_artifact_sha256": "243879d20838ed669224a7ec06038ccf34b30c6cfcff620863e8ad0a6c7fd47b",
+    "openalex_injected_transport": "passed",
+    "openalex_live": "skipped-missing-credential",
+    "unpaywall_injected_transport": "passed",
+    "unpaywall_live": "skipped-missing-credential",
+    "zotero_local_injected_transport": "passed",
+    "zotero_local_live": "blocked-desktop-api-not-running",
+    "zotero_write_permission_gate": "passed",
+    "zotero_write_idempotency": "passed-with-injected-transport",
+    "zotero_real_write": "not-attempted",
+    "credential_value_persistence": "blocked-as-required",
+    "cnki_runtime_bridge": "staged"
+  },
+  "production_certified": false
+}

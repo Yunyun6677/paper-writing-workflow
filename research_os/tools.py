@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any, Callable
 import jsonschema
 from .guardrails import run_guardrails
-from .store import sha256_file, utc_now
+from .store import atomic_json, canonical_hash, sha256_file, utc_now
 
 Tool = Callable[[dict[str, Any], Path], dict[str, Any]]
 
@@ -57,6 +57,25 @@ class ToolRegistry:
         if spec.permission_level == "explicit-approval" and not approved: raise PermissionError(f"Tool requires human approval: {name}")
         if data_sensitivity not in (spec.data_sensitivity or ["public", "synthetic"]): raise PermissionError(f"Tool {name} is not authorized for {data_sensitivity} data")
         jsonschema.Draft202012Validator(spec.input_schema).validate(inputs)
+        replay_path = None
+        idempotency_key = inputs.get("idempotency_key")
+        input_hash = canonical_hash({"tool": name, "inputs": inputs})
+        if idempotency_key and spec.side_effect_level != "none":
+            replay_path = project_dir.resolve() / ".research-os" / "idempotency" / (
+                canonical_hash({"tool": name, "key": idempotency_key}) + ".json"
+            )
+            if replay_path.is_file():
+                record = json.loads(replay_path.read_text(encoding="utf-8"))
+                if record.get("input_hash") != input_hash:
+                    raise ValueError(f"Idempotency key was already used with different inputs: {idempotency_key}")
+                result = dict(record["result"])
+                for artifact in result.get("artifacts", []):
+                    path = _safe_project_path(project_dir, artifact["path"])
+                    if not path.is_file() or (artifact.get("sha256") and sha256_file(path) != artifact["sha256"]):
+                        raise RuntimeError(f"Idempotent replay artifact is missing or changed: {artifact['path']}")
+                result["idempotent_replay"] = True
+                jsonschema.Draft202012Validator(spec.output_schema).validate(result)
+                return result
         pool = ThreadPoolExecutor(max_workers=1)
         future = pool.submit(function, inputs, project_dir)
         try:
@@ -67,6 +86,13 @@ class ToolRegistry:
         else:
             pool.shutdown(wait=True)
         jsonschema.Draft202012Validator(spec.output_schema).validate(result)
+        if replay_path is not None and result.get("status") == "complete":
+            replay_path.parent.mkdir(parents=True, exist_ok=True)
+            atomic_json(replay_path, {
+                "schema_version": "tool-idempotency-record/1.0", "tool": name,
+                "idempotency_key": idempotency_key, "input_hash": input_hash,
+                "result_hash": canonical_hash(result), "result": result, "created_at": utc_now(),
+            })
         return result
 
 def _safe_project_path(project_dir: Path, value: str) -> Path:
@@ -131,4 +157,9 @@ def default_registry() -> ToolRegistry:
     registry.register(ToolSpec("artifact_integrity", "Verify project artifact existence and hashes.", {"type": "object", "properties": {"artifacts": {"type": "array"}}}, GENERIC_OUTPUT, "local-read", timeout=60, data_sensitivity=["public", "synthetic", "restricted", "personal", "confidential"]), artifact_integrity)
     registry.register(ToolSpec("research_firewall", "Write a deterministic final lineage audit receipt.", {"type": "object", "properties": {"registries": {"type": "object"}, "output": {"type": "string"}}}, GENERIC_OUTPUT, "local-write", timeout=60, data_sensitivity=["public", "synthetic", "restricted", "personal", "confidential"]), research_firewall)
     registry.register(ToolSpec("research_guardrails", "Evaluate structured citation, full-text, numerical, causal, specification, and privacy contracts.", {"type": "object", "properties": {"bundle": {"type": "object"}, "output": {"type": "string"}}}, GENERIC_OUTPUT, "local-write", timeout=60, data_sensitivity=["public", "synthetic", "restricted", "personal", "confidential"], verifier="guardrail-report-schema"), research_guardrails)
+    # Imported lazily to keep the registry contracts free from engine imports.
+    from .native_tools import register_tier1_tools
+    register_tier1_tools(registry)
+    from .external_tools import register_external_tools
+    register_external_tools(registry)
     return registry

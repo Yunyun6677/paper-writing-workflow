@@ -1,0 +1,18 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": "tracing",
+  "date": "2026-09-14",
+  "status": "tested-not-production-certified",
+  "checks": {
+    "agent_run_id": "passed",
+    "provider_model_tool": "passed",
+    "artifact_hash_references": "passed",
+    "tokens_cost_latency": "passed",
+    "outcome_retry_error": "passed",
+    "human_decision_fields": "passed",
+    "opentelemetry_attribute_mapping": "passed",
+    "content_capture_default": "false",
+    "sensitive_external_export_default": "blocked"
+  },
+  "production_certified": false
+}

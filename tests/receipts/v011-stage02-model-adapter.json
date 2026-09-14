@@ -1,0 +1,10 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 2,
+  "name": "framework-neutral ModelAdapter and AgentExecutor",
+  "date": "2026-09-14",
+  "implemented": ["run_agent", "resume_agent", "stream_events", "cancel", "usage", "schema-valid observation boundary"],
+  "production_certified": false,
+  "tests_passed": 4,
+  "status": "tested"
+}

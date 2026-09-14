@@ -1,0 +1,21 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 6,
+  "date": "2026-09-14",
+  "status": "tested-with-explicit-os-limitations",
+  "checks": {
+    "working_directory_boundary": "passed",
+    "absolute_path_boundary": "passed",
+    "environment_secret_filter": "passed",
+    "fail_closed_network_policy": "passed",
+    "windows_process_tree_timeout": "passed",
+    "isolated_python_r_stata_smoke": "passed",
+    "codex_cli_process_tree_control": "unit-tested"
+  },
+  "limitations": [
+    "network deny is declaration-only on the local Windows backend",
+    "filesystem enforcement is path-policy, not an OS sandbox",
+    "untrusted code with restricted data is not production-certified"
+  ],
+  "production_certified": false
+}

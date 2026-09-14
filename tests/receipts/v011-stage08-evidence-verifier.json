@@ -1,0 +1,19 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 8,
+  "date": "2026-09-14",
+  "status": "tested-not-production-certified",
+  "checks": {
+    "bibliographic_identity": "passed",
+    "page_locator_and_source_text": "passed",
+    "exact_entailment": "passed",
+    "unassessed_paraphrase_blocks": "passed",
+    "model_assessment_provenance": "passed-with-deterministic-fixture",
+    "fulltext_bytes_and_text_pages": "passed",
+    "numeric_value_hash_model_sample": "passed",
+    "causal_language_design_compatibility": "passed",
+    "specification_drift": "passed",
+    "upstream_pass_flag_bypass": "blocked-as-required"
+  },
+  "production_certified": false
+}

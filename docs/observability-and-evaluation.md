@@ -1,5 +1,7 @@
 # Observability and evaluation
 
+> v0.11 adds explicit `agent_run_id`, provider, tool, outcome, retry, reported cost, and parent-span-compatible fields to every framework-neutral trace span. `to_opentelemetry_attributes()` exports only scalar metadata and never artifact content.
+
 ## Local-first observability
 
 Every runtime run writes append-only spans to `<run_dir>/traces.jsonl`. The trace

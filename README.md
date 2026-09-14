@@ -2,7 +2,7 @@
 
 面向经济学、管理学和政治学研究的可审计 Research Agent System：由一个 Research Director 管理持久状态、动态任务图、失败恢复和人工门控，四个 Specialist Agents 使用已有五个 Skills 与确定性工具完成文献、实证、写作和核验。
 
-**当前版本：v0.11.0（2026-09-10）**
+**当前稳定版本：v0.10.0；v0.11.0 开发快照更新于 2026-09-15**
 
 **项目状态：可运行的 Agent kernel 原型；模型 adapter 与全部外部工具尚未完成生产认证，不等同于无人监督的自动论文生成器。**
 
@@ -32,13 +32,15 @@
 
 实现细节见 [Agent Runtime v0.10](docs/agent-runtime-v0.10.md)，架构审计见 [Agent runtime 差距分析](docs/agent-runtime-gap-analysis.md)，框架选择依据见 [Agent 框架比较](docs/agent-framework-benchmark.md) 与 [ADR-001](docs/adr-001-agent-runtime-framework.md)，旧项目接入见 [ResearchState 迁移策略](docs/research-state-migration.md)。
 
-## 可观测性、评测与模型适配
+## v0.11 开发中的可观测性、评测与模型适配
 
-v0.11 为每个 run 增加本地 `traces.jsonl`：记录 Agent、实际模型或“未报告”、任务、工具元数据、输入/输出制品引用、延迟、token 用量、错误、重试和人工决策编号。默认不记录提示词、论文正文、数据行、工具参数、密钥或决策理由；第三方 trace 导出默认关闭，受限内容不能仅靠修改配置外发。
+当前开发分支已为每个 run 增加本地 `traces.jsonl`：记录 Agent、实际模型或“未报告”、任务、工具元数据、输入/输出制品引用、延迟、token 用量、错误、重试和人工决策编号。默认不记录提示词、论文正文、数据行、工具参数、密钥或决策理由；第三方 trace 导出默认关闭，受限内容不能仅靠修改配置外发。这些能力尚未构成 v0.11 发布认证。
 
 `tests/agent-evals/` 使用 synthetic fixtures 和公开复现摘要测试文献、实证、Agent 与论文四类指标，包括引用/DOI/全文、系数/标准误/样本、失败恢复/错误路由/虚假完成/死循环，以及正文数字和证据覆盖。详见 [可观测性与评测说明](docs/observability-and-evaluation.md)。
 
-架构采用“轻量 Python 核心 + 可选 OpenAI Agents SDK adapter”：ResearchState、DAG、证据和制品始终框架中立；OpenAI Agents SDK 是 Codex 环境的首选未来模型执行层，LangGraph 保留为复杂分布式图的可选 adapter。`config/providers.json` 同时声明 OpenAI-compatible 和本地兼容接口，但默认全部关闭，不能把“接口已声明”理解为“模型已接通”。
+四篇公开论文的真实复现结果、逐篇数值误差、来源、回执和能力边界见 [公开实证论文复现基准](docs/public-replication-benchmark.md)。该页面分别报告文件完整性、指定数值目标和方法认证状态，避免用一个笼统“准确率”混淆三者。
+
+架构采用“轻量 Python 核心 + 可选 provider adapter”：ResearchState、DAG、证据和制品始终框架中立。开发分支已有 Mock、Codex CLI 和可选 OpenAI Agents SDK adapter；Mock 已完成端到端测试，Codex CLI 已完成真实的 Runtime→模型→本地工具→工具结果复核→哈希产物登记闭环（仅使用合成内容）。OpenAI SDK 本机依赖仍未安装，手工 `observe` 继续作为兼容模式。Crossref 已真实联网验证；OpenAlex、Unpaywall、Zotero 和 CNKI 的具体测试边界见 [v0.11能力矩阵](docs/v0.11-capability-matrix.md)，不能把单次 smoke 或接口存在理解成生产认证。
 
 ## 五个 Specialist Skill
 
@@ -273,7 +275,7 @@ projects/     默认不公开的个人研究项目
 ## 验证状态
 
 - Python、Stata 16、R 4.6.1 的标准接口及跨引擎一致性测试已跑通。
-- Autor–Dorn–Hanson、Card–Krueger 及两项中国相关论文已完成限定范围的公开复现。
+- 四篇公开论文已完成限定范围的真实复现测试：Autor–Dorn–Hanson、Card–Krueger、Acemoglu–Johnson–Robinson 三项指定结果通过，Yang 等（2023）完成表图重建但保留秩亏警告；清单和验证回执见 `tests/fixtures/public-replications/four-paper-benchmark.json` 与 `tests/receipts/v011-four-public-paper-benchmark.json`。这不是全文全部结果复现，也不等于因果识别认证。
 - 知网官方全文下载、本地校验和 Zotero 附件归档已跑通。
 - 外文 DOI → OpenAlex/Crossref → 合法 PDF 的真实下载测试已跑通。
 - 实证执行器会生成 LaTeX 系数表、PDF 图和 `report.tex`；当前机器未安装 LaTeX，因此仍需在 TeX Live/MiKTeX 环境完成最终编译测试。

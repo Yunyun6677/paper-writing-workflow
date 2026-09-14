@@ -1,0 +1,33 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 9,
+  "date": "2026-09-14",
+  "status": "tested-not-production-certified",
+  "commands": [
+    ".venv-empirical/Scripts/python.exe -m unittest discover -s tests/e2e -p test_*.py -v",
+    ".venv-empirical/Scripts/python.exe scripts/run_tests.py"
+  ],
+  "checks": {
+    "literature_only_e2e": "passed",
+    "public_csv_real_python_ols_e2e": "passed",
+    "review_rejection_dynamic_revision": "passed",
+    "model_timeout_retry": "passed",
+    "malformed_observation_block": "passed",
+    "missing_artifact_recovery": "passed",
+    "tool_timeout_block": "passed",
+    "network_failure_retry": "passed",
+    "duplicate_side_effect_prevention": "passed",
+    "restart_resume": "passed",
+    "corrupt_checkpoint_recovery": "passed",
+    "human_rejection": "passed",
+    "full_repository_entry_points": "123 passed",
+    "live_codex_specialist_tool_loop": "passed on synthetic content"
+  },
+  "limitations": [
+    "Fixtures are synthetic or public and deterministic.",
+    "The live Codex specialist smoke used one synthetic task and does not establish scientific-quality performance.",
+    "OpenAI Agents SDK and LaTeX live execution remain untested in this environment.",
+    "Passing runtime tests does not establish scientific validity."
+  ],
+  "production_certified": false
+}

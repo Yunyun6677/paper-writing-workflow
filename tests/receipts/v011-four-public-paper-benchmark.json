@@ -1,0 +1,190 @@
+{
+  "schema_version": "public-replication-benchmark-receipt/1.0",
+  "benchmark_id": "four-public-papers-20260914",
+  "verified_at": "2026-09-14T13:14:56.129038+00:00",
+  "manifest_path": "tests/fixtures/public-replications/four-paper-benchmark.json",
+  "manifest_sha256": "a69e473145db1b0ccf776b66fdb8cc80ac694ad440f295fa010b76cdd6157b81",
+  "status": "complete_with_warning",
+  "papers_expected": 4,
+  "papers_verified": 4,
+  "clean_passes": 3,
+  "warning_count": 1,
+  "papers": [
+    {
+      "paper_id": "adh2013",
+      "assessment": "pass",
+      "integrity_passed": true,
+      "receipt_status_matches": true,
+      "verified": true,
+      "warnings": [],
+      "files": [
+        {
+          "path": "work/public-e2e-4papers-20260914/adh2013/paper.pdf",
+          "role": "fulltext",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "e35493c9042ed370e7cd754fba6a0273a4a547f48fbbc0c9c298b56ef799b7b6"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/adh2013/replication.zip",
+          "role": "replication_package",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "1b56c028a75fba784b14477cdf2e89de6ae90a443b9b1b9648179d852048df12"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/adh2013/run-python/receipt.json",
+          "role": "execution_receipt",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "80b47d6e35316b2a9fe85e323a614e0a3af6f6419e73222a398fc86f8d40b4ff"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/adh2013/run-python/table3_results.csv",
+          "role": "result",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "4ece425c72d608e006fb3f485eecd05d7ce707815a6eccb51810fc112a3c44c4"
+        }
+      ]
+    },
+    {
+      "paper_id": "card1994",
+      "assessment": "pass",
+      "integrity_passed": true,
+      "receipt_status_matches": true,
+      "verified": true,
+      "warnings": [],
+      "files": [
+        {
+          "path": "work/public-e2e-4papers-20260914/card1994/paper.pdf",
+          "role": "fulltext",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "ee1c49a69983b1d274c8c50dabb2cee8734b37e8dcf01af8cfee07673d6d86c9"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/card1994/extracted/public.dat",
+          "role": "data",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "04bde0cad5540980f32ce099c6dad369e2f05494698071d8a65b3e1cbe9ca53a"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/card1994/run-python/receipt.json",
+          "role": "execution_receipt",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "e1242f7dc33dd48d1e5fa26b7cf1baca0093096a6ddadab2943dc3f534e440c1"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/card1994/run-python/table3_results.csv",
+          "role": "result",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "ad2a308fb6128cea658f26d68fd7bb33aa35867f5748f0ec181886513c72e881"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/card1994/run-python/table4_results.csv",
+          "role": "result",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "27a8d7026b00b4bff1a2468ad096c7acbabf49e36ea78bfad8b05da9a7099a8d"
+        }
+      ]
+    },
+    {
+      "paper_id": "yang2023",
+      "assessment": "complete_with_warning",
+      "integrity_passed": true,
+      "receipt_status_matches": true,
+      "verified": true,
+      "warnings": [
+        "The statsmodels run emitted rank-deficient design-matrix warnings; generated tables are retained but the specification requires a dedicated rank diagnostic before certification."
+      ],
+      "files": [
+        {
+          "path": "work/public-e2e-4papers-20260914/yang2023/fulltext-bioc.json",
+          "role": "fulltext",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "f24fdcdaabbfe956eeabf70ab6214b72ec90ce61c53a6f7a484d80680297dcb6"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/yang2023/replication.zip",
+          "role": "replication_package",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "510c827f7b7b9a9e5599ab4053cc22379459bc8e7c22016fe8484961df5a3944"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/yang2023/run-python/receipt.json",
+          "role": "execution_receipt",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "042bd9ce5f8fdb58a15062ec8cd3ec455b201f924173cdc6a189ea085bd30955"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/yang2023/run-python/table1_results.csv",
+          "role": "result",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "96bc05abed23446ec5bda34595ba603f5e937b040ab7364c1c5c5a58408b7687"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/yang2023/run-python/table2_results.csv",
+          "role": "result",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "43918efd1eaa36a7c85202c51170660cbb069b8df0855a600ff820d443d5e629"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/yang2023/run-python/figure1.png",
+          "role": "figure",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "af93d0fdd85dba46cd9e69df6dd41f33cd6465b9e46db158d5a2e128d9a87830"
+        }
+      ]
+    },
+    {
+      "paper_id": "ajr2001",
+      "assessment": "pass",
+      "integrity_passed": true,
+      "receipt_status_matches": true,
+      "verified": true,
+      "warnings": [],
+      "files": [
+        {
+          "path": "work/public-e2e-4papers-20260914/ajr2001/paper.pdf",
+          "role": "fulltext",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "bce991ebdb67555d7ee6d8b0f478cc69d54e78addb7037ccc4e99e0780e324bd"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/ajr2001/maketable4.dta",
+          "role": "data",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "2b34cce21b58a3a424a804e97a134106ab7010ef936bb68b3a244d3e271af404"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/ajr2001/run-python/receipt.json",
+          "role": "execution_receipt",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "da7477b97a47c32c75689ac52f15aee8cafb8657caea9397da54193a9ea17067"
+        },
+        {
+          "path": "work/public-e2e-4papers-20260914/ajr2001/run-python/table4_columns_1_2.csv",
+          "role": "result",
+          "exists": true,
+          "hash_matches": true,
+          "actual_sha256": "e23c893644a3723f39b6c7ac33397e1acc9482ed38ee95754a7964688694b015"
+        }
+      ]
+    }
+  ],
+  "certification_boundary": "This benchmark checks acquisition provenance, artifact integrity, and selected-table numerical reproduction. It is not full-paper replication, causal-identification certification, or the representative ten-paper v0.11 release gate."
+}

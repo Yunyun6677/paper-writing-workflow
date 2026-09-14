@@ -1,0 +1,26 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": "bounded-planner",
+  "date": "2026-09-14",
+  "status": "tested-not-production-certified",
+  "checks": {
+    "initial_plan": "passed",
+    "adaptive_plan": "passed",
+    "schema_validation": "passed",
+    "cycle_detection": "passed",
+    "role_validation": "passed",
+    "tool_permission_validation": "passed",
+    "data_sensitivity_validation": "passed",
+    "max_task_budget": "passed",
+    "human_gate_policy": "passed",
+    "final_audit_dependency_protection": "passed",
+    "runtime_feedback_regression": "passed",
+    "invalid_specialist_followup_fails_closed": "passed",
+    "invalid_strategy_replan_requires_human_handoff": "passed"
+  },
+  "limitations": [
+    "MockPlanningAdapter is tested; a production live model planner is not certified.",
+    "The deterministic default graph remains the default execution plan."
+  ],
+  "production_certified": false
+}

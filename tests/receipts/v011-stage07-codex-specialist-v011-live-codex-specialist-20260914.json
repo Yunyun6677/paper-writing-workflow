@@ -1,0 +1,15 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 7,
+  "status": "blocked",
+  "date": "2026-09-14",
+  "fixture": "synthetic",
+  "failure_class": "FAIL_TRANSIENT",
+  "failure": "The model requested artifact_write without the required idempotency_key.",
+  "safety_result": "Runtime rejected the schema-invalid tool call; no tool ran and no artifact was created.",
+  "root_cause": "The assignment exposed allowed tool names but not their input contracts.",
+  "remediation": "AgentExecutionRequest now carries bounded ToolSpec manifests for every allowed tool.",
+  "artifact_exists": false,
+  "tool_runs": 0,
+  "production_certified": false
+}

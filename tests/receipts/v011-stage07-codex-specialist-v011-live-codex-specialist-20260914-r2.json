@@ -1,0 +1,21 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 7,
+  "status": "complete",
+  "date": "2026-09-14",
+  "fixture": "synthetic",
+  "tool_contract_supplied": true,
+  "artifact_exists": true,
+  "artifact": {
+    "path": "design/codex-live-smoke.json",
+    "sha256": "44a7d376710a52fd921ef9164d55737ee9a3bb873fecf40ffa1692479c7c9866",
+    "content_contract": {
+      "status": "verified",
+      "synthetic": true
+    }
+  },
+  "tool_runs": 1,
+  "model_rounds": 2,
+  "verification": "Runtime accepted PASS only after the local tool result was returned and the artifact hash was verified.",
+  "production_certified": false
+}

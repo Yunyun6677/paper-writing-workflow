@@ -1,0 +1,24 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 12,
+  "date": "2026-09-14",
+  "status": "tested-not-production-certified",
+  "checks": {
+    "routing_metrics": "passed",
+    "planning_metrics": "passed",
+    "literature_receipt_metrics": "passed",
+    "empirical_receipt_metrics": "passed",
+    "writing_artifact_metrics": "passed",
+    "runtime_recovery_metrics": "passed",
+    "efficiency_metrics": "passed",
+    "unavailable_not_inferred_as_success": "passed",
+    "registered_hash_matching_receipt": "passed",
+    "legacy_benchmark_suite": "9 passed"
+  },
+  "limitations": [
+    "Metrics requiring known expected values remain null in ordinary runs without benchmark receipts.",
+    "Cost is null when the provider does not report cost.",
+    "Scientific evaluation is tested on synthetic/public fixtures, not certified on a broad real-paper corpus."
+  ],
+  "production_certified": false
+}

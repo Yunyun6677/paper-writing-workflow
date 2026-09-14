@@ -1,0 +1,10 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 3,
+  "name": "deterministic MockModelAdapter",
+  "date": "2026-09-14",
+  "implemented": ["scripted observations", "timeout injection", "resume", "events", "cancel", "usage"],
+  "production_certified": false,
+  "tests_passed": 4,
+  "status": "tested"
+}

@@ -99,6 +99,8 @@ class TraceRecorder:
 
     def record(self, *, state: dict[str, Any], name: str, kind: str, started_at: str, status: str,
                agent: str | None = None, model: str | None = None, task: dict[str, Any] | None = None,
+               agent_run_id: str | None = None, provider: str | None = None,
+               tool: str | None = None, outcome: str | None = None,
                tool_calls: list[dict[str, Any]] | None = None, inputs: Any = None, outputs: Any = None,
                token_usage: dict[str, Any] | None = None, errors: list[dict[str, Any]] | None = None,
                human_decisions: list[dict[str, Any]] | None = None, parent_span_id: str | None = None,
@@ -121,15 +123,21 @@ class TraceRecorder:
             "parent_span_id": parent_span_id,
             "run_id": state["run_id"],
             "project_id": state["project_id"],
+            "agent_run_id": agent_run_id,
             "name": name,
             "kind": kind,
             "started_at": started_at,
             "ended_at": ended_at,
             "latency_ms": elapsed_ms(started_at, ended_at),
             "status": status,
+            "outcome": outcome,
             "agent": agent_name,
             "model": model_name,
+            "provider": provider,
             "task": task_id,
+            "tool": tool,
+            "retry": bool(task and task.get("attempts", 0) > 1),
+            "cost_usd": (token_usage or {}).get("cost_usd"),
             "tool_calls": [{"name": call.get("name"), "call_id": call.get("call_id"), "status": call.get("status")} for call in (tool_calls or [])],
             "input_artifacts": _artifact_refs(inputs),
             "output_artifacts": _artifact_refs(outputs),
@@ -144,9 +152,14 @@ class TraceRecorder:
                 "gen_ai.operation.name": name,
                 "gen_ai.agent.name": agent_name,
                 "gen_ai.request.model": model_name,
+                "gen_ai.provider.name": provider,
+                "gen_ai.usage.cost": (token_usage or {}).get("cost_usd"),
                 "research.project_id": state["project_id"],
                 "research.run_id": state["run_id"],
                 "research.task_id": task_id,
+                "research.agent_run_id": agent_run_id,
+                "research.tool.name": tool,
+                "research.outcome": outcome,
                 **(attributes or {}),
             },
         }
@@ -164,3 +177,19 @@ class TraceRecorder:
             for exporter in self.exporters:
                 exporter.export(span)
         return span
+
+
+def to_opentelemetry_attributes(span: dict[str, Any]) -> dict[str, Any]:
+    """Return content-free scalar attributes suitable for an OTel span exporter."""
+    values = {
+        "research.run_id": span["run_id"], "research.project_id": span["project_id"],
+        "research.task_id": span.get("task"), "research.agent_run_id": span.get("agent_run_id"),
+        "research.agent": span.get("agent"), "research.tool": span.get("tool"),
+        "research.outcome": span.get("outcome"), "gen_ai.provider.name": span.get("provider"),
+        "gen_ai.request.model": span.get("model"), "gen_ai.usage.input_tokens": span["token_usage"].get("input_tokens"),
+        "gen_ai.usage.output_tokens": span["token_usage"].get("output_tokens"),
+        "gen_ai.usage.total_tokens": span["token_usage"].get("total_tokens"),
+        "gen_ai.usage.cost": span.get("cost_usd"), "research.latency_ms": span["latency_ms"],
+        "research.retry": span["retry"], "research.status": span["status"],
+    }
+    return {key: value for key, value in values.items() if value is not None}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 11,
+  "date": "2026-09-14",
+  "status": "tested-not-production-certified",
+  "checks": {
+    "dependency_filter": "passed",
+    "role_policy": "passed",
+    "writer_approved_artifacts_only": "passed",
+    "reviewer_artifact_only": "passed",
+    "raw_data_reference_only": "passed",
+    "sensitive_content_default_denial": "passed",
+    "explicit_sensitive_authorization": "passed",
+    "token_budget": "passed",
+    "pack_hash_receipt": "passed",
+    "specialist_execution_regression": "passed"
+  },
+  "limitations": [
+    "Token counts are provider-independent estimates, not exact tokenizer counts.",
+    "Relevance is deterministic lexical matching; no vector database is used.",
+    "A live external model context-quality evaluation remains pending explicit authorization."
+  ],
+  "production_certified": false
+}

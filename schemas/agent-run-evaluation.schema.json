@@ -26,6 +26,15 @@
         "checkpoints": {"type": "integer", "minimum": 0}
       }
     },
+    "metric_groups": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {"type": ["number", "integer", "boolean", "null"]}
+      }
+    },
+    "unavailable_metrics": {"type": "array", "items": {"type": "string"}},
+    "measurement_notes": {"type": "array", "items": {"type": "string"}},
     "integrity_errors": {"type": "array", "items": {"type": "string"}}
   }
 }

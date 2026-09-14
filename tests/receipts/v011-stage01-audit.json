@@ -1,0 +1,17 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": 1,
+  "name": "v0.10 capability audit",
+  "date": "2026-09-14",
+  "baseline_commit": "52b5094",
+  "command": ".venv-empirical/Scripts/python.exe -m unittest discover -s tests -p test*.py -v",
+  "tests_run": 21,
+  "tests_passed": 21,
+  "tests_failed": 0,
+  "scope": "Existing unit and contract tests only; no live model or external tool execution.",
+  "artifacts": [
+    "docs/v0.11-execution-gap-analysis.md",
+    "docs/v0.11-capability-matrix.md"
+  ],
+  "status": "passed"
+}

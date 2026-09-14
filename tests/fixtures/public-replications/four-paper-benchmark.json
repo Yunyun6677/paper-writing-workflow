@@ -1,0 +1,104 @@
+{
+  "schema_version": "public-replication-benchmark/1.0",
+  "benchmark_id": "four-public-papers-20260914",
+  "created_at": "2026-09-14T00:00:00+08:00",
+  "scope": "Selected-table numerical reproduction from four empirical papers with publicly accessible full text and data.",
+  "papers": [
+    {
+      "paper_id": "adh2013",
+      "citation": "Autor, David H.; Dorn, David; Hanson, Gordon H. (2013). The China Syndrome: Local Labor Market Effects of Import Competition in the United States. American Economic Review 103(6): 2121-2168.",
+      "doi": "10.1257/aer.103.6.2121",
+      "method": "weighted 2SLS with shift-share import exposure and clustered inference",
+      "target": "Table 3, columns 1-6",
+      "sources": {
+        "fulltext": "https://economics.mit.edu/sites/default/files/publications/the%20china%20syndrome%202013.pdf",
+        "data": "https://www.ddorn.net/data/Autor-Dorn-Hanson-ChinaSyndrome-FileArchive.zip"
+      },
+      "files": [
+        {"path": "work/public-e2e-4papers-20260914/adh2013/paper.pdf", "sha256": "e35493c9042ed370e7cd754fba6a0273a4a547f48fbbc0c9c298b56ef799b7b6", "role": "fulltext"},
+        {"path": "work/public-e2e-4papers-20260914/adh2013/replication.zip", "sha256": "1b56c028a75fba784b14477cdf2e89de6ae90a443b9b1b9648179d852048df12", "role": "replication_package"},
+        {"path": "work/public-e2e-4papers-20260914/adh2013/run-python/receipt.json", "sha256": "80b47d6e35316b2a9fe85e323a614e0a3af6f6419e73222a398fc86f8d40b4ff", "role": "execution_receipt"},
+        {"path": "work/public-e2e-4papers-20260914/adh2013/run-python/table3_results.csv", "sha256": "4ece425c72d608e006fb3f485eecd05d7ce707815a6eccb51810fc112a3c44c4", "role": "result"}
+      ],
+      "receipt_path": "work/public-e2e-4papers-20260914/adh2013/run-python/receipt.json",
+      "required_receipt_status": "complete",
+      "assessment": "pass"
+    },
+    {
+      "paper_id": "card1994",
+      "citation": "Card, David; Krueger, Alan B. (1994). Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania. American Economic Review 84(4): 772-793.",
+      "identifier": "JSTOR:2118030",
+      "working_paper_doi": "10.3386/w4509",
+      "method": "difference-in-differences and regression adjustment",
+      "target": "Table 3 core DID and Table 4 columns 1-5",
+      "sources": {
+        "fulltext": "https://davidcard.berkeley.edu/papers/min-wage-ff-nj.pdf",
+        "data": "https://davidcard.berkeley.edu/data_sets/njmin.zip"
+      },
+      "acquisition_note": "Fresh server retrieval timed out; the benchmark reused byte-verified files previously obtained from the same author URLs.",
+      "files": [
+        {"path": "work/public-e2e-4papers-20260914/card1994/paper.pdf", "sha256": "ee1c49a69983b1d274c8c50dabb2cee8734b37e8dcf01af8cfee07673d6d86c9", "role": "fulltext"},
+        {"path": "work/public-e2e-4papers-20260914/card1994/extracted/public.dat", "sha256": "04bde0cad5540980f32ce099c6dad369e2f05494698071d8a65b3e1cbe9ca53a", "role": "data"},
+        {"path": "work/public-e2e-4papers-20260914/card1994/run-python/receipt.json", "sha256": "e1242f7dc33dd48d1e5fa26b7cf1baca0093096a6ddadab2943dc3f534e440c1", "role": "execution_receipt"},
+        {"path": "work/public-e2e-4papers-20260914/card1994/run-python/table3_results.csv", "sha256": "ad2a308fb6128cea658f26d68fd7bb33aa35867f5748f0ec181886513c72e881", "role": "result"},
+        {"path": "work/public-e2e-4papers-20260914/card1994/run-python/table4_results.csv", "sha256": "27a8d7026b00b4bff1a2468ad096c7acbabf49e36ea78bfad8b05da9a7099a8d", "role": "result"}
+      ],
+      "receipt_path": "work/public-e2e-4papers-20260914/card1994/run-python/receipt.json",
+      "required_receipt_status": "complete",
+      "assessment": "pass"
+    },
+    {
+      "paper_id": "yang2023",
+      "citation": "Yang, Yucheng et al. (2023). Unraveling controversies over civic honesty measurement: A large-scale experiment in China. Proceedings of the National Academy of Sciences 120(45): e2213824120.",
+      "doi": "10.1073/pnas.2213824120",
+      "method": "field experiment, balance comparisons, and covariate-adjusted OLS with HC1",
+      "target": "Tables 1-2 and Figure 1",
+      "sources": {
+        "fulltext": "https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_json/PMC10629568/unicode",
+        "article": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10629568/",
+        "data": "https://github.com/Science-replication-group/Unraveling_Controversies_over_Civic_Honesty_Measurement",
+        "data_commit": "5d7c9eeba928ba101252f221d114f05d64f116fc"
+      },
+      "files": [
+        {"path": "work/public-e2e-4papers-20260914/yang2023/fulltext-bioc.json", "sha256": "f24fdcdaabbfe956eeabf70ab6214b72ec90ce61c53a6f7a484d80680297dcb6", "role": "fulltext"},
+        {"path": "work/public-e2e-4papers-20260914/yang2023/replication.zip", "sha256": "510c827f7b7b9a9e5599ab4053cc22379459bc8e7c22016fe8484961df5a3944", "role": "replication_package"},
+        {"path": "work/public-e2e-4papers-20260914/yang2023/run-python/receipt.json", "sha256": "042bd9ce5f8fdb58a15062ec8cd3ec455b201f924173cdc6a189ea085bd30955", "role": "execution_receipt"},
+        {"path": "work/public-e2e-4papers-20260914/yang2023/run-python/table1_results.csv", "sha256": "96bc05abed23446ec5bda34595ba603f5e937b040ab7364c1c5c5a58408b7687", "role": "result"},
+        {"path": "work/public-e2e-4papers-20260914/yang2023/run-python/table2_results.csv", "sha256": "43918efd1eaa36a7c85202c51170660cbb069b8df0855a600ff820d443d5e629", "role": "result"},
+        {"path": "work/public-e2e-4papers-20260914/yang2023/run-python/figure1.png", "sha256": "af93d0fdd85dba46cd9e69df6dd41f33cd6465b9e46db158d5a2e128d9a87830", "role": "figure"}
+      ],
+      "receipt_path": "work/public-e2e-4papers-20260914/yang2023/run-python/receipt.json",
+      "required_receipt_status": "complete",
+      "assessment": "complete_with_warning",
+      "warnings": ["The statsmodels run emitted rank-deficient design-matrix warnings; generated tables are retained but the specification requires a dedicated rank diagnostic before certification."]
+    },
+    {
+      "paper_id": "ajr2001",
+      "citation": "Acemoglu, Daron; Johnson, Simon; Robinson, James A. (2001). The Colonial Origins of Comparative Development: An Empirical Investigation. American Economic Review 91(5): 1369-1401.",
+      "doi": "10.1257/aer.91.5.1369",
+      "method": "cross-country 2SLS instrumental variables",
+      "target": "Table 4, Panel A, columns 1-2",
+      "sources": {
+        "article": "https://www.aeaweb.org/articles?id=10.1257%2Faer.91.5.1369",
+        "data_archive": "https://economics.mit.edu/people/faculty/daron-acemoglu/data-archive"
+      },
+      "acquisition_note": "The benchmark reused byte-verified public files already present in the local replication workspace; official article and archive identities were rechecked.",
+      "files": [
+        {"path": "work/public-e2e-4papers-20260914/ajr2001/paper.pdf", "sha256": "bce991ebdb67555d7ee6d8b0f478cc69d54e78addb7037ccc4e99e0780e324bd", "role": "fulltext"},
+        {"path": "work/public-e2e-4papers-20260914/ajr2001/maketable4.dta", "sha256": "2b34cce21b58a3a424a804e97a134106ab7010ef936bb68b3a244d3e271af404", "role": "data"},
+        {"path": "work/public-e2e-4papers-20260914/ajr2001/run-python/receipt.json", "sha256": "da7477b97a47c32c75689ac52f15aee8cafb8657caea9397da54193a9ea17067", "role": "execution_receipt"},
+        {"path": "work/public-e2e-4papers-20260914/ajr2001/run-python/table4_columns_1_2.csv", "sha256": "e23c893644a3723f39b6c7ac33397e1acc9482ed38ee95754a7964688694b015", "role": "result"}
+      ],
+      "receipt_path": "work/public-e2e-4papers-20260914/ajr2001/run-python/receipt.json",
+      "required_receipt_status": "complete",
+      "assessment": "pass"
+    }
+  ],
+  "excluded_attempts": [
+    {
+      "paper_id": "wiebe2020",
+      "reason": "The public raw data archive did not finish within the bounded acquisition window. Partial downloads were removed and the case was not counted among the four completed tests."
+    }
+  ],
+  "certification_boundary": "This benchmark checks acquisition provenance, artifact integrity, and selected-table numerical reproduction. It is not full-paper replication, causal-identification certification, or the representative ten-paper v0.11 release gate."
+}

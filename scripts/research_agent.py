@@ -18,6 +18,9 @@ from research_os.migrations import migrate_project
 from research_os.evaluation import evaluate
 from research_os.runtime import ResearchRuntime
 from research_os.store import ResearchStateStore
+from research_os.executor import AgentExecutor
+from research_os.adapters.codex_cli import CodexCLIAdapter
+from research_os.state_backends import open_state_backend
 
 
 def emit(value: object) -> None:
@@ -25,7 +28,23 @@ def emit(value: object) -> None:
 
 
 def runtime(args: argparse.Namespace) -> ResearchRuntime:
-    return ResearchRuntime(ResearchStateStore(args.run_dir), args.project_dir)
+    store = open_state_backend(args.run_dir)
+    adapter_name = getattr(args, "model_adapter", "manual")
+    executors = {}
+    if adapter_name == "codex":
+        state = store.load()
+        if state["data_sensitivity"] in {"restricted", "personal", "confidential"} and not getattr(args, "allow_external_model_content", False):
+            raise PermissionError("Sensitive project context requires --allow-external-model-content for the Codex cloud backend")
+        adapter = CodexCLIAdapter(args.project_dir, Path(args.run_dir) / "agent-backend",
+                                  model_id=getattr(args, "codex_model", None) or "configured-codex-model",
+                                  sandbox="read-only", persist_sessions=False)
+        executor = AgentExecutor(adapter)
+        executors = {name: executor for name in ("research-director", "literature-agent", "empirical-agent",
+                                                  "writing-agent", "reviewer-verifier-agent")}
+    return ResearchRuntime(
+        store, args.project_dir, agent_executors=executors,
+        allow_sensitive_context=bool(getattr(args, "allow_external_model_content", False)),
+    )
 
 
 def main() -> int:
@@ -35,6 +54,7 @@ def main() -> int:
     init.add_argument("--manifest", required=True)
     init.add_argument("--run-root", required=True)
     init.add_argument("--parent-run-id")
+    init.add_argument("--state-backend", choices=["file", "sqlite"], default="file")
     migrate = sub.add_parser("migrate")
     migrate.add_argument("--project-dir", required=True)
     migrate.add_argument("--run-root", required=True)
@@ -43,6 +63,10 @@ def main() -> int:
         command = sub.add_parser(name)
         command.add_argument("--run-dir", required=True)
         command.add_argument("--project-dir", required=True)
+        if name in {"run", "resume"}:
+            command.add_argument("--model-adapter", choices=["manual", "codex"], default="manual")
+            command.add_argument("--codex-model")
+            command.add_argument("--allow-external-model-content", action="store_true")
     pause = sub.add_parser("pause")
     pause.add_argument("--run-dir", required=True)
     pause.add_argument("--project-dir", required=True)
@@ -62,7 +86,7 @@ def main() -> int:
     args = parser.parse_args()
     try:
         if args.command == "init":
-            store = ResearchRuntime.initialize(args.manifest, args.run_root, args.parent_run_id)
+            store = ResearchRuntime.initialize(args.manifest, args.run_root, args.parent_run_id, args.state_backend)
             emit({"status": "initialized", "run_dir": str(store.run_dir), "state": str(store.state_path)})
         elif args.command == "migrate":
             store = migrate_project(args.project_dir, args.run_root, args.parent_run_id)
@@ -77,21 +101,21 @@ def main() -> int:
             state = runtime(args).reconstruct()
             emit({"run_id": state["run_id"], "status": state["lifecycle_status"], "working_memory": state["memory"]["working"]})
         elif args.command == "status":
-            state = ResearchStateStore(args.run_dir).load()
+            state = open_state_backend(args.run_dir).load()
             emit({"run_id": state["run_id"], "lifecycle_status": state["lifecycle_status"], "stage": state["current_stage"], "active_task": state["active_task"], "tasks": [{"task_id": t["task_id"], "assigned_agent": t["assigned_agent"], "status": t["status"], "attempts": t["attempts"], "max_attempts": t["retry_policy"]["max_attempts"]} for t in state["task_graph"]], "pending_human_actions": state["pending_human_actions"]})
         elif args.command == "verify":
-            store = ResearchStateStore(args.run_dir)
+            store = open_state_backend(args.run_dir)
             errors = store.verify()
             ResearchRuntime._validate_state(store.load())
             emit({"status": "pass" if not errors else "blocked", "errors": errors})
             return 1 if errors else 0
         elif args.command == "evaluate":
-            result = evaluate(ResearchStateStore(args.run_dir))
+            result = evaluate(open_state_backend(args.run_dir), args.project_dir)
             schema = json.loads((ROOT / "schemas" / "agent-run-evaluation.schema.json").read_text(encoding="utf-8"))
             jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).validate(result)
             emit(result)
         elif args.command == "recover":
-            store = ResearchStateStore(args.run_dir)
+            store = open_state_backend(args.run_dir)
             state = store.recover_latest()
             ResearchRuntime._validate_state(state)
             emit({"status": "recovered", "run_id": state["run_id"], "stage": state["current_stage"]})

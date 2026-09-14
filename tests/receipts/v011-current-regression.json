@@ -1,0 +1,24 @@
+{
+  "schema_version": "v0.11-stage-receipt/1.0",
+  "stage": "current-regression",
+  "date": "2026-09-15",
+  "status": "passed-not-release-certified",
+  "command": ".venv-empirical/Scripts/python.exe scripts/run_tests.py",
+  "entry_points_passed": 124,
+  "breakdown": {
+    "runtime_and_e2e_unittest": 80,
+    "agent_evals": 9,
+    "legacy_empirical": 17,
+    "method_preflight": 7,
+    "r_bridge": 4,
+    "paper_workflow": 3,
+    "open_access_resolver": 4
+  },
+  "release_blockers": [
+    "The required 10-public-paper plus public-CSV end-to-end release scenario has not run.",
+    "OpenAI Agents SDK and LaTeX live execution are unavailable in this environment.",
+    "OpenAlex and Unpaywall lack configured credentials; Zotero Desktop local API is not running.",
+    "Zotero attachment upload and CNKI host-to-runtime bridge remain staged."
+  ],
+  "production_certified": false
+}
