@@ -2,11 +2,11 @@
   "schema_version": "v0.11-stage-receipt/1.0",
   "stage": "current-regression",
   "date": "2026-09-15",
-  "status": "passed-not-release-certified",
+  "status": "passed-release-gate-scoped",
   "command": ".venv-empirical/Scripts/python.exe scripts/run_tests.py",
-  "entry_points_passed": 124,
+  "entry_points_passed": 125,
   "breakdown": {
-    "runtime_and_e2e_unittest": 80,
+    "runtime_and_e2e_unittest": 81,
     "agent_evals": 9,
     "legacy_empirical": 17,
     "method_preflight": 7,
@@ -14,11 +14,17 @@
     "paper_workflow": 3,
     "open_access_resolver": 4
   },
-  "release_blockers": [
-    "The required 10-public-paper plus public-CSV end-to-end release scenario has not run.",
+  "release_gate": {
+    "status": "complete_with_warning",
+    "papers_verified": 10,
+    "clean_author_table_matches": 4,
+    "receipt": "tests/receipts/v011-ten-paper-release-gate.json"
+  },
+  "remaining_boundaries": [
     "OpenAI Agents SDK and LaTeX live execution are unavailable in this environment.",
     "OpenAlex and Unpaywall lack configured credentials; Zotero Desktop local API is not running.",
     "Zotero attachment upload and CNKI host-to-runtime bridge remain staged."
   ],
+  "release_certification_scope": "ten-paper artifact and bounded-runtime gate; see capability matrix",
   "production_certified": false
 }

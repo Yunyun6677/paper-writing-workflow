@@ -1,0 +1,12 @@
+{
+  "schema_version": "release-report-manifest/1.0",
+  "benchmark_id": "v011-ten-public-papers-20260915",
+  "canonical_report": {
+    "path": "outputs/public-e2e-ten-paper/report.tex",
+    "sha256": "d3444310df2122c0245700bd85963b7c3b510f264cd549d2d2c000b9774a65c4"
+  },
+  "compiled_pdf": null,
+  "compile_status": "not_run_no_local_xelatex",
+  "evidence_receipt": "tests/receipts/v011-ten-paper-release-gate.json",
+  "privacy": "No paper PDF or raw dataset is redistributed in this output."
+}

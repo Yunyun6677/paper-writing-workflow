@@ -1,0 +1,211 @@
+{
+  "schema_version": "ten-paper-release-gate/1.0",
+  "benchmark_id": "v011-ten-public-papers-20260915",
+  "created_at": "2026-09-15T00:00:00+08:00",
+  "base_manifest": "tests/fixtures/public-replications/four-paper-benchmark.json",
+  "base_papers_required": 4,
+  "additional_papers_required": 6,
+  "total_papers_required": 10,
+  "minimum_clean_author_table_matches": 4,
+  "runtime_evidence": [
+    {
+      "path": "tests/receipts/v011-stage07-codex-specialist-live.json",
+      "sha256": "c1c215c056c1968218122bfcf700d9ed02c4f6ace576ae605991ea72220ef4a0",
+      "proves": "live Codex specialist tool loop and verified artifact registration"
+    },
+    {
+      "path": "tests/receipts/v011-stage08-evidence-verifier.json",
+      "sha256": "3b26fc14f5c21da93a16cc561230d5c905203ffe8a34a4dbcfba3fb22ac70fa6",
+      "proves": "citation, full-text, numeric, and causal verification receipts"
+    },
+    {
+      "path": "tests/receipts/v011-stage09-e2e.json",
+      "sha256": "057f08639b306842de4625ddf98f04284204df9fdd556f090495a1943e20821a",
+      "proves": "three project shapes, verifier feedback, restart/resume, recovery, and human-gate simulation"
+    },
+    {
+      "path": "tests/receipts/v011-stage13-state-backends.json",
+      "sha256": "6165375eb166d5cd5c126c370c10e6b88908c546285e741f1dce69f399d54197",
+      "proves": "file and SQLite backend concurrency and recovery contracts"
+    }
+  ],
+  "public_data_distribution": {
+    "repository": "https://github.com/NickCH-K/causaldata",
+    "commit": "94e0c05b394597b65fd7b3722b3fbd62f7a6c113",
+    "role": "Pinned secondary distribution of public teaching extracts; it does not replace the authors' original replication packages."
+  },
+  "additional_papers": [
+    {
+      "paper_id": "thornton2008",
+      "citation": "Thornton, Rebecca L. (2008). The Demand for, and Impact of, Learning HIV Status. American Economic Review 98(5): 1829-1863.",
+      "doi": "10.1257/aer.98.5.1829",
+      "method": "randomized encouragement and clustered linear probability model",
+      "target": "public-extract unadjusted incentive contrast",
+      "assessment": "method_alignment_only",
+      "fulltext": {
+        "url": "https://www.rebeccathornton.net/wp-content/uploads/2019/08/Thornton-AER2008.pdf",
+        "path": "work/public-e2e-10papers-20260915/thornton2008/paper.pdf",
+        "sha256": "b71c7680eadfa319256411bf11769d35fbcd690afd12f911a7c99eed671c17fe",
+        "text_path": "work/public-e2e-10papers-20260915/thornton2008/paper.txt",
+        "text_sha256": "80fe506963e1f7882e782eb9ffe56256d0f0ac201d2fbadaff23dafa5595d261",
+        "minimum_pages": 35,
+        "title_anchor": "The Demand for, and Impact of, Learning HIV Status"
+      },
+      "data": {
+        "path": "work/public-e2e-10papers-20260915/thornton2008/thornton_hiv.dta",
+        "sha256": "add8c0410f44f0561257c0024e768c3036b1183aa58299e47a80a24d17ba4b62",
+        "upstream_blob_sha": "45125d3b3dc970633318aafa03135899943cc11f"
+      },
+      "result_path": "work/public-e2e-10papers-20260915/thornton2008/run-python/result.json",
+      "result_sha256": "de0c308137699afdc688cebf6cd4c27c7c712cbeeabdc78d1842477ec586e86d",
+      "receipt_path": "work/public-e2e-10papers-20260915/thornton2008/run-python/receipt.json",
+      "receipt_sha256": "10c61017e22247f81627d12ce2e4f015f2152e988724541ad2915370203356e4"
+    },
+    {
+      "paper_id": "broockman2013",
+      "citation": "Broockman, David E. (2013). Black Politicians Are More Intrinsically Motivated to Advance Blacks' Interests: A Field Experiment Manipulating Political Incentives. American Journal of Political Science 57(3): 521-536.",
+      "doi": "10.1111/ajps.12018",
+      "method": "field experiment and difference-in-differences interaction",
+      "target": "Table 2 column 1",
+      "assessment": "pass",
+      "fulltext": {
+        "url": "https://politicalscience.yale.edu/sites/default/files/files/Broockman_David.pdf",
+        "role_note": "Author dissertation containing the complete article chapter and reported tables.",
+        "path": "work/public-e2e-10papers-20260915/broockman2013/paper.pdf",
+        "sha256": "bb6fc95f65147f7c875259cf7dc6f242aad54d09b01e536ff4a8f5544de36086",
+        "text_path": "work/public-e2e-10papers-20260915/broockman2013/paper.txt",
+        "text_sha256": "56e884b78c0b6f4ff6b745370842ade58a643a052d01b3c9801a009438ff6da9",
+        "minimum_pages": 146,
+        "title_anchor": "Do Politicians Act on Linked Fate? A Field Experiment Manipulating Their Political Incentives"
+      },
+      "data": {
+        "path": "work/public-e2e-10papers-20260915/broockman2013/black_politicians.csv",
+        "sha256": "3b7b71916a7f4f6a1abf4f834e1989a552bc3eea322763e9a4786077a06d7282",
+        "upstream_blob_sha": "ad1f46ddd1d1394a7db246430b6ded884eb519b7"
+      },
+      "result_path": "work/public-e2e-10papers-20260915/broockman2013/run-python/result.json",
+      "result_sha256": "509f8e60343a505b0495c932e0bfd4ca150a89ae3562bd1298064e54dee88f17",
+      "receipt_path": "work/public-e2e-10papers-20260915/broockman2013/run-python/receipt.json",
+      "receipt_sha256": "ae154206a2455baa402a8309c97f56234d8e12ba91025662fc392ee418b6dadb"
+    },
+    {
+      "paper_id": "cheng2013",
+      "citation": "Cheng, Cheng; Hoekstra, Mark (2013). Does Strengthening Self-Defense Law Deter Crime or Escalate Violence? Journal of Human Resources 48(3): 821-854.",
+      "doi": "10.3368/jhr.48.3.821",
+      "method": "population-weighted two-way fixed effects with state-clustered inference",
+      "target": "Table 5 Panel A column 1 core weighted TWFE",
+      "assessment": "pass_with_version_tolerance",
+      "fulltext": {
+        "url": "https://www.nber.org/system/files/working_papers/w18134/w18134.pdf",
+        "path": "work/public-e2e-10papers-20260915/cheng2013/paper.pdf",
+        "sha256": "1283a9c1e37ea2114e36b6c48ffc7c3fc0f26b2334f08c1a60ffbe82f3005682",
+        "text_path": "work/public-e2e-10papers-20260915/cheng2013/paper.txt",
+        "text_sha256": "e25015e519a94d34945ebfa7dac82fe48e5acba8151a5d65779868935efc0933",
+        "minimum_pages": 43,
+        "title_anchor": "DOES STRENGTHENING SELF-DEFENSE LAW DETER CRIME OR ESCALATE"
+      },
+      "data": {
+        "path": "work/public-e2e-10papers-20260915/cheng2013/castle.dta",
+        "sha256": "d7c14baa64a7015a5d2d969cc55563922ffd9dccb784084be473230ba0f6a006",
+        "upstream_blob_sha": "91ea4fbf3f388dfee6fa247de445639b417fb6db"
+      },
+      "result_path": "work/public-e2e-10papers-20260915/cheng2013/run-python/result.json",
+      "result_sha256": "eef5a994bb9359cd27d8c7ba93ff7197262955e2c52d55fb9265a4f00dd06f81",
+      "receipt_path": "work/public-e2e-10papers-20260915/cheng2013/run-python/receipt.json",
+      "receipt_sha256": "f487931c2d3e86c91cdea1d1e9f073b1ebc2f14e9b23beed936280495a5ca430"
+    },
+    {
+      "paper_id": "kessler2014",
+      "citation": "Kessler, Judd B.; Roth, Alvin E. (2014). Don't Take 'No' For An Answer: An Experiment With Actual Organ Donor Registrations. NBER Working Paper 20378.",
+      "doi": "10.3386/w20378",
+      "method": "difference-in-differences with state and quarter fixed effects",
+      "target": "Table 2 column 2 coefficient",
+      "assessment": "coefficient_pass_inference_unavailable",
+      "fulltext": {
+        "url": "https://www.nber.org/system/files/working_papers/w20378/w20378.pdf",
+        "path": "work/public-e2e-10papers-20260915/kessler2014/paper.pdf",
+        "sha256": "21c0c774d25e73cd06bce2e5005c1492e19f29e38be9774299fb7b329d97384b",
+        "text_path": "work/public-e2e-10papers-20260915/kessler2014/paper.txt",
+        "text_sha256": "d4052a795a67c65d9ae04f7027b5d6819673b2e7045d80fbc788c415b54ab5ae",
+        "minimum_pages": 41,
+        "title_anchor": "AN EXPERIMENT WITH ACTUAL ORGAN DONOR REGISTRATIONS"
+      },
+      "data": {
+        "path": "work/public-e2e-10papers-20260915/kessler2014/organ_donation.csv",
+        "sha256": "620241f97e7f0b0deddee497003aaf9f2746c5e068b203179760178db3d41d32",
+        "upstream_blob_sha": "fd4fb4846d4c15f5ae3e19bf6b23e08dcb8c35bf"
+      },
+      "result_path": "work/public-e2e-10papers-20260915/kessler2014/run-python/result.json",
+      "result_sha256": "1ecd324d0f5ccd2b65a3ce8535000758fb48de782ad289679158268f0966778e",
+      "receipt_path": "work/public-e2e-10papers-20260915/kessler2014/run-python/receipt.json",
+      "receipt_sha256": "1f2dcc76042f7f220bf7724dbc9a8bcca8de3a232da2bb309917ffd89895bee5"
+    },
+    {
+      "paper_id": "manacorda2011",
+      "citation": "Manacorda, Marco; Miguel, Edward; Vigorito, Andrea (2011). Government Transfers and Political Support. American Economic Journal: Applied Economics 3(3): 1-28.",
+      "doi": "10.1257/app.3.3.1",
+      "method": "regression discontinuity reduced form",
+      "target": "Table 1 Panel C column 1 coefficient and control mean",
+      "assessment": "coefficient_pass_sample_warning",
+      "fulltext": {
+        "url": "https://www.nber.org/system/files/working_papers/w14702/w14702.pdf",
+        "path": "work/public-e2e-10papers-20260915/manacorda2011/paper.pdf",
+        "sha256": "ff65d6bd9771d90152e0fcf483fd067fa79463d83a55db4b3527e8a3fa24d4bb",
+        "text_path": "work/public-e2e-10papers-20260915/manacorda2011/paper.txt",
+        "text_sha256": "ff7cc07ceaa5e54e9e11680347436b179efae28b1dc957bbb722c2182dac1a9e",
+        "minimum_pages": 48,
+        "title_anchor": "GOVERNMENT TRANSFERS AND POLITICAL SUPPORT"
+      },
+      "data": {
+        "path": "work/public-e2e-10papers-20260915/manacorda2011/Government_Transfers_RDD_Data.csv",
+        "sha256": "6d37305a9149758a1fbf95f70ff211e6bc74c714653b2c52e24274b35922635f",
+        "upstream_blob_sha": "b14ed400cd5ba632386d8e1116b447c295de4c27"
+      },
+      "result_path": "work/public-e2e-10papers-20260915/manacorda2011/run-python/result.json",
+      "result_sha256": "8c2c41481b24db9c2560f55d9612f94bfc2062aa64deb8b25ea42f72b572b7ce",
+      "receipt_path": "work/public-e2e-10papers-20260915/manacorda2011/run-python/receipt.json",
+      "receipt_sha256": "a08bece933643a09ff8b529e3e25076c19fdeb74ef4e65dc79741796ca617541"
+    },
+    {
+      "paper_id": "lee2004",
+      "citation": "Lee, David S.; Moretti, Enrico; Butler, Matthew J. (2004). Do Voters Affect or Elect Policies? Evidence from the U.S. House. Quarterly Journal of Economics 119(3): 807-859.",
+      "doi": "10.1162/0033553041502153",
+      "method": "close-election regression discontinuity",
+      "target": "Table I columns 1 and 3 close-election gaps",
+      "assessment": "pass_with_version_tolerance",
+      "fulltext": {
+        "url": "https://www.princeton.edu/~davidlee/wp/voterspolicies.pdf",
+        "path": "work/public-e2e-10papers-20260915/lee2004/paper.pdf",
+        "sha256": "4c0b0e9aa4f152498f077e7e05b26d1e7a049ac9d9dabee9a4e0553ebda50754",
+        "text_path": "work/public-e2e-10papers-20260915/lee2004/paper.txt",
+        "text_sha256": "604287d17d5d3f159db6e93f5b21140c9e6e8b87a8071cebf5b537ea4dcc4d8b",
+        "minimum_pages": 53,
+        "title_anchor": "DO VOTERS AFFECT OR ELECT POLICIES"
+      },
+      "data": {
+        "path": "work/public-e2e-10papers-20260915/lee2004/close_elections_lmb.dta",
+        "sha256": "546072aa1b46eb23cc39292540cc15f9a4afd51cd2c6753f2df5bc2b20dda7a1",
+        "upstream_blob_sha": "f7444ee4d64891e60dfca1e69015375d303d5930"
+      },
+      "result_path": "work/public-e2e-10papers-20260915/lee2004/run-python/result.json",
+      "result_sha256": "a4e5d28709942ad2d9a5592c29567b3212b5512fddd647ac13ce9f8674fdb655",
+      "receipt_path": "work/public-e2e-10papers-20260915/lee2004/run-python/receipt.json",
+      "receipt_sha256": "22b6817a6bbce606f678bbc8622409523bdacfd72c9d5dddebc79f041b6250c8"
+    }
+  ],
+  "excluded_attempts": [
+    {
+      "paper_id": "fetter2013",
+      "reason": "The 4.95 MB public teaching extract did not complete within the bounded acquisition window; a zero-byte partial file is not evidence and was not counted."
+    },
+    {
+      "paper_id": "card1995",
+      "reason": "The obtained full text is an image-only scan and the current local environment lacks OCR; it was not counted as read full text."
+    },
+    {
+      "paper_id": "lalonde1986",
+      "reason": "The available 445-record Dehejia-Wahba teaching subset does not reproduce LaLonde's published full male sample, so it was replaced by the more directly auditable Lee et al. case."
+    }
+  ],
+  "certification_boundary": "Passing this gate proves ten public paper/data combinations, local full-text integrity, bounded executions, and declared numerical checks. It does not certify every table, every causal assumption, or all external tool adapters."
+}

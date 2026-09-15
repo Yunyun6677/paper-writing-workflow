@@ -2,7 +2,17 @@
 
 本项目从首个公开版本开始记录变更，版本号遵循 [Semantic Versioning](https://semver.org/)。日期采用 `YYYY-MM-DD`。
 
-## [Unreleased] - v0.11 development
+## [Unreleased]
+
+## [0.11.0] - 2026-09-15
+
+### Ten-public-paper release gate
+
+- Added six distinct public-data papers: Thornton (2008), Broockman (2013), Cheng--Hoekstra (2013), Kessler--Roth (2014), Manacorda--Miguel--Vigorito (2011), and Lee--Moretti--Butler (2004).
+- Verified local readable full text, pinned public data, derived results, execution receipts, and SHA-256 for all six; combined them with the existing four cases for a 10/10 integrity pass.
+- Achieved four strict author-table matches across the ten-paper suite. Preserved six bounded warnings covering data-version tolerances, coefficient-only checks, missing inference inputs, method-only alignment, and the existing Yang rank diagnostic.
+- Added a fail-closed ten-paper release verifier, a tamper-detection test, a machine-readable release manifest and receipt, and Chinese Markdown/LaTeX benchmark reports.
+- Kept every PDF and raw dataset outside Git while publishing source URLs, pinned revisions, hashes, code, derived receipt metadata, and explicit certification boundaries.
 
 ### Four-public-paper live benchmark (updated 2026-09-15)
 
@@ -334,3 +344,5 @@
 [0.7.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.7.0
 [0.8.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.8.0
 [0.9.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.9.0
+[0.10.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.10.0
+[0.11.0]: https://github.com/Yunyun6677/paper-writing-workflow/releases/tag/v0.11.0

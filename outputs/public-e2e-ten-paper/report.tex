@@ -1,0 +1,58 @@
+\documentclass[UTF8,11pt]{ctexart}
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage{booktabs,longtable,array,hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=black}
+\title{Research OS v0.11：十篇公开实证论文综合发布基准}
+\author{paper-writing-workflow}
+\date{2026年9月15日}
+
+\begin{document}
+\maketitle
+
+\section{结论}
+
+十篇公开论文的本地全文、公开数据、派生结果、执行回执和 SHA-256 均通过重新核验，综合发布门通过。四篇达到严格作者表格匹配，两篇在预声明版本容差内匹配，两篇只认证核心系数，一篇只认证方法路径，另有一篇保留秩亏警告。因此，本报告证明系统能够执行、追踪和诚实划定复现边界，但不把十篇论文的全部结果或因果假设宣称为已经认证。
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{p{5.3cm}rp{6.5cm}}
+\toprule
+指标 & 结果 & 含义 \\
+\midrule
+全文、数据与执行组合 & 10/10 & 十篇均有真实本地制品和执行回执 \\
+严格作者表格匹配 & 4/10 & 预声明目标按论文显示精度通过 \\
+版本容差匹配 & 2/10 & 差值被量化并保留 \\
+仅核心系数 & 2/10 & 缺失推断信息不获认证 \\
+仅方法路径 & 1/10 & 不冒充作者表格复现 \\
+统计警告 & 1/10 & 秩亏诊断尚未关闭 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{六篇新增案例}
+
+\begin{longtable}{p{2.7cm}p{3.1cm}p{4.2cm}p{4.5cm}}
+\toprule
+论文 & 方法与目标 & 结果 & 认证边界 \\
+\midrule
+\endfirsthead
+\toprule
+论文 & 方法与目标 & 结果 & 认证边界 \\
+\midrule
+\endhead
+Thornton (2008) & 随机激励；未调整对比 & $0.450552$，村庄聚类 SE $0.022760$，$N=2,834$ & 精简数据缺少原 Table 4 的完整控制项，只认证方法路径 \\
+Broockman (2013) & 现场实验；Table 2 col. 1 & $-0.274507$ (0.013154)；交互项 $0.128078$ (0.051568)，$N=5,593$ & 与原文三位小数严格对齐 \\
+Cheng--Hoekstra (2013) & 人口加权 TWFE；Table 5 核心列 & $0.075533$ (0.034817)，$N=550$ & 原文 $0.0801$ (0.0342)；均在 0.005 容差内 \\
+Kessler--Roth (2014) & 州、季度 FE DID & California$\times$Post $=-0.022459$，$N=162$ & 系数对齐；精简数据不足以认证原文 SE \\
+Manacorda--Miguel--Vigorito (2011) & RD 约化式 & 非合格组均值 $0.727771$；资格系数 $0.118280$ & 原文 $0.729$ 与 $0.116$；样本和聚类信息保留警告 \\
+Lee--Moretti--Butler (2004) & 近票选举 RD；Table I & ADA 差 $21.283875$；胜选概率差 $0.484329$，$N=915$ & 原文 $21.2$ 与 $0.48$；显示精度容差通过 \\
+\bottomrule
+\end{longtable}
+
+\section{能力与边界}
+
+十篇组合实际覆盖随机实验、现场实验、线性概率模型、HC1、传统与交互 DID、人口加权 TWFE、近票选举与资格阈值 RD、跨国 IV/2SLS、shift-share IV、聚类推断和图表生成。论文 PDF 与原始数据位于 Git 忽略的本地工作区；公开仓库只保存执行器、来源 URL、固定版本、哈希、非原始结果和审计回执。
+
+综合门通过不能代替识别假设审查。只有严格匹配的目标可以称为数值复现；系数级或方法级案例必须连同警告一并呈现。
+
+\end{document}
