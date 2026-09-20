@@ -115,7 +115,10 @@ class ResearchRuntime:
             context_policy="artifact-only-independent-run" if verifier else "least-context-worker",
             metadata={"expected_outputs": item["expected_outputs"], "success_contract": item["success_contract"],
                       "failure_contract": item["failure_contract"], "verification_rules": item["verification_rules"],
-                      "context_pack_receipt": packed.receipt},
+                      "context_pack_receipt": packed.receipt,
+                      # An independent reviewer must not receive producer reasoning,
+                      # but it still needs the explicit scientific verification contract.
+                      "verification_inputs": item["required_inputs"] if verifier else {}},
         )
 
     @staticmethod
@@ -140,6 +143,8 @@ class ResearchRuntime:
         if name not in item["allowed_tools"]:
             raise PermissionError(f"Tool is outside task allow-list: {name}")
         self._enforce_agent_tool_scope(item, name, inputs)
+        if inputs.get("observation_mode") == "error-tail" and state["data_sensitivity"] not in {"public", "synthetic"}:
+            raise PermissionError("Agent-visible command output is limited to public or synthetic data")
         approved = any(d.get("task_id") == item["task_id"] and d.get("approved") for d in state["decisions"])
         started = utc_now()
         result = self.tools.execute(name, inputs, self.project_dir, approved=approved,

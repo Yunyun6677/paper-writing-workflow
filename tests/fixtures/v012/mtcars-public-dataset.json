@@ -1,0 +1,11 @@
+{
+  "schema_version": "public-dataset-fixture/1.0",
+  "name": "R datasets::mtcars",
+  "url": "https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/datasets/mtcars.csv",
+  "sha256": "4d6dfa9b029dbcc15333a6e3598803fae8ae7c4d08605040b1706e6367695058",
+  "rows": 32,
+  "predeclared_model": "OLS mpg on intercept and wt",
+  "predeclared_coefficient": -5.344471572722677,
+  "tolerance": 1e-9,
+  "raw_data_committed": false
+}

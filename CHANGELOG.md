@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+### v0.12 development: first public sandboxed vertical slice (2026-09-18)
+
+- Added framework-neutral `SandboxBackend`, a tested `LocalRestrictedBackend`, and a fail-closed Docker backend interface without representing local path policy as OS-level isolation.
+- Routed Python/R/Stata execution through the sandbox abstraction and strengthened byte-exact artifact hashing, bounded error observations, path redaction, environment filtering, timeout, and process-tree control.
+- Changed recoverable tool failures into structured model observations so an Agent can repair ordinary code errors without manual `observe`; permission failures still stop at the security/human boundary.
+- Added an analysis provenance graph and verifier that rechecks dataset/code/result/execution hashes, sample size, coefficient, and report value.
+- Ran a real Codex-backed public-data slice with an injected error: Python failed once, the Empirical Agent repaired it, independent reviewers verified the result and report, and final audit completed without manual observation.
+- Published a non-sensitive receipt and an uncompiled LaTeX report while retaining the failed attempt, raw input, complete live receipt, and exact live report bytes outside Git.
+- Added v1 architecture, v0.12 gap analysis, roadmap, ADR-002, capability matrix, failure-injection tests, provenance tests, sandbox tests, and public release-artifact assertions.
+- Rewrote the root README around the Research OS control plane, explicitly separating Agent, Skill, Tool, Verifier and Runtime responsibilities and documenting the human, CLI, state, model, planning, specialist, tool, sandbox, verification and artifact interfaces.
+- Kept the package version at v0.11.0: Docker execution, OS-level network/filesystem isolation, LaTeX compilation, ResearchCompiler, and autonomous idea-to-paper execution remain unverified or unimplemented.
+
 ## [0.11.0] - 2026-09-15
 
 ### Ten-public-paper release gate

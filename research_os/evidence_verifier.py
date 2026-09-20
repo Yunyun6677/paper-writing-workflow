@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any, Protocol
 
 from .store import canonical_hash, sha256_file, utc_now
+from .provenance import verify_analysis_chain
 
 
 class EntailmentAssessor(Protocol):
@@ -159,6 +160,23 @@ class EvidenceVerifier:
         return self._receipt("specification", "deterministic", [design_path, model_path], passed,
             {"design_approved":design.get("approval") is True,"changes":changes,
              "specification_drift":any(not change["authorized_change"] for change in changes)}, 1.0)
+
+    def verify_analysis_chain(self, request: dict[str, Any]) -> dict[str, Any]:
+        """Verify a complete public-data analysis chain without trusting model claims."""
+        result = verify_analysis_chain(self.project_dir, request)
+        inputs = []
+        hash_keys = {
+            "dataset_artifact": "dataset_sha256", "code_artifact": "code_sha256",
+            "result_artifact": "result_sha256", "execution_receipt": "execution_receipt_sha256",
+            "report_artifact": "report_sha256",
+        }
+        for key in hash_keys:
+            if request.get(key):
+                inputs.append(self._checked(request[key], request.get(hash_keys[key])))
+        return self._receipt(
+            "analysis_chain", "deterministic", inputs, result["status"] == "pass",
+            {"checks": result["checks"], "verified_values": result["verified_values"]}, 1.0,
+        )
 
     def _receipt(self, verifier_type: str, method: str, inputs: list[Path], passed: bool,
                  output: dict[str, Any], confidence: float, model: str | None = None) -> dict[str, Any]:

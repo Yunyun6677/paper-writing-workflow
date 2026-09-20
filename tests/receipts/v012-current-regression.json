@@ -1,0 +1,30 @@
+{
+  "schema_version": "repository-regression-receipt/1.0",
+  "created_at": "2026-09-18",
+  "version_status": "v0.12-development-not-released",
+  "command": ".venv-empirical/Scripts/python.exe scripts/run_tests.py",
+  "status": "pass",
+  "test_entry_points": 135,
+  "groups": {
+    "core_and_e2e": 91,
+    "agent_evals": 9,
+    "empirical_engine": 17,
+    "method_preflight": 7,
+    "r_bridge": 4,
+    "paper_workflow": 3,
+    "international_acquisition": 4
+  },
+  "live_vertical_slice": {
+    "receipt": "tests/receipts/v012-public-sandbox-vertical-slice.json",
+    "status": "pass",
+    "real_model": "codex-cli",
+    "public_dataset": true,
+    "injected_failure_repaired_without_manual_observe": true
+  },
+  "certification_boundary": {
+    "v012_released": false,
+    "production_certified": false,
+    "docker_live_tested": false,
+    "latex_compiled": false
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": "v012-vertical-slice-receipt/1.0",
+  "created_at": "2026-09-18T14:51:13.443470+00:00",
+  "status": "pass",
+  "runtime_status": "complete",
+  "task_statuses": {
+    "v012-analysis": "complete",
+    "v012-analysis-review": "complete",
+    "v012-writing": "complete",
+    "v012-report-review": "complete",
+    "final-audit": "complete"
+  },
+  "dataset": {
+    "url": "https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/datasets/mtcars.csv",
+    "sha256": "4d6dfa9b029dbcc15333a6e3598803fae8ae7c4d08605040b1706e6367695058",
+    "n": 32,
+    "raw_data_committed": false
+  },
+  "injected_failure_observed": true,
+  "autonomous_repair_observed": true,
+  "python_tool_outcomes": ["failed", "complete"],
+  "verified_values": {"n": 32, "coefficient": -5.344471572722676},
+  "analysis_chain_checks": {
+    "execution_complete": true,
+    "dataset_bound_to_run": true,
+    "code_bound_to_run": true,
+    "result_bound_to_run": true,
+    "result_dataset_hash": true,
+    "result_code_hash": true,
+    "sample_match": true,
+    "coefficient_match": true,
+    "report_contains_verified_value": true
+  },
+  "artifact_hashes": {
+    "dataset": "4d6dfa9b029dbcc15333a6e3598803fae8ae7c4d08605040b1706e6367695058",
+    "repaired_code": "ff882480d4269a6d70bf8e07da59ede212261cedbfbcc6dc5def0dd9f05d4798",
+    "result": "c68955246a643c31d86623c573eeb031cf52124a0d7409ff4953022784d2225f",
+    "execution_receipt": "94214961b92e145556c4371bd51d1457fdfd0d8bff243a7c0f2552ec9aeda978",
+    "report": "26f4784e1356e81abb19a51089526e0cea8d72a117101230ae1e755fe0ffe2ed"
+  },
+  "provenance_path": [
+    "ManuscriptClaim:claim:report",
+    "Estimate:estimate:wt",
+    "TableFigure:result:ols",
+    "ModelRun:run:python",
+    "Code:code:repaired",
+    "RawDataset:dataset:mtcars"
+  ],
+  "reaches_raw_dataset": true,
+  "sandbox": {
+    "sandbox_backend": "local-restricted",
+    "path_boundary": "enforced-for-cwd-and-absolute-path-arguments",
+    "environment_allowlist": "enforced",
+    "process_tree_control": "windows-job-object",
+    "network_policy": "deny",
+    "network_enforcement": "declaration-only",
+    "filesystem_enforcement": "path-policy-not-os-sandbox",
+    "production_security_boundary": false
+  },
+  "model_runs": [
+    {"task_id":"v012-analysis","agent":"empirical-agent","provider":"codex-cli","status":"PASS"},
+    {"task_id":"v012-analysis-review","agent":"reviewer-verifier-agent","provider":"codex-cli","status":"PASS"},
+    {"task_id":"v012-writing","agent":"writing-agent","provider":"codex-cli","status":"GOAL_COMPLETE"},
+    {"task_id":"v012-report-review","agent":"reviewer-verifier-agent","provider":"codex-cli","status":"PASS"}
+  ],
+  "failed_attempt_retained": "work/v012-live-20260918-r1/receipt.json",
+  "live_run_retained": "work/v012-live-20260918-r2/receipt.json",
+  "limitations": [
+    "LocalRestrictedBackend is not an OS-level network/filesystem security boundary.",
+    "LaTeX source was verified but not compiled because no local TeX engine is available.",
+    "This certifies one public descriptive OLS slice, not causal identification or arbitrary generated code."
+  ],
+  "production_certified": false
+}

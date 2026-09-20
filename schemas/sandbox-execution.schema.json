@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/sandbox-execution.schema.json",
+  "title": "Research OS sandbox execution receipt",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema_version", "backend", "status", "returncode", "timed_out", "isolation", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "sandbox-execution/1.0"},
+    "backend": {"enum": ["local-restricted", "docker"]},
+    "status": {"enum": ["complete", "failed", "timed-out"]},
+    "returncode": {"type": "integer"},
+    "timed_out": {"type": "boolean"},
+    "isolation": {"type": "object"},
+    "artifacts": {"type": "array", "items": {"type": "object", "required": ["path", "sha256"]}}
+  }
+}

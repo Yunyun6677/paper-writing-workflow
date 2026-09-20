@@ -49,7 +49,20 @@ class AgentExecutor:
                     arguments = json.loads(arguments)
                 if not isinstance(arguments, dict):
                     raise TypeError("Tool arguments must decode to a JSON object")
-                result = tool_runner(name, arguments, call_id)
+                try:
+                    result = tool_runner(name, arguments, call_id)
+                except PermissionError:
+                    # Permission failures are human/security gates, not model-debuggable errors.
+                    raise
+                except Exception as exc:
+                    # Syntax, schema, path and ordinary tool failures are observations.
+                    # Returning them to the bounded loop lets the specialist repair its
+                    # request without falsifying success or escalating routine errors.
+                    result = {
+                        "status": "failed", "artifacts": [],
+                        "errors": [str(exc)[:1000]], "error_class": type(exc).__name__,
+                        "recoverable": True,
+                    }
                 results.append({"call_id": call_id, "name": name, "result": result})
                 calls.append({"name": name, "call_id": call_id, "status": result.get("status", "unknown")})
                 artifacts.extend(result.get("artifacts", []))

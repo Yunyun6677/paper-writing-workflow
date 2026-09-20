@@ -1,0 +1,9 @@
+{
+  "schema_version": "v012-report-manifest/1.0",
+  "source_run": "work/v012-live-20260918-r2",
+  "report": "report-uncompiled-live.tex",
+  "live_report_sha256": "26f4784e1356e81abb19a51089526e0cea8d72a117101230ae1e755fe0ffe2ed",
+  "numeric_chain_status": "pass",
+  "compile_status": "not-run-no-local-tex-engine",
+  "note": "The published copy normalizes an escaped line-break artifact from the live model output; it is not represented as a byte-identical copy of the live report. The live bytes and hash remain in the ignored run directory and receipt."
+}

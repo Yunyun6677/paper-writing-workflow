@@ -170,10 +170,6 @@ class LocalProcessBoundary:
                 job.assign(process)
             except Exception:
                 process.kill(); process.communicate(); job.close(); raise
-        if job:
-            try: job.assign(process)
-            except Exception:
-                process.kill(); job.close(); raise
         timed_out = False; termination = "normal"
         try:
             stdout, stderr = process.communicate(timeout=timeout)

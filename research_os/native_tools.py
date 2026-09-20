@@ -19,7 +19,7 @@ from pypdf import PdfReader
 
 from .store import sha256_file, utc_now
 from .tools import GENERIC_OUTPUT, ToolRegistry, ToolSpec, _safe_project_path
-from .isolation import ExecutionPolicy, LocalProcessBoundary
+from .sandbox import LocalRestrictedBackend, SandboxRequest
 from .evidence_verifier import EvidenceVerifier
 
 
@@ -51,11 +51,15 @@ def _command_receipt(
     inputs: list[Path], started: float, returncode: int, stdout: str, stderr: str,
     idempotency_key: str,
     isolation: dict[str, Any] | None = None, timed_out: bool = False,
+    observation_mode: str = "none",
 ) -> dict[str, Any]:
     stdout_path, stderr_path = output / "stdout.txt", output / "stderr.txt"
     stdout_path.write_text(stdout, encoding="utf-8")
     stderr_path.write_text(stderr, encoding="utf-8")
     produced = sorted(path for path in output.rglob("*") if path.is_file() and path.name != "receipt.json")
+    def bounded(value: str) -> str:
+        normalized = value.replace(str(project_dir), "[PROJECT]").replace(str(project_dir).replace("\\", "/"), "[PROJECT]")
+        return normalized[-2000:]
     receipt = {
         "schema_version": "native-tool-execution/1.0", "status": "complete" if returncode == 0 else "failed",
         "tool": tool, "executable_name": executable.name, "idempotency_key": idempotency_key,
@@ -64,6 +68,11 @@ def _command_receipt(
         "artifacts": [_artifact(path, project_dir) for path in produced],
         "errors": [] if returncode == 0 else [f"{tool} exited with code {returncode}"],
         "isolation": isolation or {}, "timed_out": timed_out,
+        "command_observation": {
+            "mode": observation_mode,
+            "stdout_tail": bounded(stdout) if observation_mode == "error-tail" and returncode != 0 else "",
+            "stderr_tail": bounded(stderr) if observation_mode == "error-tail" and returncode != 0 else "",
+        },
     }
     _write_json(output / "receipt.json", receipt)
     receipt["artifacts"].append(_artifact(output / "receipt.json", project_dir))
@@ -96,15 +105,21 @@ def python_execute(inputs: dict[str, Any], project_dir: Path) -> dict[str, Any]:
         raise ValueError("Python executable is missing or has an unexpected name")
     arguments = [str(value) for value in inputs.get("arguments", [])]
     started = time.monotonic()
-    completed = LocalProcessBoundary(project_dir).run(
-        [str(executable), str(script), *arguments], cwd=project_dir, timeout=inputs.get("process_timeout", 300),
-        policy=ExecutionPolicy("project-write", "deny", (str(executable.parent),)),
-    )
+    completed = LocalRestrictedBackend(project_dir).run(SandboxRequest(
+        command=tuple([str(executable), str(script), *arguments]),
+        working_directory=".", timeout_seconds=inputs.get("process_timeout", 300),
+        workspace_mode="project-write", network_policy="deny",
+    ))
+    input_artifacts = [_safe_project_path(project_dir, value) for value in inputs.get("input_artifacts", [])]
+    for path in input_artifacts:
+        if not path.is_file():
+            raise FileNotFoundError(f"Declared input artifact is missing: {_relative(path, project_dir)}")
     receipt = _command_receipt(project_dir=project_dir, output=output, tool="python", executable=executable,
-                            inputs=[script], started=started, returncode=completed.returncode,
+                            inputs=[script, *input_artifacts], started=started, returncode=completed.returncode,
                             stdout=completed.stdout, stderr=completed.stderr,
                             idempotency_key=inputs["idempotency_key"], isolation=completed.isolation,
-                            timed_out=completed.timed_out)
+                            timed_out=completed.timed_out,
+                            observation_mode=inputs.get("observation_mode", "none"))
     return _verify_required_outputs(receipt, project_dir, inputs["required_outputs"])
 
 
@@ -133,15 +148,17 @@ def _engine_execute(inputs: dict[str, Any], project_dir: Path, engine: str) -> d
     if not executable.is_file() or executable.name.lower() not in allowed:
         raise FileNotFoundError(f"Verified {engine} executable is unavailable")
     started = time.monotonic()
-    completed = LocalProcessBoundary(project_dir).run(
-        command, cwd=output, timeout=inputs.get("process_timeout", 300),
-        policy=ExecutionPolicy("project-write", "deny", (str(executable.parent),)),
-    )
+    completed = LocalRestrictedBackend(project_dir).run(SandboxRequest(
+        command=tuple(command), working_directory=_relative(output, project_dir),
+        timeout_seconds=inputs.get("process_timeout", 300), workspace_mode="project-write",
+        network_policy="deny",
+    ))
     receipt = _command_receipt(project_dir=project_dir, output=output, tool=engine, executable=executable,
                             inputs=[script], started=started, returncode=completed.returncode,
                             stdout=completed.stdout, stderr=completed.stderr,
                             idempotency_key=inputs["idempotency_key"], isolation=completed.isolation,
-                            timed_out=completed.timed_out)
+                            timed_out=completed.timed_out,
+                            observation_mode=inputs.get("observation_mode", "none"))
     return _verify_required_outputs(receipt, project_dir, inputs["required_outputs"])
 
 
@@ -183,7 +200,9 @@ def artifact_write(inputs: dict[str, Any], project_dir: Path) -> dict[str, Any]:
         raise ValueError("Artifact write exceeds the 2 MB bounded payload")
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = output.with_name(output.name + ".tmp")
-    temporary.write_text(content, encoding="utf-8")
+    # Byte-exact UTF-8 avoids platform newline translation changing an
+    # agent-approved script hash between Windows and POSIX hosts.
+    temporary.write_bytes(content.encode("utf-8"))
     temporary.replace(output)
     digest = sha256_file(output)
     if inputs.get("expected_sha256") and inputs["expected_sha256"] != digest:
@@ -221,10 +240,11 @@ def latex_compile(inputs: dict[str, Any], project_dir: Path) -> dict[str, Any]:
     else:
         command = [str(executable), "-interaction=nonstopmode", "-halt-on-error", "-output-directory=" + str(output), str(source)]
     started = time.monotonic()
-    completed = LocalProcessBoundary(project_dir).run(
-        command, cwd=source.parent, timeout=inputs.get("process_timeout", 300),
-        policy=ExecutionPolicy("project-write", "deny", (str(executable.parent),)),
-    )
+    completed = LocalRestrictedBackend(project_dir).run(SandboxRequest(
+        command=tuple(command), working_directory=_relative(source.parent, project_dir),
+        timeout_seconds=inputs.get("process_timeout", 300), workspace_mode="project-write",
+        network_policy="deny",
+    ))
     receipt = _command_receipt(project_dir=project_dir, output=output, tool="latex", executable=executable,
                                inputs=[source], started=started, returncode=completed.returncode,
                                stdout=completed.stdout, stderr=completed.stderr,
@@ -245,10 +265,10 @@ def git_inspect(inputs: dict[str, Any], project_dir: Path) -> dict[str, Any]:
                   "diff": ["diff", "--no-ext-diff", "--stat"]}
     command = operations[inputs["operation"]]
     started = time.monotonic()
-    completed = LocalProcessBoundary(project_dir).run(
-        [str(executable), *command], cwd=project_dir, timeout=60,
-        policy=ExecutionPolicy("read-only", "deny", (str(executable.parent),)),
-    )
+    completed = LocalRestrictedBackend(project_dir).run(SandboxRequest(
+        command=tuple([str(executable), *command]), working_directory=".",
+        timeout_seconds=60, workspace_mode="read-only", network_policy="deny",
+    ))
     return {"status": "complete" if completed.returncode == 0 else "failed", "operation": inputs["operation"],
             "returncode": completed.returncode, "elapsed_seconds": round(time.monotonic() - started, 3),
             "stdout": completed.stdout, "stderr": completed.stderr, "artifacts": [],
@@ -265,6 +285,8 @@ SCRIPT_INPUT = {
         "idempotency_key": {"type": "string", "minLength": 8},
         "required_outputs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
         "arguments": {"type": "array", "items": {"type": ["string", "number", "integer", "boolean"]}},
+        "input_artifacts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "observation_mode": {"enum": ["none", "error-tail"]},
         "executable": {"type": "string"}, "process_timeout": {"type": "integer", "minimum": 1, "maximum": 3600},
     },
 }
@@ -285,7 +307,7 @@ def register_tier1_tools(registry: ToolRegistry) -> ToolRegistry:
         {"type":"object","additionalProperties":False,"required":["path","content","idempotency_key"],"properties":{"path":{"type":"string","minLength":1},"content":{"type":"string"},"idempotency_key":{"type":"string","minLength":8},"expected_sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}}}, GENERIC_OUTPUT,
         "local-write", timeout=60, data_sensitivity=sensitivity, verifier="artifact-hash", deterministic=True), artifact_write)
     registry.register(ToolSpec("evidence_verify", "Recompute citation, full-text, numerical, or causal verification from artifacts.",
-        {"type":"object","additionalProperties":False,"required":["verifier_type","request","output"],"properties":{"verifier_type":{"enum":["citation","fulltext","numeric","causal","specification"]},"request":{"type":"object"},"output":{"type":"string","minLength":1}}}, GENERIC_OUTPUT,
+        {"type":"object","additionalProperties":False,"required":["verifier_type","request","output"],"properties":{"verifier_type":{"enum":["citation","fulltext","numeric","causal","specification","analysis_chain"]},"request":{"type":"object"},"output":{"type":"string","minLength":1}}}, GENERIC_OUTPUT,
         "local-write", timeout=120, data_sensitivity=sensitivity, verifier="evidence-verification-receipt", deterministic=True), evidence_verify)
     latex_status = "available" if (shutil.which("latexmk") or shutil.which("xelatex")) else "staged"
     registry.register(ToolSpec("latex", "Compile one approved project-local LaTeX source and hash its output.", SCRIPT_INPUT | {"required":["source","output_directory","idempotency_key"],"properties": {"source":{"type":"string"},"output_directory":{"type":"string"},"idempotency_key":{"type":"string","minLength":8},"executable":{"type":"string"},"process_timeout":{"type":"integer","minimum":1,"maximum":900}}}, implementation_status=latex_status, **common), latex_compile)

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "status", "tool", "executable_name", "idempotency_key", "started_at", "elapsed_seconds", "returncode", "inputs", "artifacts", "errors", "isolation", "timed_out"],
+  "required": ["schema_version", "status", "tool", "executable_name", "idempotency_key", "started_at", "elapsed_seconds", "returncode", "inputs", "artifacts", "errors", "isolation", "timed_out", "command_observation"],
   "properties": {
     "schema_version": {"const": "native-tool-execution/1.0"},
     "status": {"enum": ["complete", "failed"]},
@@ -17,6 +17,16 @@
     "errors": {"type": "array", "items": {"type": "string"}}
     ,"isolation": {"type": "object"}
     ,"timed_out": {"type": "boolean"}
+    ,"command_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "stdout_tail", "stderr_tail"],
+      "properties": {
+        "mode": {"enum": ["none", "error-tail"]},
+        "stdout_tail": {"type": "string", "maxLength": 2000},
+        "stderr_tail": {"type": "string", "maxLength": 2000}
+      }
+    }
   },
   "$defs": {
     "artifact": {

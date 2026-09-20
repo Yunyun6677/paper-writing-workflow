@@ -1,0 +1,40 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+
+\title{Vehicle Weight and Fuel Economy: An Associational OLS Benchmark}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Research question}
+This report examines the OLS association between vehicle weight and fuel economy in the public \texttt{mtcars} dataset, distributed with R's \texttt{datasets} package.
+
+\section{Method}
+We estimate a bivariate ordinary least squares regression of miles per gallon (MPG) on vehicle weight. The estimation sample contains $N=32$ vehicles. This specification is an associational OLS benchmark rather than a causal estimate. It does not establish that changing vehicle weight would cause the estimated change in fuel economy.
+
+\section{Result}
+The verified coefficient on vehicle weight is exactly $-5.344472$. Thus, within this benchmark regression and in the units encoded by \texttt{mtcars}, a one-unit increase in weight is associated with a 5.344472-unit decrease in MPG on average.
+
+\begin{table}[htbp]
+\centering
+\caption{Associational OLS benchmark}
+\begin{tabular}{lr}
+\toprule
+Quantity & Verified value \\
+\midrule
+Weight coefficient & $-5.344472$ \\
+Observations & $32$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Interpretation}
+The negative coefficient summarizes a sample association only. Because the model is bivariate and no research design establishes exogenous variation in weight, omitted characteristics and other sources of confounding may account for part or all of the relationship. Accordingly, the estimate should not be interpreted causally.
+
+\end{document}
