@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from dataclasses import replace
@@ -22,6 +24,23 @@ ROOT = Path(__file__).resolve().parents[1]
 HAS_LANGCHAIN = importlib.util.find_spec("langchain") is not None
 
 
+class CoreWithoutLangChainTests(unittest.TestCase):
+    def test_core_runtime_import_does_not_require_langchain(self):
+        code = (
+            "import builtins\n"
+            "original = builtins.__import__\n"
+            "def blocked(name, *args, **kwargs):\n"
+            "    if name == 'langchain' or name.startswith('langchain.') or name.startswith('langchain_core'):\n"
+            "        raise ImportError('LangChain intentionally absent')\n"
+            "    return original(name, *args, **kwargs)\n"
+            "builtins.__import__ = blocked\n"
+            "import research_os.runtime\n"
+        )
+        result = subprocess.run([sys.executable, "-c", code], cwd=ROOT,
+                                capture_output=True, text=True, timeout=20, check=False)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+
 def assignment(*, tools: tuple[str, ...] = ("artifact_write",), run_id: str = "lc-run") -> AgentExecutionRequest:
     registry = default_registry()
     return AgentExecutionRequest(
@@ -35,13 +54,14 @@ def assignment(*, tools: tuple[str, ...] = ("artifact_write",), run_id: str = "l
 
 class FakeHarness:
     def __init__(self, tools, response_format, *, use_tool=False, malformed=False,
-                 raise_model=False, hallucinate_tool=False):
+                 raise_model=False, hallucinate_tool=False, forged_artifact=False):
         self.tools = tools
         self.response_format = response_format
         self.use_tool = use_tool
         self.malformed = malformed
         self.raise_model = raise_model
         self.hallucinate_tool = hallucinate_tool
+        self.forged_artifact = forged_artifact
 
     def invoke(self, inputs, *, config):
         if self.raise_model:
@@ -60,20 +80,24 @@ class FakeHarness:
             from langchain_core.messages import AIMessage
             messages = [AIMessage(content="", tool_calls=[
                 {"name": "unassigned_tool", "args": {}, "id": "forbidden-1"}])]
-        return {"structured_response": self.response_format(outcome=outcome, summary="synthetic only"),
+        artifacts = ([{"path": "literature/forged.json", "sha256": "0" * 64}]
+                     if self.forged_artifact else [])
+        return {"structured_response": self.response_format(
+                    outcome=outcome, summary="synthetic only", artifacts=artifacts),
                 "messages": messages}
 
 
 @unittest.skipUnless(HAS_LANGCHAIN, "optional LangChain test dependency is absent")
 class LangChainAdapterTests(unittest.TestCase):
     def adapter(self, *, use_tool=False, malformed=False, raise_model=False,
-                hallucinate_tool=False):
+                hallucinate_tool=False, forged_artifact=False):
         def factory(**kwargs):
             self.assertIsNone(kwargs["checkpointer"])
             self.assertIsNone(kwargs["store"])
             return FakeHarness(kwargs["tools"], kwargs["response_format"],
                                use_tool=use_tool, malformed=malformed,
-                               raise_model=raise_model, hallucinate_tool=hallucinate_tool)
+                               raise_model=raise_model, hallucinate_tool=hallucinate_tool,
+                               forged_artifact=forged_artifact)
         return LangChainSpecialistAdapter(model_id="test:scripted", repository_root=ROOT,
                                           model=object(), create_agent_fn=factory)
 
@@ -120,6 +144,18 @@ class LangChainAdapterTests(unittest.TestCase):
         self.assertEqual(result["outcome"], "FAIL_TRANSIENT")
         self.assertEqual(result["tool_calls"][0]["status"], "failed")
         self.assertEqual(result["provider"], "langchain")
+
+    def test_model_cannot_invent_artifact_receipt(self):
+        with self.assertRaisesRegex(ValueError, "not produced by a bound tool"):
+            AgentExecutor(self.adapter(forged_artifact=True)).execute(
+                assignment(), lambda *_: {"status": "complete"})
+
+    def test_tool_needs_human_becomes_explicit_handoff(self):
+        result = AgentExecutor(self.adapter(use_tool=True)).execute(
+            assignment(), lambda *_: {"status": "needs-human", "artifacts": []})
+        self.assertEqual(result["outcome"], "BLOCKED")
+        self.assertEqual(result["tool_calls"][0]["status"], "needs-human")
+        self.assertIn("researcher action", result["human_action"])
 
     def test_runtime_registers_only_real_tool_artifacts(self):
         with tempfile.TemporaryDirectory() as temporary:

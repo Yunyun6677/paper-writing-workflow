@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### LangChain integration architecture and PR-1 boundary hardening (2026-09-29)
+
+- Audited canonical runtime, scientific memory, context packing, verifier, sandbox, artifact registration and provenance dependencies; proposed separately reviewable LangGraph, semantic-index and cache phases without implementing them.
+- Hardened the existing optional LangChain adapter: model-authored artifact declarations must match an actual bound tool result, and tool `needs-human` becomes an explicit handoff instead of a transient retry.
+- Added regression tests for both boundary failures and core import without LangChain. ResearchRuntime's canonical state transitions and the existing provider adapters remain unchanged.
+
 ### Optional LangChain specialist harness (phase 1, 2026-09-29)
 
 - Added an opt-in LangChain `create_agent` adapter for the four existing specialist roles. Existing Skill files remain the SOP source; ResearchRuntime retains canonical state authority.
