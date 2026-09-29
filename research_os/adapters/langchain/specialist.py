@@ -113,9 +113,19 @@ class LangChainSpecialistAdapter(ModelAdapter):
         observation = validate_observation(result["structured_response"], self.repository_root)
         if observation.get("tool_calls"):
             raise ValueError("Model cannot supply tool receipts; ToolBridge records actual calls")
+        observed_artifacts = {(a.get("path"), a.get("sha256")) for a in bridge.artifacts}
+        if any((a["path"], a["sha256"]) not in observed_artifacts
+               for a in observation.get("artifacts", [])):
+            raise ValueError("Model declared an artifact not produced by a bound tool")
         observation["tool_calls"] = list(bridge.calls)
-        failed_calls = [call for call in bridge.calls if call["status"] != "complete"]
-        if failed_calls and observation["outcome"] in {"PASS", "GOAL_COMPLETE"}:
+        human_calls = [call for call in bridge.calls if call["status"] == "needs-human"]
+        failed_calls = [call for call in bridge.calls if call["status"] == "failed"]
+        if human_calls:
+            if observation["outcome"] != "HIGH_RISK_DECISION":
+                observation["outcome"] = "BLOCKED"
+            names = ", ".join(sorted({call["name"] for call in human_calls}))
+            observation["human_action"] = f"Tool {names} requires researcher action; inspect its Runtime receipt"
+        elif failed_calls and observation["outcome"] in {"PASS", "GOAL_COMPLETE"}:
             observation["outcome"] = "FAIL_TRANSIENT"
             observation.setdefault("errors", []).append("A bound tool failed; the task cannot complete")
         known = {(a["path"], a["sha256"]) for a in observation.get("artifacts", [])}
