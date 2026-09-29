@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+### Optional LangChain specialist harness (phase 1, 2026-09-29)
+
+- Added an opt-in LangChain `create_agent` adapter for the four existing specialist roles. Existing Skill files remain the SOP source; ResearchRuntime retains canonical state authority.
+- Exposed only task-permitted, registry-backed tools to the model loop and routed calls through the existing Runtime/ToolRegistry receipt and idempotency path.
+- Added schema-valid structured observations, explicit failure handling, provider-session reconstruction, and scripted-model integration tests without changing the default CLI path.
+- Documented current interface audit, non-certified boundaries and a proposed (not implemented) LangGraph phase. No LangGraph adapter, vector index or Redis integration was added.
+
 ### v0.12 development: first public sandboxed vertical slice (2026-09-18)
 
 - Added framework-neutral `SandboxBackend`, a tested `LocalRestrictedBackend`, and a fail-closed Docker backend interface without representing local path policy as OS-level isolation.

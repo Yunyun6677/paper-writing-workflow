@@ -23,7 +23,8 @@ class AgentExecutor:
     def execute(self, request: AgentExecutionRequest,
                 tool_runner: Callable[[str, dict[str, Any], str], dict[str, Any]] | None = None,
                 max_tool_rounds: int = 8) -> dict[str, Any]:
-        observation = self.validate_observation(self.adapter.run_agent(request), request)
+        with self.adapter.tool_context(tool_runner):
+            observation = self.validate_observation(self.adapter.run_agent(request), request)
         return self._drive(request, observation, tool_runner, max_tool_rounds)
 
     def _drive(self, request: AgentExecutionRequest, observation: dict[str, Any],
@@ -80,7 +81,9 @@ class AgentExecutor:
     def resume(self, request: AgentExecutionRequest, response: dict[str, Any] | None = None,
                tool_runner: Callable[[str, dict[str, Any], str], dict[str, Any]] | None = None,
                max_tool_rounds: int = 8) -> dict[str, Any]:
-        observation = self.adapter.resume_agent(request.agent_run_id, response)
+        self.adapter.restore_request(request)
+        with self.adapter.tool_context(tool_runner):
+            observation = self.adapter.resume_agent(request.agent_run_id, response)
         return self._drive(request, self.validate_observation(observation, request), tool_runner, max_tool_rounds)
 
     def validate_observation(self, value: dict[str, Any], request: AgentExecutionRequest) -> dict[str, Any]:

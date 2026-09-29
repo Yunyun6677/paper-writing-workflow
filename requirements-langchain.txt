@@ -1,0 +1,2 @@
+# Optional specialist harness only. Core Research OS does not import LangChain.
+langchain==1.4.3

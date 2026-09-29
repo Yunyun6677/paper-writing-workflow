@@ -281,7 +281,9 @@ python scripts/research_agent.py --help
 - Contract：`research_os.adapters.base.ModelAdapter`
 - 方法：`run_agent()`、`resume_agent()`、`stream_events()`、`cancel()`、`usage()`
 - 输出：`schemas/research-agent-observation.schema.json`
-- 实现：Mock、Codex CLI、可选 OpenAI Agents SDK。
+- 实现：Mock、Codex CLI、可选 OpenAI Agents SDK，以及可选 LangChain `create_agent` Specialist harness。
+
+LangChain harness 目前仅通过本地 scripted-model 集成测试，未接入默认 CLI，也未经过真实托管模型认证。安装 `requirements-langchain.txt` 后，可通过 Python 将 `LangChainSpecialistAdapter` 注入现有 `ResearchRuntime` 的 `agent_executors`；Tool Registry、ResearchState 和科学核验规则保持不变。设计审计和边界见 [LangChain 第一阶段](docs/langchain-adapter-phase1.md)。本阶段没有接入 LangGraph、向量数据库或 Redis。
 
 模型不能直接写 state、绕过 verifier 或扩张 tool permission。
 

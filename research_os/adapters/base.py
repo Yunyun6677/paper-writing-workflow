@@ -7,6 +7,7 @@ They return proposals/observations; only ResearchRuntime may transition state.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from contextlib import nullcontext
 from copy import deepcopy
 from dataclasses import asdict, dataclass, field
 from typing import Any, Iterable
@@ -69,6 +70,13 @@ class ModelAdapter(ABC):
 
     provider_id: str
     model_id: str
+
+    def tool_context(self, tool_runner: Any):
+        """Optional scoped tool callback; legacy adapters keep their existing loop."""
+        return nullcontext()
+
+    def restore_request(self, request: AgentExecutionRequest) -> None:
+        """Rebuild ephemeral provider context from a canonical assignment on resume."""
 
     @abstractmethod
     def run_agent(self, request: AgentExecutionRequest) -> dict[str, Any]:
