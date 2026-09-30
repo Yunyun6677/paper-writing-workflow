@@ -303,6 +303,38 @@ class ResearchRuntime:
         if missing or integrity: state["lifecycle_status"] = "recovering"
         self._save(state, "run.reconstructed", {"missing_artifacts": missing, "checkpoint_errors": integrity}); return state
 
+    def register_source(self, relative_path: str, *, schema_ref: str = "literature-source/1.0") -> dict[str, Any]:
+        """Register a verified external input without granting an agent state-write authority."""
+        state = self._load()
+        path = (self.project_dir / relative_path).resolve()
+        if not path.is_relative_to(self.project_dir) or not path.is_file() or not relative_path.replace("\\", "/").startswith("literature/"):
+            raise ValueError("Source must be an existing project-local literature artifact")
+        digest = sha256_file(path)
+        existing = next((x for x in state["artifacts"] if x["path"] == relative_path), None)
+        if existing:
+            if existing["sha256"] != digest: raise ValueError("Registered source changed")
+            return existing
+        reference = {"artifact_id": f"source:{len(state['artifacts'])}", "path": relative_path,
+                     "sha256": digest, "bytes": path.stat().st_size,
+                     "schema_ref": schema_ref, "external": False}
+        state["artifacts"].append(reference)
+        self._save(state, "source.registered", {"path": relative_path, "sha256": digest})
+        return reference
+
+    def record_external_approval(self, *, operation: str, target_hash: str,
+                                 rationale: str) -> dict[str, Any]:
+        if operation != "zotero-cloud-import" or not rationale.strip() or len(target_hash) != 64:
+            raise ValueError("Explicit operation, target hash and rationale are required")
+        state = self._load()
+        # A separate decision namespace prevents this approval from granting
+        # any later Literature Agent tool call blanket external-write access.
+        decision = {"decision_id": str(uuid.uuid4()), "task_id": "external:zotero-cloud-import", "operation": operation,
+                    "target_hash": target_hash, "approved": True, "actor": "human-http",
+                    "rationale": rationale.strip(), "at": utc_now()}
+        state["decisions"].append(decision)
+        self._save(state, "human.external-write-approved", decision)
+        return decision
+
     def observe_agent(self, task_id: str, observation: dict[str, Any]) -> dict[str, Any]:
         state = self._load(); item = _task(state, task_id)
         if item["status"] != "waiting-agent": raise RuntimeErrorState(f"Task is not awaiting an agent observation: {task_id}")

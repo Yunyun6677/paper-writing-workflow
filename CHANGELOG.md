@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+### PR-2 local literature HTTP demo (2026-09-30)
+
+- Added a loopback-only HTTP UI backed by the canonical SQLite ResearchRuntime, with a per-process page token, project creation/status/resume, source-PDF screening, and human-decision endpoints.
+- Added a configurable OpenAI-compatible LangChain model factory; no model name or credential is hard-coded. Installed the optional provider package in the local project environment, but live model inference is not yet certified.
+- Added hash-checked page-range PDF reading for the Literature Agent. The public demo excludes Zotero Desktop private-library reads from its model tool list.
+- Added an explicitly approved Zotero Cloud client for DOI deduplication, parent item creation, child PDF attachment, storage upload and phase receipts. Protocol tests use synthetic fake transport; no live user-library write has been claimed.
+- Kept LangGraph, vector store and Redis out of PR-2. Scientific task transitions remain in ResearchRuntime.
+
 ### LangChain integration architecture and PR-1 boundary hardening (2026-09-29)
 
 - Audited canonical runtime, scientific memory, context packing, verifier, sandbox, artifact registration and provenance dependencies; proposed separately reviewable LangGraph, semantic-index and cache phases without implementing them.
