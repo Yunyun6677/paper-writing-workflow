@@ -67,7 +67,7 @@ class ContextPacker:
 
         for recency, artifact in enumerate(state.get("artifacts", [])):
             producer = artifact.get("artifact_id", "").split(":", 1)[0]
-            if artifact.get("artifact_id") != "project-manifest" and producer not in ancestors:
+            if artifact.get("artifact_id") != "project-manifest" and producer != "source" and producer not in ancestors:
                 excluded.append({"artifact_id": artifact.get("artifact_id", "unknown"), "reason": "not-a-dependency"})
                 continue
             relative = str(artifact.get("path", "")).replace("\\", "/")

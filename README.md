@@ -1,5 +1,7 @@
 # Research OS
 
+> **PR-2 开发预览：**新增仅本机访问的文献综述 HTTP 演示入口、可配置 OpenAI-compatible 模型接口，以及经人工批准的 Zotero 云端 PDF 归档流程。入口与边界见 [PR-2 使用说明](docs/pr2-literature-http-demo.md)。真实 DeepSeek 推理和真实 Zotero 写入尚未通过端到端验证，不能视为生产能力。
+
 **面向经济学、管理学、政治学与公共政策研究的 evidence-first Research Agent System。**
 
 Research OS 不是“输入题目后自动生成一篇论文”的提示词集合。它把研究过程表示为可持久化的任务图和可核验的制品链，由 Research Director 调度真实模型、专业 Skill、确定性工具和独立 Reviewer，在明确权限与科研约束下推进研究。

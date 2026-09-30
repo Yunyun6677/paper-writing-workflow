@@ -191,6 +191,21 @@ def pdf_parse(inputs: dict[str, Any], project_dir: Path) -> dict[str, Any]:
             "page_count": len(pages), "text_pages": sum(bool(page["text"].strip()) for page in pages)}
 
 
+def pdf_page_read(inputs: dict[str, Any], project_dir: Path) -> dict[str, Any]:
+    """Bounded page-addressable observation from a hash-verified PDF."""
+    source = _safe_project_path(project_dir, inputs["pdf"])
+    if not source.is_file() or source.suffix.lower() != ".pdf" or sha256_file(source) != inputs["source_sha256"]:
+        raise ValueError("PDF source is missing or hash changed")
+    reader = PdfReader(source)
+    start, count = inputs["start_page"], inputs.get("page_count", 1)
+    if start < 1 or start > len(reader.pages):
+        raise ValueError("Page is outside PDF")
+    pages = [{"page": index + 1, "text": (reader.pages[index].extract_text() or "")[:12000]}
+             for index in range(start - 1, min(start - 1 + count, len(reader.pages)))]
+    return {"status": "complete", "artifacts": [], "errors": [], "total_pages": len(reader.pages),
+            "source_sha256": inputs["source_sha256"], "pages": pages}
+
+
 def artifact_write(inputs: dict[str, Any], project_dir: Path) -> dict[str, Any]:
     output = _safe_project_path(project_dir, inputs["path"])
     if output.exists():
@@ -303,6 +318,11 @@ def register_tier1_tools(registry: ToolRegistry) -> ToolRegistry:
     registry.register(ToolSpec("pdf_parser", "Extract page-addressable text from one hash-verified project-local PDF.",
         {"type":"object","additionalProperties":False,"required":["pdf","output"],"properties":{"pdf":{"type":"string"},"output":{"type":"string"},"source_sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}}}, GENERIC_OUTPUT,
         "local-write", timeout=180, data_sensitivity=sensitivity, verifier="page-count-text-coverage"), pdf_parse)
+    registry.register(ToolSpec("pdf_page_read", "Read at most two cited pages from a hash-verified project PDF.",
+        {"type":"object","additionalProperties":False,"required":["pdf","source_sha256","start_page"],"properties":{
+            "pdf":{"type":"string","pattern":"^literature/"},"source_sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},
+            "start_page":{"type":"integer","minimum":1},"page_count":{"type":"integer","minimum":1,"maximum":2}}}, GENERIC_OUTPUT,
+        "local-read", timeout=60, data_sensitivity=sensitivity, verifier="pdf-hash-and-page-locator"), pdf_page_read)
     registry.register(ToolSpec("artifact_write", "Write one bounded UTF-8 artifact to an agent-scoped project path.",
         {"type":"object","additionalProperties":False,"required":["path","content","idempotency_key"],"properties":{"path":{"type":"string","minLength":1},"content":{"type":"string"},"idempotency_key":{"type":"string","minLength":8},"expected_sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}}}, GENERIC_OUTPUT,
         "local-write", timeout=60, data_sensitivity=sensitivity, verifier="artifact-hash", deterministic=True), artifact_write)
